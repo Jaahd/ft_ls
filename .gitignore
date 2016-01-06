@@ -32,4 +32,5 @@
 *.dSYM/
 
 # extras
-*test*
+# *test*
+# *toto*
