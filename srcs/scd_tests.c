@@ -10,7 +10,7 @@
 #include "libft.h"
 #include <time.h> /* for ctime -> pour modif format de time */
 /*
-  int     stat(const char *restrict path, struct stat *restrict buf);
+   int     stat(const char *restrict path, struct stat *restrict buf);
 
    struct stat { * when _DARWIN_FEATURE_64_BIT_INODE is defined *
    dev_t           st_dev;           * ID of device containing file *
@@ -65,7 +65,7 @@
    char    *pw_shell;			* default shell *
    time_t  pw_expire;			* account expiration *
    int     pw_fields;			* internal: fields filled in *
-           };
+   };
 
    struct group				*getgrgid(gid_t gid);	   
 
@@ -80,12 +80,12 @@
    char		*ctime(const time_t *clock);		--> format la valeur donnee par time 
 
    struct timespec
-   {
-   time_t			tv_sec;
-   long				tv_nsec;
-   };
+{
+	time_t			tv_sec;
+	long				tv_nsec;
+};
 
-   */
+*/
 
 int				main (int ac, char **av) 
 {
@@ -95,6 +95,7 @@ int				main (int ac, char **av)
 	struct group	*given_gr;
 	DIR				*pDir;
 	char			*time_tmp;
+	char			perm[11];
 
 	if (ac < 2) 
 		av[1] = ".";
@@ -106,21 +107,46 @@ int				main (int ac, char **av)
 	}
 	while ((pDirent = readdir(pDir)) != NULL) 
 	{
+		lstat(ft_strjoin("./libft/", pDirent->d_name), &buff_stat);
+		given_pw = getpwuid(buff_stat.st_uid);
+		given_gr = getgrgid(buff_stat.st_gid);
+		time_tmp = ctime(&buff_stat.st_mtime);
+		if(S_ISBLK(buff_stat.st_mode))
+			perm[0] = 'b';
+		else if(S_ISREG(buff_stat.st_mode))
+			perm[0] = '-';
+		else if(S_ISCHR(buff_stat.st_mode))
+			perm[0] = 'c';
+		else if(S_ISDIR(buff_stat.st_mode))
+			perm[0] = 'd';
+		else if(S_ISFIFO(buff_stat.st_mode))
+			perm[0] = 'p';
+		else if(S_ISLNK(buff_stat.st_mode))
+			perm[0] = 'l';
+		else if(S_ISSOCK(buff_stat.st_mode))
+			perm[0] = 's';
+		else
+			perm[0] = '?';
+	//	perm[0] = (S_ISDIR(buff_stat.st_mode)) ? 'd' : '-';
+		perm[1] = (buff_stat.st_mode & S_IRUSR) ? 'r' : '-';
+		perm[2] = (buff_stat.st_mode & S_IWUSR) ? 'w' : '-';
+		perm[3] = (buff_stat.st_mode & S_IXUSR) ? 'x' : '-';
+		perm[4] = (buff_stat.st_mode & S_IRGRP) ? 'r' : '-'; 
+		perm[5] = (buff_stat.st_mode & S_IWGRP) ? 'w' : '-'; 
+		perm[6] = (buff_stat.st_mode & S_IXGRP) ? 'x' : '-';
+		perm[7] = (buff_stat.st_mode & S_IROTH) ? 'r' : '-';
+		perm[8] = (buff_stat.st_mode & S_IWOTH) ? 'w' : '-';
+		perm[9] = (buff_stat.st_mode & S_IXOTH) ? 'x' : '-';
+		perm[10] = '\0';
 		ft_putstr("nom du fichier :\t");
 		ft_putendl(pDirent->d_name);
-		ft_putstr("infos non modifiees :\n");
-		stat(pDirent->d_name, &buff_stat);
-		printf("file mode :\t%d\n", buff_stat.st_mode);
-		ft_putstr("infos modifiees :\n");
-		given_pw = getpwuid(buff_stat.st_uid);
 		printf("user id :\t%s\n", given_pw->pw_name);
 		printf("nb of links :\t%d\n", buff_stat.st_nlink);
-//		printf("file mode :\t%d\n", given_pw.);
-		given_gr = getgrgid(buff_stat.st_gid);
+		printf("file mode :\t%s\n", perm);
 		printf("group id :\t%s\n", given_gr->gr_name);
-		time_tmp = ctime(&buff_stat.st_mtime);
 		printf("last modifs :\t%s\n", ft_strsub(time_tmp, 4, 12));
 		ft_putchar('\n');
+		buff_stat.st_mode = 0;
 	}
 	closedir (pDir);
 	return 0;
