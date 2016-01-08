@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:10:43 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/07 21:50:10 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/08 12:38:23 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*##### readdir met qqch dans errno!!!!!!!!!!!!#############*/
@@ -16,10 +16,17 @@
 #include "ft_ls.h"
 #include "libft.h"
 
-void	ft_error(int error)
-{
+void	ft_error(int error, char *cur_pb)
+{	
+	ft_putstr("ft_ls: ");
 	if (error == 1)
-		perror("memory allocation failure");
+		perror(cur_pb);
+	if (error == 2)
+	{
+		ft_putstr_fd("illegal option -- ", 2);
+		ft_putchar_fd(*cur_pb, 2);
+		ft_putendl_fd("\nusage: ft_ls [Ralrt] [file ...]", 2);
+	}
 	exit(EXIT_FAILURE);
 }
 
@@ -34,6 +41,9 @@ int		get_options(t_arg *argmt, int *ac_c, char **av)
 		i = 1;
 		while(av[cpt][0] == '-' && av[cpt][i])
 		{
+			if (av[cpt][i] != 'R' && av[cpt][i] != 'a' && av[cpt][i] != 'l' &&
+					av[cpt][i] != 'r' && av[cpt][i] != 't')
+				ft_error(2, &av[cpt][i]);
 			argmt->R = (av[cpt][i] == 'R') ? 1 : argmt->R;
 			argmt->a = (av[cpt][i] == 'a') ? 1 : argmt->a;
 			argmt->l = (av[cpt][i] == 'l') ? 1 : argmt->l;
@@ -54,9 +64,10 @@ int		get_name(t_arg *argmt, int ac, int *ac_c, char **av)
 	int				i;
 
 	i = 0;
-	if (((argmt->n_arg = (char **)malloc(sizeof(char *) * (2 + *ac_c))) == NULL) 
-	|| ((argmt->fpath = (char **)malloc(sizeof(char *) * (2 + *ac_c))) == NULL))
-		ft_error(1);
+	if ((argmt->n_arg = (char **)malloc(sizeof(char *) * (2 + *ac_c))) == NULL) 
+		ft_error(1, *argmt->n_arg);
+	if ((argmt->fpath = (char **)malloc(sizeof(char *) * (2 + *ac_c))) == NULL)
+		ft_error(1, *argmt->fpath);
 	if (*ac_c == 0)
 	{
 		argmt->n_arg[0] = ft_strdup(".");
@@ -81,8 +92,12 @@ int		main(int ac, char **av)
 	ac_c = ac;
 	get_options(&argmt, &ac_c, av);
 	get_name(&argmt, ac, &ac_c, av);
+	/* printf a virer */
 	printf("n_arg :'%s'\n", argmt.n_arg[0]);
+	printf("n_arg2 :'%s'\n", argmt.n_arg[1]);
 	printf("fpath :'%s'\n", argmt.fpath[0]);
+	printf("fpath2 :'%s'\n", argmt.fpath[1]);
 	printf("R :%d\ta :%d\tl :%d\tr :%d\tt :%d\n", argmt.R, argmt.a, argmt.l, argmt.r, argmt.t);
+	/* printf a virer */
 	return (0);
 }
