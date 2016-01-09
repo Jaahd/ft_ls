@@ -13,6 +13,9 @@
 #ifndef FT_LS_H
 # define FT_LS_H
 /*
+
+ATTENTION AJOUTER HEADER 42 DANS FT_SWAP!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
  NE PAS OUBLIER DE GERER LA "NON - TAILLE" POUR LES FICHIERS b OU c!!!!!!!!!!!!
  */
 #include <stdio.h>

@@ -85,12 +85,16 @@ void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 
-void				ft_lstpushback(t_list **alst, t_list *new);
+void				ft_putnbrendl(int n);
 int					ft_strnlen(char *str, char c);
+void				ft_lstpushback(t_list **alst, t_list *new);
 char				*ft_itoa_base(int n, int base);
-char				*ft_properjoin(char *s1, char *s2);
 t_list				*ft_split_to_lst(const char *s, char c);
 int					ft_lst_count(t_list *lst);
-void				ft_putnbrendl(int n);
+/* AJOUTER FREE_TBL */
+char				*ft_properjoin(char *s1, char *s2);
+/* AJOUTER ATOI_BASE */
+/* AJOUTER HIDENP */
+void				ft_swap(char *s1, char *s2);
 
 #endif

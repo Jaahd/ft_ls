@@ -40,6 +40,26 @@ void	ft_error(int error, char *cur_pb)
 	exit(EXIT_FAILURE);
 }
 
+int		buble_sort(t_arg *argmt)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 1;
+	while(argmt->n_arg[j] != NULL)
+	{
+		if(ft_strcmp(argmt->n_arg[i], argmt->n_arg[j]) > 0)
+		{
+			ft_swap(argmt->n_arg[i], argmt->n_arg[j]);
+			i = 0;
+			j = 1;
+		}
+		i++;
+		j++;
+	}
+}
+
 int		read_file(t_arg *argmt)
 {
 	int		i;
