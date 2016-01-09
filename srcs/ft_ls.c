@@ -19,12 +19,13 @@
 #include <sys/stat.h>
 #include "libft.h"
 #include <time.h> /* for ctime -> pour modif format de time */
-/*##### readdir met qqch dans errno!!!!!!!!!!!!#############*/
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include "ft_ls.h"
 #include "libft.h"
+/*##### readdir met qqch dans errno!!!!!!!!!!!!#############*/
 
 void	ft_error(int error, char *cur_pb)
 {	
