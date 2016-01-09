@@ -40,7 +40,7 @@ void	ft_error(int error, char *cur_pb)
 	exit(EXIT_FAILURE);
 }
 
-int		buble_sort(t_arg *argmt)
+int		bubble_sort(t_arg *argmt)
 {
 	int		i;
 	int		j;
