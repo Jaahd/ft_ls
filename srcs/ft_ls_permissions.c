@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:07:32 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/10 13:23:44 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/10 13:51:30 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 #include "libft.h"
 
 int		isadir(char *path)
-{	struct stat			buff_stat;
+{
+	struct stat			buff_stat;
 
 	lstat(path, &buff_stat);
 	return (S_ISDIR(buff_stat.st_mode));

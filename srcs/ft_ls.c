@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:10:43 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/10 13:24:50 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/10 14:33:01 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,32 @@ void	ft_error(int error, char *cur_pb)
 		perror(cur_pb);
 }
 
-int		read_file(t_arg *argmt)
+int		read_dir(DIR *pDir)
+{
+/*	struct dirent		*pDirent;
+	int					type;
+	char				*name;
+
+	while ((pDirent = readdir(pDir)) != NULL)
+	{
+		type = pDirent->d_type;
+		name = pDirent->d_name;
+	}
+*/	pDir = (DIR *)pDir;	
+	return (0);
+}
+
+int		open_dir(t_arg *argmt)
 {
 	int					i;
 	DIR					*pDir;
 
+	i = 0;
+	while (i < argmt->arg_nb)
+	{
+		printf("%s\n", argmt->n_arg[i]);
+		i++;
+	}
 	i = 0;
 	while (i < argmt->arg_nb)
 	{
@@ -60,18 +81,19 @@ int		read_file(t_arg *argmt)
 			if (pDir != NULL)
 			{
 				printf("pDir : %s\n", argmt->n_arg[i]);
+			/* rappeler la fonction 	open_dir();*/
 				closedir(pDir);
 			}
 			else
 				ft_error(3, argmt->n_arg[i]);
 		}
-		else
-			printf("file :%s\n", argmt->n_arg[i]);
-			/* afficher juste le fichier */
+//		printf("Pouet\n");
 		i++;
 	}
 	return (0);
 }
+
+/* fonction qui sera recursive et appelera toutes les autres fonctions */
 
 int		main(int ac, char **av)
 {
@@ -84,14 +106,15 @@ int		main(int ac, char **av)
 	get_name(&argmt, ac, &ac_c, av);
 	argmt.arg_nb = ac_c;
 	bubble_sort(&argmt);
-	read_file(&argmt);
-/*	while (argmt.n_arg[i] != NULL)
-	{
+	open_dir(&argmt);
+	//	read_dir(&argmt);
+	/*	while (argmt.n_arg[i] != NULL)
+		{
 		printf("arg : %s\n", argmt.n_arg[i]);
 		i++;
-	}
-	printf("---END---\n\n");
-*/	/* printf a virer */
+		}
+		printf("---END---\n\n");
+		*/	/* printf a virer */
 	//	printf("n_arg :'%s'\n", argmt.n_arg[0]);
 	//	printf("n_arg2 :'%s'\n", argmt.n_arg[1]);
 	//	printf("fpath :'%s'\n", argmt.fpath[0]);
