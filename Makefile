@@ -15,7 +15,9 @@ LFTHPATH =	$(LIBPATH)/includes
 CFLAGS = -g -Wall -Werror -Wextra -I $(HPATH) -I $(LFTHPATH)
 LIBS = -L $(LIBPATH) -lft
 
-SRC = 	ft_ls.c
+SRC = 	ft_ls.c \
+		ft_ls_permissions.c \
+		ft_ls_getinfo.c
 
 OFILES = $(patsubst %.c, $(OPATH)/%.o, $(SRC))
 

@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/08 12:48:37 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/08 13:34:26 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/10 13:15:46 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,39 @@
 #include "libft.h"
 #include "ft_ls.h"
 
+int		bubble_sort(t_arg *argmt)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while (i < argmt->arg_nb)
+	{
+		j = i + 1;
+		while (j < argmt->arg_nb)
+		{
+			if (ft_strcmp(argmt->n_arg[i], argmt->n_arg[j]) > 0)
+			{
+				ft_swap(&(argmt->n_arg[i]), &(argmt->n_arg[j]));
+				ft_swap(&(argmt->fpath[i]), &(argmt->fpath[j]));
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
 int		get_options(t_arg *argmt, int *ac_c, char **av)
-{	
+{
 	int				i;
 	int				cpt;
 
 	cpt = 1;
-	while(cpt < *ac_c)
+	while (cpt < *ac_c)
 	{
 		i = 1;
-		while(av[cpt][0] == '-' && av[cpt][i])
+		while (av[cpt][0] == '-' && av[cpt][i])
 		{
 			if (av[cpt][i] != 'R' && av[cpt][i] != 'a' && av[cpt][i] != 'l' &&
 					av[cpt][i] != 'r' && av[cpt][i] != 't')
@@ -48,7 +71,7 @@ int		get_name(t_arg *argmt, int ac, int *ac_c, char **av)
 	int				i;
 
 	i = 0;
-	if ((argmt->n_arg = (char **)malloc(sizeof(char *) * (1 + *ac_c))) == NULL) 
+	if ((argmt->n_arg = (char **)malloc(sizeof(char *) * (1 + *ac_c))) == NULL)
 		ft_error(1, *argmt->n_arg);
 	if ((argmt->fpath = (char **)malloc(sizeof(char *) * (1 + *ac_c))) == NULL)
 		ft_error(1, *argmt->fpath);
@@ -57,7 +80,7 @@ int		get_name(t_arg *argmt, int ac, int *ac_c, char **av)
 		argmt->n_arg[0] = ft_strdup(".");
 		argmt->fpath[0] = ft_strdup("./");
 	}
-	while(i < *ac_c)
+	while (i < *ac_c)
 	{
 		argmt->n_arg[i] = ft_strdup(av[ac - *ac_c + i]);
 		argmt->fpath[i] = ft_strjoin("./", av[ac - *ac_c + i]);
@@ -67,4 +90,3 @@ int		get_name(t_arg *argmt, int ac, int *ac_c, char **av)
 	argmt->fpath[i] = NULL;
 	return (0);
 }
-

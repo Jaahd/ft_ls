@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/23 17:49:05 by avacher           #+#    #+#             */
-/*   Updated: 2015/12/28 15:17:38 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/10 12:04:33 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,10 @@ void				ft_lstpushback(t_list **alst, t_list *new);
 char				*ft_itoa_base(int n, int base);
 t_list				*ft_split_to_lst(const char *s, char c);
 int					ft_lst_count(t_list *lst);
-/* AJOUTER FREE_TBL */
+void				ft_free_tbl_s(char **tbl);
 char				*ft_properjoin(char *s1, char *s2);
-/* AJOUTER ATOI_BASE */
-/* AJOUTER HIDENP */
-void				ft_swap(char *s1, char *s2);
+int					ft_atoi_base(char *str, int base);
+int					ft_hidenp(char *hiden, char *str);
+void				ft_swap(char **s1, char **s2);
 
 #endif
