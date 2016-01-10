@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:10:43 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/10 14:33:01 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/10 17:20:29 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,34 +61,39 @@ int		read_dir(DIR *pDir)
 	return (0);
 }
 
-int		open_dir(t_arg *argmt)
+char	*format_path(char *begining, char *end)
+{
+		
+}
+
+int		display(DIR *pDir, t_list **dir_list)
+{
+	struct dirent		*pDirent;
+	
+	while ((pDirent = readdir(pDir)) != NULL) 
+	{
+		printf("dir content :%s\n", pDirent->d_name);
+		if (pDirent->d_type == DT_DIR)
+			ft_lstpushback(dir_list, pDirent->d_name);
+	}
+	return (0);
+}
+
+int		open_dir(char *dpath, char *dname)
 {
 	int					i;
 	DIR					*pDir;
-
+	t_list				*dir_list;
+	
 	i = 0;
-	while (i < argmt->arg_nb)
+	pDir = opendir(dpath);
+	if (pDir == NULL)
+		ft_error(3, dname);
+	display(pDir, dpath, &dir_list);
+	while (dir_list != NULL)
 	{
-		printf("%s\n", argmt->n_arg[i]);
-		i++;
-	}
-	i = 0;
-	while (i < argmt->arg_nb)
-	{
-		if (isadir(argmt->fpath[i]))
-		{
-			pDir = opendir(argmt->n_arg[i]);
-			if (pDir != NULL)
-			{
-				printf("pDir : %s\n", argmt->n_arg[i]);
-			/* rappeler la fonction 	open_dir();*/
-				closedir(pDir);
-			}
-			else
-				ft_error(3, argmt->n_arg[i]);
-		}
-//		printf("Pouet\n");
-		i++;
+		open_dir(format_path(dpath, dir_list->content), dir_list->content);
+		dir_list = dir_list->next;
 	}
 	return (0);
 }
@@ -106,7 +111,11 @@ int		main(int ac, char **av)
 	get_name(&argmt, ac, &ac_c, av);
 	argmt.arg_nb = ac_c;
 	bubble_sort(&argmt);
-	open_dir(&argmt);
+	while (i < argmt.agr_nb)
+	{
+		open_dir(argmt.fpath[i]);
+		i++;
+	}
 	//	read_dir(&argmt);
 	/*	while (argmt.n_arg[i] != NULL)
 		{

@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:16:44 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/10 13:17:11 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/10 16:36:55 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@ typedef struct		s_arg
 	int				r;
 	int				t;
 }					t_arg;	
+
+typedef struct		s_dlist
+{
+	char			*dpath;
+	char			*dname;
+	struct s_dlist	*next;	
+}					t_dlist;
 
 void				ft_error(int error, char *cur_pb);
 int					get_options(t_arg *argmt, int *ac_c, char **av);
