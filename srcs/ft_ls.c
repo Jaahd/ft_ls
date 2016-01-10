@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:10:43 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/10 17:20:29 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/10 18:59:30 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*format_path(char *begining, char *end)
 		
 }
 
-int		display(DIR *pDir, t_list **dir_list)
+int		display(DIR *pDir, t_dlist **dir_list)
 {
 	struct dirent		*pDirent;
 	
@@ -74,7 +74,7 @@ int		display(DIR *pDir, t_list **dir_list)
 	{
 		printf("dir content :%s\n", pDirent->d_name);
 		if (pDirent->d_type == DT_DIR)
-			ft_lstpushback(dir_list, pDirent->d_name);
+			dirlst_pushb(dir_list, pDirent->d_name);
 	}
 	return (0);
 }
@@ -83,16 +83,16 @@ int		open_dir(char *dpath, char *dname)
 {
 	int					i;
 	DIR					*pDir;
-	t_list				*dir_list;
+	t_dlist				*dir_list;
 	
 	i = 0;
 	pDir = opendir(dpath);
 	if (pDir == NULL)
 		ft_error(3, dname);
-	display(pDir, dpath, &dir_list);
+	display(pDir, &dir_list);
 	while (dir_list != NULL)
 	{
-		open_dir(format_path(dpath, dir_list->content), dir_list->content);
+		open_dir(format_path(dpath, dir_list->dname), dir_list->dname);
 		dir_list = dir_list->next;
 	}
 	return (0);
@@ -111,9 +111,9 @@ int		main(int ac, char **av)
 	get_name(&argmt, ac, &ac_c, av);
 	argmt.arg_nb = ac_c;
 	bubble_sort(&argmt);
-	while (i < argmt.agr_nb)
+	while (i < argmt.arg_nb)
 	{
-		open_dir(argmt.fpath[i]);
+		open_dir(argmt.fpath[i], argmt.n_arg[i]);
 		i++;
 	}
 	//	read_dir(&argmt);

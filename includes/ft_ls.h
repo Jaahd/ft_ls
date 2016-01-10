@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:16:44 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/10 17:28:01 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/10 18:56:45 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ typedef struct		s_arg
 
 typedef struct		s_dlist
 {
-	char			*dpath;
 	char			*dname;
 	struct s_dlist	*next;	
 }					t_dlist;
