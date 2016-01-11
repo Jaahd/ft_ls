@@ -61,9 +61,15 @@ int		read_dir(DIR *pDir)
 	return (0);
 }
 
-char	*format_path(char *begining, char *end)
+char	*format_path(char *b_path, char *filename, int namelen)
 {
-		
+	char			*f_path;
+
+	if (filename[namelen - 1] == '/')
+		filename[namelen - 1] = '\0';
+	if((f_path = ft_properjoin(b_path, filename) == NULL))
+		ft_error(1, filename);
+	return (f_path);
 }
 
 int		display(DIR *pDir, t_dlist **dir_list)

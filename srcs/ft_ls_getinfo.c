@@ -82,8 +82,10 @@ int		get_name(t_arg *argmt, int ac, int *ac_c, char **av)
 	}
 	while (i < *ac_c)
 	{
-		argmt->n_arg[i] = ft_strdup(av[ac - *ac_c + i]);
-		argmt->fpath[i] = ft_strjoin("./", av[ac - *ac_c + i]);
+		if((argmt->n_arg[i] = ft_strdup(av[ac - *ac_c + i])) == NULL)
+			ft_error(1, argmt->n_arg[i]);
+		if ((argmt->fpath[i] = ft_strjoin("./", av[ac - *ac_c + i])) == NULL)
+			ft_error(1, argmt->fpath[i]);
 		i++;
 	}
 	argmt->n_arg[i] = NULL;
