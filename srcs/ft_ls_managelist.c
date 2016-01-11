@@ -12,6 +12,7 @@
 
 #include <string.h>
 #include "ft_ls.h"
+#include "libft.h"
 
 int		dirlst_pushb(t_dlist **dirlist, char *dname)
 {
