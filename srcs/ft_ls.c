@@ -68,11 +68,12 @@ char	*format_path(char *b_path, char *filename, int namelen)
 
 	if (filename[namelen - 1] == '/')
 		filename[namelen - 1] = '\0';
-	if (b_path[ft_strlen(b_path) - 1] == '/')
-		fb_path[ft_strlen(b_path) - 1] = '\0';
-	if((f_path = ft_properjoin(b_path, filename) == NULL) || 
-		(f_path = ft_properjoin(b_path, filename) == NULL))
+	if (b_path[ft_strlen(b_path) - 1] != '/')
+		if((tmp = ft_properjoin(b_path, "/")) == NULL);
+			ft_error(1, b_path);
+	if((f_path = ft_properjoin(tmp, filename) == NULL))
 		ft_error(1, filename);
+	ft_strdel(&tmp);
 	return (f_path);
 }
 
