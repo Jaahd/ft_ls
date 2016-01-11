@@ -63,11 +63,15 @@ int		read_dir(DIR *pDir)
 
 char	*format_path(char *b_path, char *filename, int namelen)
 {
+	char			*tmp;
 	char			*f_path;
 
 	if (filename[namelen - 1] == '/')
 		filename[namelen - 1] = '\0';
-	if((f_path = ft_properjoin(b_path, filename) == NULL))
+	if (b_path[ft_strlen(b_path) - 1] == '/')
+		fb_path[ft_strlen(b_path) - 1] = '\0';
+	if((f_path = ft_properjoin(b_path, filename) == NULL) || 
+		(f_path = ft_properjoin(b_path, filename) == NULL))
 		ft_error(1, filename);
 	return (f_path);
 }
