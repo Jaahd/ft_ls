@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:16:44 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/12 18:06:42 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/12 19:14:43 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct		s_arg
 	char			**n_arg;
 	char			**fpath;
 	int				arg_nb;
-	int				R;
+	int				rec;
 	int				a;
 	int				l;
 	int				r;

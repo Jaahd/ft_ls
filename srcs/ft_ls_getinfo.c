@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/08 12:48:37 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/12 18:16:33 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/12 19:21:33 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		get_options(t_arg *argmt, int *ac_c, char **av)
 			if (av[cpt][i] != 'R' && av[cpt][i] != 'a' && av[cpt][i] != 'l' &&
 					av[cpt][i] != 'r' && av[cpt][i] != 't')
 				ft_error(2, &av[cpt][i]);
-			argmt->R = (av[cpt][i] == 'R') ? 1 : argmt->R;
+			argmt->rec = (av[cpt][i] == 'R') ? 1 : argmt->rec;
 			argmt->a = (av[cpt][i] == 'a') ? 1 : argmt->a;
 			argmt->l = (av[cpt][i] == 'l') ? 1 : argmt->l;
 			argmt->r = (av[cpt][i] == 'r') ? 1 : argmt->r;

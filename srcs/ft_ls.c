@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:10:43 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/12 18:09:28 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/12 20:13:53 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,14 @@ int		fill_dirlist(DIR *pDir, t_dlist **dir_lst)
 
 	while ((pDirent = readdir(pDir)) != NULL) 
 	{
+		printf("dir content :%s\n", pDirent->d_name);
 		if (pDirent->d_type == DT_DIR)
 			dirlst_pushb(dir_lst, pDirent->d_name);
 	}
 	return (0);
 }
 
-int		open_dir(char *dpath, char *dname)
+int		open_dir(t_arg argmt, char *dpath, char *dname)
 {
 	int					i;
 	DIR					*pDir;
@@ -72,13 +73,38 @@ int		open_dir(char *dpath, char *dname)
 		return (ft_error(3, dname));
 	fill_dirlist(pDir, &dir_lst);
 	closedir(pDir);
-	while (dir_lst)
+	while (argmt.rec == 1 && dir_lst)
 	{
 		if (ft_strcmp(dir_lst->dname, ".") != 0 && 
 				ft_strcmp(dir_lst->dname, "..") != 0)
-			open_dir(format_path(dpath, dir_lst->dname, ft_strlen(dir_lst->dname)),
+			open_dir(argmt, format_path(dpath, dir_lst->dname,
+					ft_strlen(dir_lst->dname)),
 			 	dir_lst->dname);
 		dir_lst = dir_lst->next;
+	}
+	return (0);
+}
+
+int		first_display(t_arg argmt)
+{
+	int			i;
+
+	i = -1;
+	while (++i < argmt.arg_nb)
+	{
+		if (!(isadir(argmt.fpath[i])))	
+			ft_putendl(argmt.n_arg[i]);/* fonction d'affichage */
+	}
+	i = -1;
+	while (++i < argmt.arg_nb)
+	{
+		if (isadir(argmt.fpath[i]) && ft_strcmp(argmt.n_arg[i], ".") 
+				&& ft_strcmp(argmt.n_arg[i], ".."))
+		{
+			ft_putchar('\n');
+			ft_putendl(argmt.n_arg[i]);
+			open_dir(argmt, argmt.fpath[i], argmt.n_arg[i]);
+		}
 	}
 	return (0);
 }
@@ -89,7 +115,7 @@ int		main(int ac, char **av)
 	int				ac_c;
 	int	i;
 
-	i = 0;
+	i = -1;
 	ac_c = ac;
 	get_options(&argmt, &ac_c, av);
 	argmt.arg_nb = ac_c;
@@ -99,10 +125,6 @@ int		main(int ac, char **av)
 		ft_error(1, "argmt.fpath");
 	get_name(&argmt, ac, &ac_c, av);
 	bubble_sort(&argmt);
-	while (i < argmt.arg_nb)
-	{
-		open_dir(argmt.fpath[i], argmt.n_arg[i]);
-		i++;
-	}
+	first_display(argmt);
 	return (0);
 }
