@@ -14,7 +14,7 @@
 #include <sys/types.h> /* -> getpwduid */
 #include <pwd.h> /* -> getpwduid */
 #include <grp.h> /* -> get grgid */
-#include <uuid/uuid.h> /* -> getpwduid & getgrgid */
+// #include <uuid/uuid.h> /* -> getpwduid & getgrgid */
 #include <sys/errno.h>
 #include <sys/stat.h>
 #include "libft.h"
@@ -46,21 +46,6 @@ void	ft_error(int error, char *cur_pb)
 		perror(cur_pb);
 }
 
-int		read_dir(DIR *pDir)
-{
-/*	struct dirent		*pDirent;
-	int					type;
-	char				*name;
-
-	while ((pDirent = readdir(pDir)) != NULL)
-	{
-		type = pDirent->d_type;
-		name = pDirent->d_name;
-	}
-*/	pDir = (DIR *)pDir;	
-	return (0);
-}
-
 char	*format_path(char *b_path, char *filename, int namelen)
 {
 	char			*tmp;
@@ -69,15 +54,22 @@ char	*format_path(char *b_path, char *filename, int namelen)
 	if (filename[namelen - 1] == '/')
 		filename[namelen - 1] = '\0';
 	if (b_path[ft_strlen(b_path) - 1] != '/')
-		if((tmp = ft_properjoin(b_path, "/")) == NULL);
+	{
+		if((tmp = ft_strjoin(b_path, "/")) == NULL)
 			ft_error(1, b_path);
-	if((f_path = ft_properjoin(tmp, filename) == NULL))
+	}
+	else
+	{
+		if ((tmp = ft_strdup(b_path)) == NULL)
+			ft_error(1, b_path);
+	}
+	if(((f_path = ft_strjoin(tmp, filename)) == NULL))
 		ft_error(1, filename);
 	ft_strdel(&tmp);
 	return (f_path);
 }
 
-int		display(DIR *pDir, t_dlist **dir_list)
+int		fill_dirlist(DIR *pDir, t_dlist **dir_list)
 {
 	struct dirent		*pDirent;
 	
@@ -89,7 +81,7 @@ int		display(DIR *pDir, t_dlist **dir_list)
 	}
 	return (0);
 }
-
+/*
 int		open_dir(char *dpath, char *dname)
 {
 	int					i;
@@ -100,7 +92,7 @@ int		open_dir(char *dpath, char *dname)
 	pDir = opendir(dpath);
 	if (pDir == NULL)
 		ft_error(3, dname);
-	display(pDir, &dir_list);
+	fill_dirlist(pDir, &dir_list);
 	while (dir_list != NULL)
 	{
 		open_dir(format_path(dpath, dir_list->dname), dir_list->dname);
@@ -108,24 +100,28 @@ int		open_dir(char *dpath, char *dname)
 	}
 	return (0);
 }
-
-/* fonction qui sera recursive et appelera toutes les autres fonctions */
-
+*/
 int		main(int ac, char **av)
 {
 	t_arg			argmt;
 	int				ac_c;
 	int	i;
+
 	i = 0;
 	ac_c = ac;
 	get_options(&argmt, &ac_c, av);
-	get_name(&argmt, ac, &ac_c, av);
 	argmt.arg_nb = ac_c;
+	if ((argmt.n_arg = (char **)malloc(sizeof(char *) * (argmt.arg_nb + 1))) == NULL)
+		ft_error(1, "argmt.n_arg");
+	if ((argmt.fpath = (char **)malloc(sizeof(char *) * (argmt.arg_nb + 1))) == NULL)
+		ft_error(1, "argmt.fpath");
+	get_name(&argmt, ac, &ac_c, av);
 	bubble_sort(&argmt);
 	while (i < argmt.arg_nb)
 	{
-		open_dir(argmt.fpath[i], argmt.n_arg[i]);
-		i++;
+		printf("n_arg :%s\tfpath :%s\n", argmt.n_arg[i], argmt.fpath[i]);
+/*		open_dir(argmt.fpath[i], argmt.n_arg[i]);
+*/		i++;
 	}
 	//	read_dir(&argmt);
 	/*	while (argmt.n_arg[i] != NULL)
@@ -142,4 +138,4 @@ int		main(int ac, char **av)
 	//	printf("R :%d\ta :%d\tl :%d\tr :%d\tt :%d\n", argmt.R, argmt.a, argmt.l, argmt.r, argmt.t);
 	/* printf a virer */
 	return (0);
-}
+}//

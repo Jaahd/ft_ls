@@ -71,21 +71,18 @@ int		get_name(t_arg *argmt, int ac, int *ac_c, char **av)
 	int				i;
 
 	i = 0;
-	if ((argmt->n_arg = (char **)malloc(sizeof(char *) * (1 + *ac_c))) == NULL)
-		ft_error(1, *argmt->n_arg);
-	if ((argmt->fpath = (char **)malloc(sizeof(char *) * (1 + *ac_c))) == NULL)
-		ft_error(1, *argmt->fpath);
 	if (*ac_c == 0)
 	{
-		argmt->n_arg[0] = ft_strdup(".");
-		argmt->fpath[0] = ft_strdup("./");
+		if ((argmt->n_arg[0] = ft_strdup(".")) == NULL)
+			ft_error(1, ".");
+		if ((argmt->fpath[0] = ft_strdup("./")) == NULL)
+			ft_error(1, "./");
 	}
 	while (i < *ac_c)
 	{
 		if((argmt->n_arg[i] = ft_strdup(av[ac - *ac_c + i])) == NULL)
 			ft_error(1, argmt->n_arg[i]);
-		if ((argmt->fpath[i] = ft_strjoin("./", av[ac - *ac_c + i])) == NULL)
-			ft_error(1, argmt->fpath[i]);
+		argmt->fpath[i] = format_path("./", argmt->n_arg[i], ft_strlen(argmt->n_arg[i]));
 		i++;
 	}
 	argmt->n_arg[i] = NULL;

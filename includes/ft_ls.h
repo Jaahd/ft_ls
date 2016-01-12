@@ -39,5 +39,7 @@ int					get_options(t_arg *argmt, int *ac_c, char **av);
 int					get_name(t_arg *argmt, int ac, int *ac_c, char **av);
 int					bubble_sort(t_arg *argmt);
 int					isadir(char *path);
+int					dirlst_pushb(t_dlist **dirlist, char *dname);
+char					*format_path(char *b_path, char *filename, int namelen);
 
 #endif
