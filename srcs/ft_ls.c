@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:10:43 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/12 20:13:53 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/12 20:35:57 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,68 +45,6 @@ int		ft_error(int error, char *cur_pb)
 	if (error == 3)
 		perror(cur_pb);
 	return (EXIT_FAILURE);
-}
-
-int		fill_dirlist(DIR *pDir, t_dlist **dir_lst)
-{
-	struct dirent		*pDirent;
-
-	while ((pDirent = readdir(pDir)) != NULL) 
-	{
-		printf("dir content :%s\n", pDirent->d_name);
-		if (pDirent->d_type == DT_DIR)
-			dirlst_pushb(dir_lst, pDirent->d_name);
-	}
-	return (0);
-}
-
-int		open_dir(t_arg argmt, char *dpath, char *dname)
-{
-	int					i;
-	DIR					*pDir;
-	t_dlist				*dir_lst;
-	
-	i = 0;
-	dir_lst = NULL;
-	pDir = opendir(dpath);
-	if (pDir == NULL)
-		return (ft_error(3, dname));
-	fill_dirlist(pDir, &dir_lst);
-	closedir(pDir);
-	while (argmt.rec == 1 && dir_lst)
-	{
-		if (ft_strcmp(dir_lst->dname, ".") != 0 && 
-				ft_strcmp(dir_lst->dname, "..") != 0)
-			open_dir(argmt, format_path(dpath, dir_lst->dname,
-					ft_strlen(dir_lst->dname)),
-			 	dir_lst->dname);
-		dir_lst = dir_lst->next;
-	}
-	return (0);
-}
-
-int		first_display(t_arg argmt)
-{
-	int			i;
-
-	i = -1;
-	while (++i < argmt.arg_nb)
-	{
-		if (!(isadir(argmt.fpath[i])))	
-			ft_putendl(argmt.n_arg[i]);/* fonction d'affichage */
-	}
-	i = -1;
-	while (++i < argmt.arg_nb)
-	{
-		if (isadir(argmt.fpath[i]) && ft_strcmp(argmt.n_arg[i], ".") 
-				&& ft_strcmp(argmt.n_arg[i], ".."))
-		{
-			ft_putchar('\n');
-			ft_putendl(argmt.n_arg[i]);
-			open_dir(argmt, argmt.fpath[i], argmt.n_arg[i]);
-		}
-	}
-	return (0);
 }
 
 int		main(int ac, char **av)

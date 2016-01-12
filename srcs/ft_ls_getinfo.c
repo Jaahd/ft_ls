@@ -6,11 +6,12 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/08 12:48:37 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/12 19:21:33 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/12 20:58:38 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string.h>
+#include <dirent.h>
 #include "libft.h"
 #include "ft_ls.h"
 

@@ -17,8 +17,9 @@ LIBS = -L $(LIBPATH) -lft
 
 SRC = 	ft_ls.c \
 		ft_ls_getinfo.c \
+		ft_ls_display.c \
 		ft_ls_managelist.c \
-		ft_ls_permissions.c \
+		ft_ls_permissions.c 
 
 OFILES = $(patsubst %.c, $(OPATH)/%.o, $(SRC))
 
