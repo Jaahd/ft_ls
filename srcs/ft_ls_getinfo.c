@@ -6,13 +6,36 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/08 12:48:37 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/10 13:15:46 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/12 17:01:24 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string.h>
 #include "libft.h"
 #include "ft_ls.h"
+
+char	*format_path(char *b_path, char *filename, int namelen)
+{
+	char			*tmp;
+	char			*f_path;
+
+	if (filename[namelen - 1] == '/')
+		filename[namelen - 1] = '\0';
+	if (b_path[ft_strlen(b_path) - 1] != '/')
+	{
+		if((tmp = ft_strjoin(b_path, "/")) == NULL)
+			ft_error(1, b_path);
+	}
+	else
+	{
+		if ((tmp = ft_strdup(b_path)) == NULL)
+			ft_error(1, b_path);
+	}
+	if(((f_path = ft_strjoin(tmp, filename)) == NULL))
+		ft_error(1, filename);
+	ft_strdel(&tmp);
+	return (f_path);
+}
 
 int		bubble_sort(t_arg *argmt)
 {

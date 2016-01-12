@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:16:44 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/10 18:56:45 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/12 17:42:42 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct		s_dlist
 	struct s_dlist	*next;	
 }					t_dlist;
 
-void				ft_error(int error, char *cur_pb);
+int					ft_error(int error, char *cur_pb);
 int					get_options(t_arg *argmt, int *ac_c, char **av);
 int					get_name(t_arg *argmt, int ac, int *ac_c, char **av);
 int					bubble_sort(t_arg *argmt);
