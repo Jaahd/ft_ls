@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/08 12:48:37 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/12 17:01:24 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/12 18:16:33 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*format_path(char *b_path, char *filename, int namelen)
 		filename[namelen - 1] = '\0';
 	if (b_path[ft_strlen(b_path) - 1] != '/')
 	{
-		if((tmp = ft_strjoin(b_path, "/")) == NULL)
+		if ((tmp = ft_strjoin(b_path, "/")) == NULL)
 			ft_error(1, b_path);
 	}
 	else
@@ -31,7 +31,7 @@ char	*format_path(char *b_path, char *filename, int namelen)
 		if ((tmp = ft_strdup(b_path)) == NULL)
 			ft_error(1, b_path);
 	}
-	if(((f_path = ft_strjoin(tmp, filename)) == NULL))
+	if (((f_path = ft_strjoin(tmp, filename)) == NULL))
 		ft_error(1, filename);
 	ft_strdel(&tmp);
 	return (f_path);
@@ -103,9 +103,13 @@ int		get_name(t_arg *argmt, int ac, int *ac_c, char **av)
 	}
 	while (i < *ac_c)
 	{
-		if((argmt->n_arg[i] = ft_strdup(av[ac - *ac_c + i])) == NULL)
+		if ((argmt->n_arg[i] = ft_strdup(av[ac - *ac_c + i])) == NULL)
 			ft_error(1, argmt->n_arg[i]);
-		argmt->fpath[i] = format_path("./", argmt->n_arg[i], ft_strlen(argmt->n_arg[i]));
+		if (argmt->n_arg[i][0] != '/')
+			argmt->fpath[i] = format_path("./", argmt->n_arg[i],
+					ft_strlen(argmt->n_arg[i]));
+		else
+			argmt->fpath[i] = ft_strdup(argmt->n_arg[i]);
 		i++;
 	}
 	argmt->n_arg[i] = NULL;

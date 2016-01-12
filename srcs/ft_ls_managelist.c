@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/10 17:27:11 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/12 17:17:54 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/12 18:11:09 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		dirlst_pushb(t_dlist **dirlist, char *dname)
 	t_dlist		*new;
 
 	tmp = *dirlist;
-	while(tmp != NULL && tmp->next != NULL)
+	while (tmp != NULL && tmp->next != NULL)
 		tmp = tmp->next;
 	if ((new = (t_dlist *)malloc(sizeof(t_dlist))) == NULL)
 		ft_error(1, dname);

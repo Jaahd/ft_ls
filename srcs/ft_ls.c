@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:10:43 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/12 17:42:18 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/12 18:09:28 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,8 @@ int		open_dir(char *dpath, char *dname)
 		return (ft_error(3, dname));
 	fill_dirlist(pDir, &dir_lst);
 	closedir(pDir);
-	printf("pouet\n");
 	while (dir_lst)
 	{
-		printf("trololo\n");
-		printf("path:%s\tdir name:%s\n", format_path(dpath, dir_lst->dname, ft_strlen(dir_lst->dname)), dir_lst->dname);
 		if (ft_strcmp(dir_lst->dname, ".") != 0 && 
 				ft_strcmp(dir_lst->dname, "..") != 0)
 			open_dir(format_path(dpath, dir_lst->dname, ft_strlen(dir_lst->dname)),
@@ -105,22 +102,7 @@ int		main(int ac, char **av)
 	while (i < argmt.arg_nb)
 	{
 		open_dir(argmt.fpath[i], argmt.n_arg[i]);
-		printf("n_arg :%s\tfpath :%s\n", argmt.n_arg[i], argmt.fpath[i]);
 		i++;
 	}
-	//	read_dir(&argmt);
-	/*	while (argmt.n_arg[i] != NULL)
-		{
-		printf("arg : %s\n", argmt.n_arg[i]);
-		i++;
-		}
-		printf("---END---\n\n");
-		*/	/* printf a virer */
-	//	printf("n_arg :'%s'\n", argmt.n_arg[0]);
-	//	printf("n_arg2 :'%s'\n", argmt.n_arg[1]);
-	//	printf("fpath :'%s'\n", argmt.fpath[0]);
-	//	printf("fpath2 :'%s'\n", argmt.fpath[1]);
-	//	printf("R :%d\ta :%d\tl :%d\tr :%d\tt :%d\n", argmt.R, argmt.a, argmt.l, argmt.r, argmt.t);
-	/* printf a virer */
 	return (0);
-}//
+}
