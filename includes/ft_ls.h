@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:16:44 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/13 16:06:17 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/13 19:53:57 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct		s_arg
 {
 	char			**n_arg;
 	char			**fpath;
+	int				*t_arg;
 	int				arg_nb;
 	int				rec;
 	int				a;
@@ -39,6 +40,7 @@ typedef struct		s_dlist
 int					ft_error(int error, char *cur_pb);
 
 // getinfo
+int					get_mtime(t_arg *argmt);
 char				*format_path(char *b_path, char *filename, int namelen);
 int					bubble_sort(t_arg *argmt);
 int					get_options(t_arg *argmt, int *ac_c, char **av);
@@ -49,8 +51,7 @@ int					isadir(char *path);
 
 // display
 int					first_display(t_arg argmt);
-int					ls_display(struct dirent *p_dirent, t_arg *argmt,
-						char *name,	char *path);
+int					ls_display(struct dirent *p_dirent, t_arg *argmt);
 
 // managedir 
 int					fill_dirlist(DIR *p_dir, t_dlist **dir_lst, t_arg *argmt);

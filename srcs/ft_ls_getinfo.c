@@ -6,10 +6,11 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/08 12:48:37 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/12 20:58:38 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/13 20:14:37 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/stat.h>
 #include <string.h>
 #include <dirent.h>
 #include "libft.h"
@@ -38,25 +39,49 @@ char	*format_path(char *b_path, char *filename, int namelen)
 	return (f_path);
 }
 
+int		get_mtime(t_arg *argmt)
+{
+	struct stat		buff;
+	int				i;
+
+	i = 0;
+	if ((argmt->t_arg = (int *)malloc(sizeof(int) * (argmt->arg_nb))) == NULL)
+		ft_error(1, "argmt.n_arg");
+	while (argmt->n_arg[i])
+	{
+		stat(argmt->fpath[i], &buff);	
+		argmt->t_arg[i] = buff.st_mtime;
+		i++;
+	}
+	return (0);
+}
+
 int		bubble_sort(t_arg *argmt)
 {
+	int		cmp;
 	int		i;
 	int		j;
 
-	i = 0;
-	while (i < argmt->arg_nb)
+	i = -1;
+	while (++i < argmt->arg_nb)
 	{
 		j = i + 1;
 		while (j < argmt->arg_nb)
 		{
-			if (ft_strcmp(argmt->n_arg[i], argmt->n_arg[j]) > 0)
+			if (argmt->t == 1)
+				cmp = argmt->r ? (argmt->t_arg[i] - argmt->t_arg[j]) : 
+					(argmt->t_arg[j] - argmt->t_arg[i]);
+			else
+				cmp = argmt->r ? ft_strcmp(argmt->n_arg[j], argmt->n_arg[i]) : 
+					ft_strcmp(argmt->n_arg[i], argmt->n_arg[j]);
+			if (cmp > 0)
 			{
 				ft_swap(&(argmt->n_arg[i]), &(argmt->n_arg[j]));
 				ft_swap(&(argmt->fpath[i]), &(argmt->fpath[j]));
+				int_swap(&(argmt->t_arg[i]), &(argmt->t_arg[j]));
 			}
 			j++;
 		}
-		i++;
 	}
 	return (0);
 }

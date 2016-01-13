@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ls_managelist.c                                 :+:      :+:    :+:   */
+/*   ft_ls_managedir.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/10 17:27:11 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/13 16:15:38 by avacher          ###   ########.fr       */
+/*   Created: 2016/01/13 17:40:26 by avacher           #+#    #+#             */
+/*   Updated: 2016/01/13 17:52:57 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		fill_dirlist(DIR *p_dir, t_dlist **dir_lst, t_arg *argmt)
 	i = 0;
 	while ((p_dirent = readdir(p_dir)) != NULL) 
 	{
-		ls_display(p_dirent, argmt, argmt->n_arg[i], argmt->fpath[i]);	
+		ls_display(p_dirent, argmt);	
 	//	printf("dir content :%s\n", p_dirent->d_name);
 		if (p_dirent->d_type == DT_DIR)
 			dirlst_pushb(dir_lst, p_dirent->d_name);

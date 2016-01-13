@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/23 17:49:05 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/10 12:04:33 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/13 19:32:15 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,6 @@ char				*ft_properjoin(char *s1, char *s2);
 int					ft_atoi_base(char *str, int base);
 int					ft_hidenp(char *hiden, char *str);
 void				ft_swap(char **s1, char **s2);
+void				int_swap(int *i, int *j);
 
 #endif

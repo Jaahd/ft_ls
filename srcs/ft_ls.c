@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:10:43 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/12 20:35:57 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/13 20:17:30 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,14 @@ int		main(int ac, char **av)
 	ac_c = ac;
 	get_options(&argmt, &ac_c, av);
 	argmt.arg_nb = ac_c;
-	if ((argmt.n_arg = (char **)malloc(sizeof(char *) * (argmt.arg_nb + 1))) == NULL)
+	if ((argmt.n_arg = (char **)malloc(sizeof(char *) * 
+					(argmt.arg_nb + 1))) == NULL)
 		ft_error(1, "argmt.n_arg");
-	if ((argmt.fpath = (char **)malloc(sizeof(char *) * (argmt.arg_nb + 1))) == NULL)
+	if ((argmt.fpath = (char **)malloc(sizeof(char *) * 
+					(argmt.arg_nb + 1))) == NULL)
 		ft_error(1, "argmt.fpath");
 	get_name(&argmt, ac, &ac_c, av);
+	get_mtime(&argmt);
 	bubble_sort(&argmt);
 	first_display(argmt);
 	return (0);

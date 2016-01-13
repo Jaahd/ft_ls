@@ -6,7 +6,7 @@
 #    By: avacher <avacher@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/25 17:44:48 by avacher           #+#    #+#              #
-#    Updated: 2015/12/19 13:29:08 by avacher          ###   ########.fr        #
+#    Updated: 2016/01/13 19:02:12 by avacher          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = libft.a
@@ -90,7 +90,8 @@ SRC = ft_memset.c \
 	  ft_properjoin.c \
 	  ft_atoi_base.c \
 	  ft_hidenp.c \
-	  ft_swap.c
+	  ft_swap.c \
+	  int_swap.c
 
 OBJ = $(patsubst %.c, $(OPATH)/%.o, $(SRC))
 
