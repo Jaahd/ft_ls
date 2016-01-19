@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:10:43 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/19 19:49:19 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/19 22:38:14 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ int		main(int ac, char **av)
 	ac_c = ac;
 	get_options(&options, &ac_c, av);
 	lst.arg_nb = ac_c;
+	get_name2(&options, &lst, ac, av);
 	get_name(&lst, ac, &ac_c, av);
-	bubble_sort(&options, &lst);
 	first_display(&lst);
 	return (0);
 }

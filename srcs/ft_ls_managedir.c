@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 17:40:26 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/19 19:43:53 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/19 22:38:14 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,27 @@
 #include "ft_ls.h"
 #include "libft.h"
 
-int		dirlst_pushb(t_flist **dirlist, char *dname)
+int		dbllst_pushb(t_flist **list, char *name)
 {
 	t_flist		*tmp;
 	t_flist		*new;
 
-	tmp = *dirlist;
+	tmp = *list;
 	while (tmp != NULL && tmp->next != NULL)
 		tmp = tmp->next;
 	if ((new = (t_flist *)malloc(sizeof(t_flist))) == NULL)
-		ft_error(1, dname);
+		ft_error(1, name);
 	new->next = NULL;
 	new->prev = NULL;
-	if ((new->dname = ft_strdup(dname)) == NULL)
-		ft_error(1, dname);
+	if ((new->name = ft_strdup(name)) == NULL)
+		ft_error(1, name);
 	if (tmp)
 	{
 		tmp->next = new;
 		new->prev = tmp;
 	}
 	else
-		*dirlist = new;
+		*list = new;
 	return (0);
 }
 
