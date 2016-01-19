@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:10:43 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/13 20:17:30 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/19 19:49:19 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,23 +49,17 @@ int		ft_error(int error, char *cur_pb)
 
 int		main(int ac, char **av)
 {
-	t_arg			argmt;
+	t_flist			lst;
+	t_arg			options;
 	int				ac_c;
 	int	i;
 
 	i = -1;
 	ac_c = ac;
-	get_options(&argmt, &ac_c, av);
-	argmt.arg_nb = ac_c;
-	if ((argmt.n_arg = (char **)malloc(sizeof(char *) * 
-					(argmt.arg_nb + 1))) == NULL)
-		ft_error(1, "argmt.n_arg");
-	if ((argmt.fpath = (char **)malloc(sizeof(char *) * 
-					(argmt.arg_nb + 1))) == NULL)
-		ft_error(1, "argmt.fpath");
-	get_name(&argmt, ac, &ac_c, av);
-	get_mtime(&argmt);
-	bubble_sort(&argmt);
-	first_display(argmt);
+	get_options(&options, &ac_c, av);
+	lst.arg_nb = ac_c;
+	get_name(&lst, ac, &ac_c, av);
+	bubble_sort(&options, &lst);
+	first_display(&lst);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/08 12:48:37 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/13 20:14:37 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/19 19:46:07 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,55 +38,84 @@ char	*format_path(char *b_path, char *filename, int namelen)
 	ft_strdel(&tmp);
 	return (f_path);
 }
-
-int		get_mtime(t_arg *argmt)
+/*
+int		get_mtime(t_arg *opt)
 {
 	struct stat		buff;
 	int				i;
 
 	i = 0;
-	if ((argmt->t_arg = (int *)malloc(sizeof(int) * (argmt->arg_nb))) == NULL)
-		ft_error(1, "argmt.n_arg");
-	while (argmt->n_arg[i])
+	if ((opt->t_arg = (int *)malloc(sizeof(int) * (opt->arg_nb))) == NULL)
+		ft_error(1, "opt.n_arg");
+	while (lst->name[i])
 	{
-		stat(argmt->fpath[i], &buff);	
-		argmt->t_arg[i] = buff.st_mtime;
+		stat(lst->path[i], &buff);	
+		opt->t_arg[i] = buff.st_mtime;
 		i++;
 	}
 	return (0);
 }
-
-int		bubble_sort(t_arg *argmt)
+*//*
+int		bubble_sort(t_arg *opt)
 {
 	int		cmp;
 	int		i;
 	int		j;
 
 	i = -1;
-	while (++i < argmt->arg_nb)
+	while (++i < opt->arg_nb)
 	{
 		j = i + 1;
-		while (j < argmt->arg_nb)
+		while (j < opt->arg_nb)
 		{
-			if (argmt->t == 1)
-				cmp = argmt->r ? (argmt->t_arg[i] - argmt->t_arg[j]) : 
-					(argmt->t_arg[j] - argmt->t_arg[i]);
+			if (opt->t == 1)
+				cmp = opt->r ? (opt->t_arg[i] - opt->t_arg[j]) : 
+					(opt->t_arg[j] - opt->t_arg[i]);
 			else
-				cmp = argmt->r ? ft_strcmp(argmt->n_arg[j], argmt->n_arg[i]) : 
-					ft_strcmp(argmt->n_arg[i], argmt->n_arg[j]);
+				cmp = opt->r ? ft_strcmp(lst->name[j], lst->name[i]) : 
+					ft_strcmp(lst->name[i], lst->name[j]);
 			if (cmp > 0)
 			{
-				ft_swap(&(argmt->n_arg[i]), &(argmt->n_arg[j]));
-				ft_swap(&(argmt->fpath[i]), &(argmt->fpath[j]));
-				int_swap(&(argmt->t_arg[i]), &(argmt->t_arg[j]));
+				ft_swap(&(lst->name[i]), &(lst->name[j]));
+				ft_swap(&(lst->path[i]), &(lst->path[j]));
+				int_swap(&(opt->t_arg[i]), &(opt->t_arg[j]));
 			}
 			j++;
 		}
 	}
 	return (0);
 }
+*/
+void	lst_swap(t_flist **lst, char *s1, t_arg *opt)
+{
+	t_flist		*tmp;
+	t_flist		*tmp2;
+	char		*str;
 
-int		get_options(t_arg *argmt, int *ac_c, char **av)
+	tmp = *lst;
+	str = (opt->t == 1 ? tmp->date : tmp->name);
+	while (tmp && tmp->next && str != s1)
+	{
+		tmp2 = tmp->next->next;
+		tmp->next->prev = tmp->prev;
+		tmp->next->next = tmp;
+		tmp->prev = tmp->next;
+		tmp->next = tmp2;
+	}
+}
+
+int		bubble_sort(t_arg *opt, t_flist *lst)
+{
+	int			cmp;
+	t_flist		*tmp;
+	t_flist		*tmp2;
+
+	tmp = lst;
+	tmp2 = lst->next;
+
+}
+
+int		get_options(t_arg *opt, int *ac_c, char **av)
 {
 	int				i;
 	int				cpt;
@@ -100,11 +129,11 @@ int		get_options(t_arg *argmt, int *ac_c, char **av)
 			if (av[cpt][i] != 'R' && av[cpt][i] != 'a' && av[cpt][i] != 'l' &&
 					av[cpt][i] != 'r' && av[cpt][i] != 't')
 				ft_error(2, &av[cpt][i]);
-			argmt->rec = (av[cpt][i] == 'R') ? 1 : argmt->rec;
-			argmt->a = (av[cpt][i] == 'a') ? 1 : argmt->a;
-			argmt->l = (av[cpt][i] == 'l') ? 1 : argmt->l;
-			argmt->r = (av[cpt][i] == 'r') ? 1 : argmt->r;
-			argmt->t = (av[cpt][i] == 't') ? 1 : argmt->t;
+			opt->recu = (av[cpt][i] == 'R') ? 1 : opt->recu;
+			opt->a = (av[cpt][i] == 'a') ? 1 : opt->a;
+			opt->l = (av[cpt][i] == 'l') ? 1 : opt->l;
+			opt->r = (av[cpt][i] == 'r') ? 1 : opt->r;
+			opt->t = (av[cpt][i] == 't') ? 1 : opt->t;
 			i++;
 		}
 		if (av[cpt][0] != '-')
@@ -115,30 +144,29 @@ int		get_options(t_arg *argmt, int *ac_c, char **av)
 	return (0);
 }
 
-int		get_name(t_arg *argmt, int ac, int *ac_c, char **av)
+int		get_name(t_flist *lst, int ac, int *ac_c, char **av)
 {
 	int				i;
 
 	i = 0;
 	if (*ac_c == 0)
 	{
-		if ((argmt->n_arg[0] = ft_strdup(".")) == NULL)
+		if ((lst->name = ft_strdup(".")) == NULL)
 			ft_error(1, ".");
-		if ((argmt->fpath[0] = ft_strdup("./")) == NULL)
+		if ((lst->path = ft_strdup("./")) == NULL)
 			ft_error(1, "./");
 	}
 	while (i < *ac_c)
 	{
-		if ((argmt->n_arg[i] = ft_strdup(av[ac - *ac_c + i])) == NULL)
-			ft_error(1, argmt->n_arg[i]);
-		if (argmt->n_arg[i][0] != '/')
-			argmt->fpath[i] = format_path("./", argmt->n_arg[i],
-					ft_strlen(argmt->n_arg[i]));
+		if ((lst->name = ft_strdup(av[ac - *ac_c + i])) == NULL)
+			ft_error(1, lst->name);
+		if (lst->name[0] != '/')
+			lst->path = format_path("./", lst->name, ft_strlen(lst->name));
 		else
-			argmt->fpath[i] = ft_strdup(argmt->n_arg[i]);
+			lst->path = ft_strdup(lst->name);
+		lst->prev = lst;
+		lst = lst->next;
 		i++;
 	}
-	argmt->n_arg[i] = NULL;
-	argmt->fpath[i] = NULL;
 	return (0);
 }

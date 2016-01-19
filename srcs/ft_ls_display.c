@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/12 20:33:45 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/13 20:11:34 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/19 20:01:57 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,43 @@
 #include "libft.h"
 #include "ft_ls.h"
 
-int		first_display(t_arg argmt)
+int		first_display(t_flist *lst)
 {
-	int			i;
+	t_flist		*tmp;
 
-	i = -1;
-	while (++i < argmt.arg_nb)
+	tmp = lst;
+	while (tmp != NULL)
 	{
-		if (!(isadir(argmt.fpath[i])))	
-			ft_putendl(argmt.n_arg[i]);/* fonction d'affichage */
+		if (!(isadir(tmp.path)))	
+			ft_putendl(tmp.name);/* fonction d'affichage */
+		tmp = tmp.next;
 	}
-	i = -1;
-	while (++i < argmt.arg_nb)
+	tmp = lst;
+	while (tmp != NULL)
 	{
-		if (isadir(argmt.fpath[i]) && ft_strcmp(argmt.n_arg[i], ".") 
-				&& ft_strcmp(argmt.n_arg[i], ".."))
+		if (isadir(tmp.path) && ft_strcmp(tmp.name, ".") 
+				&& ft_strcmp(tmp.name, ".."))
 		{
 			ft_putchar('\n');
-			ft_putstr(argmt.n_arg[i]);
+			ft_putstr(tmp.name);
 			ft_putendl(":");
-			open_dir(argmt, argmt.fpath[i], argmt.n_arg[i]);
+			ft_putendl("nom du dossier");
+	//		open_dir(tmp, tmp.path, tmp.name);
 		}
+		tmp = tmp.next;
 	}
 	return (0);
 }
 /*
 int		long_display()
 */
-int		ls_display(struct dirent *p_dirent, t_arg *argmt)
+int		ls_display(struct dirent *p_dirent, t_flist *lst)
 {
 
 	if (ft_strcmp(p_dirent->d_name, ".") && ft_strcmp(p_dirent->d_name, "..")
-			&& argmt)
+			&& lst)
 	{
-		if (argmt->l == 1)
+		if (lst->l == 1)
 		{
 			printf("l is good\n");
 //			long_display(p_dirent->d_name);
@@ -55,6 +58,6 @@ int		ls_display(struct dirent *p_dirent, t_arg *argmt)
 		else
 			ft_putendl(p_dirent->d_name);
 	}
-	//	printf("\ndirent : %s\nargmt : %s\npath : %s\n", p_dirent->d_name, name, path);
+	//	printf("\ndirent : %s\nlst : %s\npath : %s\n", p_dirent->d_name, name, path);
 	return (0);
 }
