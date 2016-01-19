@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:16:44 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/19 20:01:38 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/19 22:36:54 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct		s_arg
 	int				l;
 	int				r;
 	int				t;
+	int				arg_nb;
 }					t_arg;	
 
 typedef struct		s_flist
@@ -39,8 +40,6 @@ typedef struct		s_flist
 	char			*size; // -> cf si besoin de le changer en int //
 	char			*link_nb;
 	char			*link;
-	int				arg_nb;
-	struct s_flist	*prev;
 	struct s_flist	*next;	
 }					t_flist;
 
@@ -49,9 +48,10 @@ int					ft_error(int error, char *cur_pb);
 // getinfo
 //int					get_mtime(t_arg *argmt);
 char				*format_path(char *b_path, char *filename, int namelen);
-int					bubble_sort(t_arg *opt, t_flist *lst);
+int					lst_insert(t_arg *opt, t_flist **lst, t_flist *new);
+t_flist				*lst_new(char *name, char *fpath);
+int					get_name(t_arg *opt, t_flist **lst, int ac_c, char **av);
 int					get_options(t_arg *opt, int *ac_c, char **av);
-int					get_name(t_flist *lst, int ac, int *ac_c, char **av);
 
 // permissions
 int					isadir(char *path);

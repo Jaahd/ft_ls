@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/08 12:48:37 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/19 19:46:07 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/19 22:37:00 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,103 +16,88 @@
 #include "libft.h"
 #include "ft_ls.h"
 
+t_flist		*lst_new(char *name, char *fpath)
+{
+	t_flist			*new;
+	
+	if ((new = (t_flist *)malloc(sizeof(t_flist))) == NULL)
+		ft_error (1, "list creation"); // nom a reprendre
+	if ((new->name = ft_strdup(name)) == NULL)
+		ft_error(1, name);
+	new->path = fpath;
+	new->type = 0;
+	new->date = NULL;
+	new->owner = NULL;
+	new->group = NULL;
+	new->rights = NULL;
+	new->size = NULL;
+	new->link_nb = NULL;
+	new->link = NULL;
+	new->next = NULL;
+	return (new);
+}
+
+int		lst_insert(t_arg *opt, t_flist **lst, t_flist *new)
+{
+	t_flist			*tmp;
+	int				cmp;
+
+	tmp = *lst;
+	while (tmp->next != NULL && (cmp = (opt->r ?
+					ft_strcmp(new->name, tmp->next->name) :
+					ft_strcmp(tmp->next->name, new->name)) < 0))
+		tmp = tmp->next;
+	new->next = tmp->next;
+	tmp->next = new;
+	return (0);
+}
+
+int		get_name(t_arg *opt, t_flist **lst, int ac_c, char **av)
+{
+	t_flist			*new;
+	int				cpt;
+
+	cpt = 1;
+	if (ac_c == 0)
+	{
+		new = lst_new(".", "./");
+		*lst = new;
+	}
+	while (av[cpt] && av[cpt][0] == '-')
+		cpt++;
+	while (av[cpt])
+	{
+		new = lst_new(av[cpt], format_path("", av[cpt], ft_strlen(av[cpt])));
+		if (*lst == NULL)
+			*lst = new;
+		else
+			lst_insert(opt, lst, new);
+	}
+	return (0);
+}
+
 char	*format_path(char *b_path, char *filename, int namelen)
 {
 	char			*tmp;
 	char			*f_path;
 
+	tmp = NULL;
 	if (filename[namelen - 1] == '/')
 		filename[namelen - 1] = '\0';
-	if (b_path[ft_strlen(b_path) - 1] != '/')
+	if (b_path && b_path[ft_strlen(b_path) - 1] != '/')
 	{
 		if ((tmp = ft_strjoin(b_path, "/")) == NULL)
 			ft_error(1, b_path);
 	}
-	else
+	else if (b_path)
 	{
 		if ((tmp = ft_strdup(b_path)) == NULL)
 			ft_error(1, b_path);
 	}
-	if (((f_path = ft_strjoin(tmp, filename)) == NULL))
+	if (((f_path = ft_properjoin(tmp, filename)) == NULL))
 		ft_error(1, filename);
 	ft_strdel(&tmp);
 	return (f_path);
-}
-/*
-int		get_mtime(t_arg *opt)
-{
-	struct stat		buff;
-	int				i;
-
-	i = 0;
-	if ((opt->t_arg = (int *)malloc(sizeof(int) * (opt->arg_nb))) == NULL)
-		ft_error(1, "opt.n_arg");
-	while (lst->name[i])
-	{
-		stat(lst->path[i], &buff);	
-		opt->t_arg[i] = buff.st_mtime;
-		i++;
-	}
-	return (0);
-}
-*//*
-int		bubble_sort(t_arg *opt)
-{
-	int		cmp;
-	int		i;
-	int		j;
-
-	i = -1;
-	while (++i < opt->arg_nb)
-	{
-		j = i + 1;
-		while (j < opt->arg_nb)
-		{
-			if (opt->t == 1)
-				cmp = opt->r ? (opt->t_arg[i] - opt->t_arg[j]) : 
-					(opt->t_arg[j] - opt->t_arg[i]);
-			else
-				cmp = opt->r ? ft_strcmp(lst->name[j], lst->name[i]) : 
-					ft_strcmp(lst->name[i], lst->name[j]);
-			if (cmp > 0)
-			{
-				ft_swap(&(lst->name[i]), &(lst->name[j]));
-				ft_swap(&(lst->path[i]), &(lst->path[j]));
-				int_swap(&(opt->t_arg[i]), &(opt->t_arg[j]));
-			}
-			j++;
-		}
-	}
-	return (0);
-}
-*/
-void	lst_swap(t_flist **lst, char *s1, t_arg *opt)
-{
-	t_flist		*tmp;
-	t_flist		*tmp2;
-	char		*str;
-
-	tmp = *lst;
-	str = (opt->t == 1 ? tmp->date : tmp->name);
-	while (tmp && tmp->next && str != s1)
-	{
-		tmp2 = tmp->next->next;
-		tmp->next->prev = tmp->prev;
-		tmp->next->next = tmp;
-		tmp->prev = tmp->next;
-		tmp->next = tmp2;
-	}
-}
-
-int		bubble_sort(t_arg *opt, t_flist *lst)
-{
-	int			cmp;
-	t_flist		*tmp;
-	t_flist		*tmp2;
-
-	tmp = lst;
-	tmp2 = lst->next;
-
 }
 
 int		get_options(t_arg *opt, int *ac_c, char **av)
@@ -141,32 +126,5 @@ int		get_options(t_arg *opt, int *ac_c, char **av)
 		cpt++;
 	}
 	*ac_c -= cpt;
-	return (0);
-}
-
-int		get_name(t_flist *lst, int ac, int *ac_c, char **av)
-{
-	int				i;
-
-	i = 0;
-	if (*ac_c == 0)
-	{
-		if ((lst->name = ft_strdup(".")) == NULL)
-			ft_error(1, ".");
-		if ((lst->path = ft_strdup("./")) == NULL)
-			ft_error(1, "./");
-	}
-	while (i < *ac_c)
-	{
-		if ((lst->name = ft_strdup(av[ac - *ac_c + i])) == NULL)
-			ft_error(1, lst->name);
-		if (lst->name[0] != '/')
-			lst->path = format_path("./", lst->name, ft_strlen(lst->name));
-		else
-			lst->path = ft_strdup(lst->name);
-		lst->prev = lst;
-		lst = lst->next;
-		i++;
-	}
 	return (0);
 }
