@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:07:32 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/20 18:44:48 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/20 20:02:45 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,25 @@ char	file_type(struct stat buff_stat)
 	return (type);
 }
 
-int		option_l(struct stat buff_stat, struct passwd *pwd,
-		struct group *grp, t_flist **lst, t_arg *option)
+int		option_l(struct stat b_stat, char *cheat[], t_flist **lst, t_arg *opt)
 {
-		(*lst)->owner = pwd->pw_name;
+	int					len_tmp;
+
+		(*lst)->owner = ft_strdup(cheat[0]);
+		if ((len_tmp = ft_strlen((*lst)->owner)) > opt->own_len)
+			opt->own_len = len_tmp; 
 		printf("owner : %s\t", (*lst)->owner);
-		(*lst)->group = grp->gr_name;
+		(*lst)->group = ft_strdup(cheat[1]);
+		if ((len_tmp = ft_strlen((*lst)->group)) > opt->gr_len)
+			opt->gr_len = len_tmp; 
 		printf("grp : %s\t", (*lst)->group);
-		file_rights(lst, buff_stat);
+		file_rights(lst, b_stat);
 		printf("rights : %s\t", (*lst)->rights);
-		file_size(lst, option, buff_stat);
+		file_size(lst, opt, b_stat);
 		printf("size : %s\n", (*lst)->size);
-		(*lst)->link_nb = ft_itoa(buff_stat.st_nlink);
+		(*lst)->link_nb = ft_itoa(b_stat.st_nlink);
+		if ((len_tmp = ft_strlen((*lst)->link_nb)) > opt->lk_len)
+			opt->lk_len = len_tmp; 
 		printf("nb de liens : %s\n", (*lst)->link_nb);
 /*		if ((*lst)->type == 'l')
 		{
@@ -97,6 +104,7 @@ int		file_info(char *path, t_arg *option, t_flist **lst)
 	struct passwd		*pwd;
 	struct group		*grp;
 	char				*time_tmp;
+	char				*cheat[2];
 
 	lstat(path, &buff_stat);
 	if ((pwd = getpwuid(buff_stat.st_uid)) == NULL)
@@ -115,7 +123,9 @@ int		file_info(char *path, t_arg *option, t_flist **lst)
 	}
 	if (option->l == 1)
 	{
-		option_l(buff_stat, pwd, grp, lst, option);
+		cheat[0] = pwd->pw_name;
+		cheat[1] = grp->gr_name;
+		option_l(buff_stat, cheat, lst, option);
 	}
 	return (S_ISDIR(buff_stat.st_mode));
 }

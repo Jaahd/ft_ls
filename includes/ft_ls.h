@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:16:44 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/20 18:42:44 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/20 19:58:38 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct		s_arg
 	int				arg_nb;
 	int				own_len;
 	int				gr_len;
+	int				lk_len;
 	int				size_len;
 }					t_arg;	
 
@@ -61,11 +62,11 @@ int					get_name(t_arg *option, t_flist **lst, int ac_c, char **av);
 int					get_options(t_arg *option, int *ac_c, char **av);
 
 // permissions
-int					file_size(t_flist **lst, t_arg *option, struct stat buff_stat);
+int					file_size(t_flist **lst, t_arg *option, struct stat b_stat);
 int					file_rights(t_flist **lst, struct stat buff_stat);
 char				file_type(struct stat buff_stat);
-int					option_l(struct stat buff_stat, struct passwd *pwd,
-						struct group *grp, t_flist **lst, t_arg *option);
+int					option_l(struct stat buff_stat, char *cheat[],
+								t_flist **lst, t_arg *option);
 int					file_info(char *path, t_arg *option, t_flist **lst);
 
 // display
