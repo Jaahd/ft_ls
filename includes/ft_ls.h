@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:16:44 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/20 17:48:10 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/20 18:42:44 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,11 @@
  NE PAS OUBLIER DE GERER LA "NON - TAILLE" POUR LES FICHIERS b OU c!!!!!!!!!!!!
  */
 #include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <dirent.h>
+#include <pwd.h>
+#include <grp.h>
 
 typedef struct		s_arg
 {
@@ -57,15 +61,20 @@ int					get_name(t_arg *option, t_flist **lst, int ac_c, char **av);
 int					get_options(t_arg *option, int *ac_c, char **av);
 
 // permissions
-int					file_info(char *path, t_arg option, t_flist **lst);
+int					file_size(t_flist **lst, t_arg *option, struct stat buff_stat);
+int					file_rights(t_flist **lst, struct stat buff_stat);
+char				file_type(struct stat buff_stat);
+int					option_l(struct stat buff_stat, struct passwd *pwd,
+						struct group *grp, t_flist **lst, t_arg *option);
+int					file_info(char *path, t_arg *option, t_flist **lst);
 
 // display
-int					first_display(t_flist **lst, t_arg options);
+int					first_display(t_flist **lst, t_arg *options);
 int					ls_display(struct dirent *p_dir, t_arg *opt, t_flist **lst);
 
 // managedir 
 int					fill_dirlist(DIR *p_dir, t_flist **lst, t_arg *argmt);
 int					lst_pushback(t_flist **lst, char *dname);
-int					open_dir(t_arg opt, char *dpath, char *dname);
+int					open_dir(t_arg *opt, char *dpath, char *dname);
 
 #endif

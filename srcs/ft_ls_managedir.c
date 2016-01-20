@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 17:40:26 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/20 17:48:18 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/20 18:41:49 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int		fill_list(DIR *p_dir, t_flist **lst, t_arg *option)
 	return (0);
 }
 
-int		open_dir(t_arg option, char *dpath, char *dname)
+int		open_dir(t_arg *option, char *dpath, char *dname)
 {
 //	printf("fct : open_dir\n");
 	int					i;
@@ -67,9 +67,9 @@ int		open_dir(t_arg option, char *dpath, char *dname)
 	p_dir = opendir(dpath);
 	if (p_dir == NULL)
 		return (ft_error(3, dname));
-	fill_list(p_dir, &lst, &option);
+	fill_list(p_dir, &lst, option);
 	closedir(p_dir);
-	while (option.recu == 1 && lst)
+	while (option->recu == 1 && lst)
 	{
 		if (ft_strcmp(lst->name, ".") != 0 && ft_strcmp(lst->name, "..") != 0)
 			open_dir(option, format_path(dpath, lst->name, 

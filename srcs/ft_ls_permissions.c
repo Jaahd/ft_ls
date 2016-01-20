@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:07:32 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/20 17:47:59 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/20 18:44:48 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@
 #include "ft_ls.h"
 #include "libft.h"
 
-int		file_size(t_flist **lst, t_arg **option, struct stat buff_stat)
+int		file_size(t_flist **lst, t_arg *option, struct stat buff_stat)
 {
 	int						size;
 	(*lst)->size = ft_itoa(buff_stat.st_size);
 	size = ft_strlen((*lst)->size);
 	printf("taille de la size%d\n", size);
-	if (size > (*t_arg)->size_len)
-		(*t_arg)->size_len = size;
+	if (size > option->size_len)
+		option->size_len = size;
 	return (0);
 }
 
@@ -69,17 +69,18 @@ char	file_type(struct stat buff_stat)
 	return (type);
 }
 
-int		option_l(struct stat buff_stat, struct passwd *passwd, struct group *group, t_flist **lst, t_arg **option)
+int		option_l(struct stat buff_stat, struct passwd *pwd,
+		struct group *grp, t_flist **lst, t_arg *option)
 {
-		(*lst)->owner = passwd->pw_name;
+		(*lst)->owner = pwd->pw_name;
 		printf("owner : %s\t", (*lst)->owner);
-		(*lst)->group = group->gr_name;
-		printf("group : %s\t", (*lst)->group);
+		(*lst)->group = grp->gr_name;
+		printf("grp : %s\t", (*lst)->group);
 		file_rights(lst, buff_stat);
 		printf("rights : %s\t", (*lst)->rights);
-/*		(*lst)->size = file_size(lst, buff_stat);
+		file_size(lst, option, buff_stat);
 		printf("size : %s\n", (*lst)->size);
-	*/	(*lst)->link_nb = ft_itoa(buff_stat.st_nlink);
+		(*lst)->link_nb = ft_itoa(buff_stat.st_nlink);
 		printf("nb de liens : %s\n", (*lst)->link_nb);
 /*		if ((*lst)->type == 'l')
 		{
@@ -89,32 +90,32 @@ int		option_l(struct stat buff_stat, struct passwd *passwd, struct group *group,
 		return (0);
 }
 		
-int		file_info(char *path, t_arg **option, t_flist **lst)
+int		file_info(char *path, t_arg *option, t_flist **lst)
 {
 	//	printf("fct : isadir\n");
 	struct stat			buff_stat;
-	struct passwd		*passwd;
-	struct group		*group;
+	struct passwd		*pwd;
+	struct group		*grp;
 	char				*time_tmp;
 
 	lstat(path, &buff_stat);
-	if ((passwd = getpwuid(buff_stat.st_uid)) == NULL)
-		passwd->pw_name = ft_itoa(buff_stat.st_uid);
- 	if ((group = getgrgid(buff_stat.st_gid)) == NULL)
-		group->gr_name = ft_itoa(buff_stat.st_gid);
- 	group = getgrgid(buff_stat.st_gid);
+	if ((pwd = getpwuid(buff_stat.st_uid)) == NULL)
+		pwd->pw_name = ft_itoa(buff_stat.st_uid);
+ 	if ((grp = getgrgid(buff_stat.st_gid)) == NULL)
+		grp->gr_name = ft_itoa(buff_stat.st_gid);
+ 	grp = getgrgid(buff_stat.st_gid);
 	(*lst)->type = file_type(buff_stat);
 	printf("type de fichier : %c\t", (*lst)->type);
 	time_tmp = NULL;
-	if (option.l == 1 || option.t == 1)
+	if (option->l == 1 || option->t == 1)
 	{
 		time_tmp = ctime(&buff_stat.st_mtime);
 		(*lst)->date = ft_strsub(time_tmp, 4, 12);
 		printf("date : %s\t", (*lst)->date);
 	}
-	if (option.l == 1)
+	if (option->l == 1)
 	{
-		option_l(buff_stat, passwd, group, lst, option);
+		option_l(buff_stat, pwd, grp, lst, option);
 	}
 	return (S_ISDIR(buff_stat.st_mode));
 }

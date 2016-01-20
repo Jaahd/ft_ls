@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:10:43 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/20 17:48:21 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/20 18:41:49 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,6 @@ int		main(int ac, char **av)
 	get_options(&option, &ac_c, av);
 	option.arg_nb = ac_c;
 	get_name(&option, &lst, ac_c, av);
-	first_display(&lst, option);
+	first_display(&lst, &option);
 	return (0);
 }
