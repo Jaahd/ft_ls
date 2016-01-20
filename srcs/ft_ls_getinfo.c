@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/08 12:48:37 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/20 13:34:37 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/20 13:39:17 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,7 @@ int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 	{
 		new = lst_new(av[cpt], format_path("", av[cpt], ft_strlen(av[cpt])));
 		if (*lst == NULL)
-		{
 			*lst = new;
-		}
 		else
 			lst_insert(option, lst, new);
 		cpt++;
