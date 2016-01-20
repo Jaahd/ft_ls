@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:16:44 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/20 13:34:59 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/20 17:48:10 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ typedef struct		s_arg
 	int				r;
 	int				t;
 	int				arg_nb;
+	int				own_len;
+	int				gr_len;
+	int				size_len;
 }					t_arg;	
 
 typedef struct		s_flist
@@ -36,7 +39,7 @@ typedef struct		s_flist
 	char			*date;
 	char			*owner;
 	char			*group;
-	char			*rights;
+	char			rights[11];
 	char			*size; // -> cf si besoin de le changer en int //
 	char			*link_nb;
 	char			*link;
@@ -54,7 +57,7 @@ int					get_name(t_arg *option, t_flist **lst, int ac_c, char **av);
 int					get_options(t_arg *option, int *ac_c, char **av);
 
 // permissions
-int					isadir(char *path);
+int					file_info(char *path, t_arg option, t_flist **lst);
 
 // display
 int					first_display(t_flist **lst, t_arg options);

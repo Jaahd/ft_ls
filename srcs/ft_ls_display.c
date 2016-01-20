@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/12 20:33:45 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/20 13:35:02 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/20 17:48:14 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +16,32 @@
 
 int		first_display(t_flist **lst, t_arg option)
 {
-	printf("fct : first_display\n");
+//	printf("fct : first_display\n");
 	t_flist		*tmp;
+	int			is_dir;
 
 	tmp = *lst;
 	while (tmp != NULL)
 	{
-		if (!(isadir(tmp->path)))	
-		{
-			printf("nom des fichiers :\n");
+		printf("nom du chose : %s\n", tmp->name);
+		is_dir = file_info(tmp->path, option, lst);
+		if ((*lst)->type != 'd')	
 			ft_putendl(tmp->name);/* fonction d'affichage */
-		}
 		tmp = tmp->next;
 	}
 	tmp = *lst;
 	while (tmp != NULL)
 	{
-		printf("nom des dossiers :\n");
-		if (isadir(tmp->path) && ft_strcmp(tmp->name, ".") 
+		printf("\n\n~~~~~~~~~~~~truc : %s\ttype de truc : %c\n", (*lst)->name, (*lst)->type);
+		if ((*lst)->type == 'd' && ft_strcmp(tmp->name, ".") 
 				&& ft_strcmp(tmp->name, ".."))
 		{
-			ft_putendl(tmp->name);/* fonction d'affichage */
-			ft_putchar('\n');
-			ft_putstr(tmp->name);
-			ft_putendl(":");
-			ft_putendl("nom du dossier");
+		printf("----> nom du dossier : %s\n", tmp->name);
+			if(option.arg_nb >  1)
+			{
+				ft_putstr(tmp->name); /* fonction d'affichage */
+				ft_putendl(":");
+			}
 			open_dir(option, tmp->path, tmp->name);
 		}
 		tmp = tmp->next;
@@ -48,8 +49,8 @@ int		first_display(t_flist **lst, t_arg option)
 	return (0);
 }
 /*
-int		long_display()
-*/
+   int		long_display()
+   */
 int		ls_display(struct dirent *p_dirent, t_arg *option, t_flist **lst)
 {
 //	printf("fct : ls_display\n");
@@ -60,7 +61,7 @@ int		ls_display(struct dirent *p_dirent, t_arg *option, t_flist **lst)
 		if (option->l == 1)
 		{
 			printf("l is good\n");
-//			long_display(p_dirent->d_name);
+			//			long_display(p_dirent->d_name);
 		}
 		else
 			ft_putendl(p_dirent->d_name);

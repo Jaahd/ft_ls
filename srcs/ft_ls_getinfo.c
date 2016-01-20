@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/08 12:48:37 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/20 13:39:17 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/20 17:14:33 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,8 @@ t_flist		*lst_new(char *name, char *fpath)
 	new->date = NULL;
 	new->owner = NULL;
 	new->group = NULL;
-	new->rights = NULL;
 	new->size = NULL;
-	new->link_nb = NULL;
+	new->link_nb = 0;
 	new->link = NULL;
 	new->next = NULL;
 	return (new);
@@ -117,7 +116,7 @@ char	*format_path(char *b_path, char *filename, int namelen)
 	}
 	if (((f_path = ft_properjoin(tmp, filename)) == NULL))
 		ft_error(1, filename);
-	printf("path : %s\n", f_path);
+//	printf("path : %s\n", f_path);
 	ft_strdel(&tmp);
 	return (f_path);
 }
