@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 17:40:26 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/19 22:38:14 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/20 13:34:49 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 #include "ft_ls.h"
 #include "libft.h"
 
-int		dbllst_pushb(t_flist **list, char *name)
+int		lst_pushback(t_flist **list, char *name)
 {
+//	printf("fct : lst_pushback\n");
 	t_flist		*tmp;
 	t_flist		*new;
 
@@ -27,58 +28,53 @@ int		dbllst_pushb(t_flist **list, char *name)
 	if ((new = (t_flist *)malloc(sizeof(t_flist))) == NULL)
 		ft_error(1, name);
 	new->next = NULL;
-	new->prev = NULL;
 	if ((new->name = ft_strdup(name)) == NULL)
 		ft_error(1, name);
 	if (tmp)
-	{
 		tmp->next = new;
-		new->prev = tmp;
-	}
 	else
 		*list = new;
 	return (0);
 }
 
-int		fill_dirlist(DIR *p_dir, t_flist **dir_lst, t_arg *argmt)
+int		fill_list(DIR *p_dir, t_flist **lst, t_arg *option)
 {
+//	printf("fct : fill_list\n");
 	struct dirent		*p_dirent;
 	int					i;
 
 	i = 0;
 	while ((p_dirent = readdir(p_dir)) != NULL) 
 	{
-		ls_display(p_dirent, argmt);	
+		ls_display(p_dirent, option, lst);	
 	//	printf("dir content :%s\n", p_dirent->d_name);
 		if (p_dirent->d_type == DT_DIR)
-			dirlst_pushb(dir_lst, p_dirent->d_name);
+			lst_pushback(lst, p_dirent->d_name);
 		i++;
 	}
 	return (0);
 }
 
-int		open_dir(t_arg argmt, char *dpath, char *dname)
+int		open_dir(t_arg option, char *dpath, char *dname)
 {
 	int					i;
 	DIR					*p_dir;
-	t_flist				*dir_lst;
+	t_flist				*lst;
 	
 	i = 0;
-	dir_lst = NULL;
+	lst = NULL;
 	p_dir = opendir(dpath);
 	if (p_dir == NULL)
 		return (ft_error(3, dname));
-	fill_dirlist(p_dir, &dir_lst, &argmt);
+	printf("fct : open_dir\n");
+	fill_list(p_dir, &lst, &option);
 	closedir(p_dir);
-	while (argmt.recu == 1 && dir_lst)
+	while (option.recu == 1 && lst)
 	{
-		if (ft_strcmp(dir_lst->dname, ".") != 0 && 
-				ft_strcmp(dir_lst->dname, "..") != 0)
-			open_dir(argmt, format_path(dpath, dir_lst->dname,
-					ft_strlen(dir_lst->dname)),
-			 	dir_lst->dname);
-		dir_lst = dir_lst->next;
+		if (ft_strcmp(lst->name, ".") != 0 && ft_strcmp(lst->name, "..") != 0)
+			open_dir(option, format_path(dpath, lst->name, 
+						ft_strlen(lst->name)), lst->name);
+		lst = lst->next;
 	}
 	return (0);
 }
-

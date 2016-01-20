@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/12 20:33:45 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/19 22:34:10 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/20 13:35:02 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,50 @@
 #include "libft.h"
 #include "ft_ls.h"
 
-int		first_display(t_flist *lst)
+int		first_display(t_flist **lst, t_arg option)
 {
+	printf("fct : first_display\n");
 	t_flist		*tmp;
 
-	tmp = lst;
+	tmp = *lst;
 	while (tmp != NULL)
 	{
-		if (!(isadir(tmp.path)))	
-			ft_putendl(tmp.name);/* fonction d'affichage */
-		tmp = tmp.next;
-	}
-	tmp = lst;
-	while (tmp != NULL)
-	{
-		if (isadir(tmp.path) && ft_strcmp(tmp.name, ".") 
-				&& ft_strcmp(tmp.name, ".."))
+		if (!(isadir(tmp->path)))	
 		{
+			printf("nom des fichiers :\n");
+			ft_putendl(tmp->name);/* fonction d'affichage */
+		}
+		tmp = tmp->next;
+	}
+	tmp = *lst;
+	while (tmp != NULL)
+	{
+		printf("nom des dossiers :\n");
+		if (isadir(tmp->path) && ft_strcmp(tmp->name, ".") 
+				&& ft_strcmp(tmp->name, ".."))
+		{
+			ft_putendl(tmp->name);/* fonction d'affichage */
 			ft_putchar('\n');
-			ft_putstr(tmp.name);
+			ft_putstr(tmp->name);
 			ft_putendl(":");
 			ft_putendl("nom du dossier");
-	//		open_dir(tmp, tmp.path, tmp.name);
+			open_dir(option, tmp->path, tmp->name);
 		}
-		tmp = tmp.next;
+		tmp = tmp->next;
 	}
 	return (0);
 }
 /*
 int		long_display()
 */
-int		ls_display(struct dirent *p_dirent, t_flist *lst)
+int		ls_display(struct dirent *p_dirent, t_arg *option, t_flist **lst)
 {
+//	printf("fct : ls_display\n");
 
 	if (ft_strcmp(p_dirent->d_name, ".") && ft_strcmp(p_dirent->d_name, "..")
-			&& lst)
+			&& *lst)
 	{
-		if (lst->l == 1)
+		if (option->l == 1)
 		{
 			printf("l is good\n");
 //			long_display(p_dirent->d_name);
@@ -58,6 +65,6 @@ int		ls_display(struct dirent *p_dirent, t_flist *lst)
 		else
 			ft_putendl(p_dirent->d_name);
 	}
-	//	printf("\ndirent : %s\nlst : %s\npath : %s\n", p_dirent->d_name, name, path);
+	//	printf("\ndirent : %s\n*lst : %s\npath : %s\n", p_dirent->d_name, name, path);
 	return (0);
 }

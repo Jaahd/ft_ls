@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:10:43 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/19 22:38:14 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/20 13:34:55 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,19 @@ int		ft_error(int error, char *cur_pb)
 
 int		main(int ac, char **av)
 {
-	t_flist			lst;
-	t_arg			options;
+//	printf("fct : main\n");
+	t_flist			*lst;
+	t_arg			option;
 	int				ac_c;
 	int	i;
 
 	i = -1;
 	ac_c = ac;
-	get_options(&options, &ac_c, av);
-	lst.arg_nb = ac_c;
-	get_name2(&options, &lst, ac, av);
-	get_name(&lst, ac, &ac_c, av);
-	first_display(&lst);
+//	printf("main\n");
+	lst = NULL;
+	get_options(&option, &ac_c, av);
+	option.arg_nb = ac_c;
+	get_name(&option, &lst, ac_c, av);
+	first_display(&lst, option);
 	return (0);
 }

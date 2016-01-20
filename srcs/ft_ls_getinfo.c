@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/08 12:48:37 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/19 22:37:00 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/20 13:34:37 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 t_flist		*lst_new(char *name, char *fpath)
 {
+//	printf("fct : lst_new\n");
 	t_flist			*new;
 	
 	if ((new = (t_flist *)malloc(sizeof(t_flist))) == NULL)
@@ -37,23 +38,37 @@ t_flist		*lst_new(char *name, char *fpath)
 	return (new);
 }
 
-int		lst_insert(t_arg *opt, t_flist **lst, t_flist *new)
+int		lst_insert(t_arg *option, t_flist **lst, t_flist *new)
 {
+//	printf("lst_insert\n");	
 	t_flist			*tmp;
 	int				cmp;
 
 	tmp = *lst;
-	while (tmp->next != NULL && (cmp = (opt->r ?
-					ft_strcmp(new->name, tmp->next->name) :
-					ft_strcmp(tmp->next->name, new->name)) < 0))
+	if ((cmp = (option->r ? ft_strcmp(tmp->name, new->name) :
+					ft_strcmp(new->name, tmp->name)) < 0))
+	{
+		new->next = tmp;
+		*lst = new;
+		return (0);
+	}
+	else if (tmp->next == NULL)
+	{
+		tmp->next = new;
+		return (0);
+	}
+	while (tmp->next != NULL && (cmp = (option->r ?
+					ft_strcmp(tmp->next->name, new->name) :
+					ft_strcmp(new->name, tmp->next->name)) > 0))
 		tmp = tmp->next;
 	new->next = tmp->next;
 	tmp->next = new;
 	return (0);
 }
 
-int		get_name(t_arg *opt, t_flist **lst, int ac_c, char **av)
+int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 {
+//	printf("fct : get_name\n");
 	t_flist			*new;
 	int				cpt;
 
@@ -69,39 +84,49 @@ int		get_name(t_arg *opt, t_flist **lst, int ac_c, char **av)
 	{
 		new = lst_new(av[cpt], format_path("", av[cpt], ft_strlen(av[cpt])));
 		if (*lst == NULL)
+		{
 			*lst = new;
+		}
 		else
-			lst_insert(opt, lst, new);
+			lst_insert(option, lst, new);
+		cpt++;
 	}
 	return (0);
 }
 
 char	*format_path(char *b_path, char *filename, int namelen)
 {
+//	printf("fct : format_path\n");
 	char			*tmp;
 	char			*f_path;
+	int				p_len;
 
 	tmp = NULL;
+	p_len = ft_strlen(b_path);
 	if (filename[namelen - 1] == '/')
 		filename[namelen - 1] = '\0';
-	if (b_path && b_path[ft_strlen(b_path) - 1] != '/')
+	if (p_len > 0 && b_path[p_len - 1] != '/')
 	{
 		if ((tmp = ft_strjoin(b_path, "/")) == NULL)
 			ft_error(1, b_path);
+//		printf("tmp(if) : %s\n", tmp);
 	}
-	else if (b_path)
+	else if (p_len > 0)
 	{
 		if ((tmp = ft_strdup(b_path)) == NULL)
 			ft_error(1, b_path);
+//		printf("tmp(else if) : %s\n", tmp);
 	}
 	if (((f_path = ft_properjoin(tmp, filename)) == NULL))
 		ft_error(1, filename);
+	printf("path : %s\n", f_path);
 	ft_strdel(&tmp);
 	return (f_path);
 }
 
 int		get_options(t_arg *opt, int *ac_c, char **av)
 {
+//	printf("fct : get_options\n");
 	int				i;
 	int				cpt;
 

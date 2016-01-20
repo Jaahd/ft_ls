@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/19 13:15:29 by avacher           #+#    #+#             */
-/*   Updated: 2015/12/28 16:32:00 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/20 11:13:37 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*ft_properjoin(char *s1, char *s2)
 	if (s1 != NULL && s2 != NULL)
 	{
 		ret = ft_strjoin(s1, s2);
-		ft_strdel(&s1);
+//		ft_strdel(&s1);
 		return (ret);
 	}
 	return (NULL);

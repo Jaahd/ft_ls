@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:16:44 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/19 22:36:54 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/20 13:34:59 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,21 @@ int					ft_error(int error, char *cur_pb);
 // getinfo
 //int					get_mtime(t_arg *argmt);
 char				*format_path(char *b_path, char *filename, int namelen);
-int					lst_insert(t_arg *opt, t_flist **lst, t_flist *new);
+int					lst_insert(t_arg *option, t_flist **lst, t_flist *new);
 t_flist				*lst_new(char *name, char *fpath);
-int					get_name(t_arg *opt, t_flist **lst, int ac_c, char **av);
-int					get_options(t_arg *opt, int *ac_c, char **av);
+int					get_name(t_arg *option, t_flist **lst, int ac_c, char **av);
+int					get_options(t_arg *option, int *ac_c, char **av);
 
 // permissions
 int					isadir(char *path);
 
 // display
-int					first_display(t_flist *lst);
-int					ls_display(struct dirent *p_dirent, t_arg *argmt);
+int					first_display(t_flist **lst, t_arg options);
+int					ls_display(struct dirent *p_dir, t_arg *opt, t_flist **lst);
 
 // managedir 
-int					fill_dirlist(DIR *p_dir, t_flist **dir_lst, t_arg *argmt);
-int					dirlst_pushb(t_flist **dirlist, char *dname);
-int					open_dir(t_arg argmt, char *dpath, char *dname);
+int					fill_dirlist(DIR *p_dir, t_flist **lst, t_arg *argmt);
+int					lst_pushback(t_flist **lst, char *dname);
+int					open_dir(t_arg opt, char *dpath, char *dname);
 
 #endif
