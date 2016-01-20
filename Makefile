@@ -32,7 +32,7 @@ $(NAME): $(OFILES)
 	@echo "Creating OBJ files"
 	@echo "Building $@"
 	@$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
-	@echo "\033[34mAll is done!\033[0m"
+	@echo "\033[36mAll is done!\033[0m"
 
 $(OPATH)/%.o: $(CPATH)/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -48,7 +48,7 @@ clean:
 fclean: clean lib.fclean
 	@echo "Deleting $(NAME)"
 	@$(RM) -f $(NAME)
-	@echo "\033[34mAll clear!\033[0m"
+	@echo "\033[36mAll clear!\033[0m"
 
 lib.fclean:
 	@$(MAKE) fclean -C $(LIBPATH)

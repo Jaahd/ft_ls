@@ -6,7 +6,7 @@
 #    By: avacher <avacher@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/25 17:44:48 by avacher           #+#    #+#              #
-#    Updated: 2016/01/13 19:02:12 by avacher          ###   ########.fr        #
+#    Updated: 2016/01/20 14:45:40 by avacher          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME = libft.a
@@ -107,26 +107,26 @@ HPATH =		$(ROOT)/includes
 all: $(OPATH) $(NAME)
 
 $(NAME): $(OBJ)
-	@echo "Creating OBJ files"
-	@echo "Building $@"
+	@echo "Libft - Creating OBJ files"
+	@echo "Libft - Building $@"
 	@$(AR) rc $@ $(OBJ)
 	@$(RANLIB) $@
-	@echo "\033[34mAll is done!\033[0m"
+	@echo "\033[34mLibft - All is done!\033[0m"
 	
 $(OPATH)/%.o: $(CPATH)/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(OPATH):
-	@echo "Creating OBJ directory"
+	@echo "Libft - Creating OBJ directory"
 	@$(MKDIR) $@
 
 clean:
-	@echo "Deleting OBJS"
+	@echo "Libft - Deleting OBJS"
 	@$(RM) -Rf $(OPATH)
 
 fclean: clean
-	@echo "Deleting $(NAME)"
+	@echo "Libft - Deleting $(NAME)"
 	@$(RM) -f $(NAME)
-	@echo "\033[34mAll clear!\033[0m"
+	@echo "\033[34mLibft - All clear!\033[0m"
 
 re: fclean all
