@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:16:44 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/21 14:19:24 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/21 16:12:03 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct		s_flist
 	char			*group;
 	char			rights[11];
 	char			*size; // -> cf si besoin de le changer en int //
+	int				fsize_len;
 	char			*link_nb;
 	char			*link;
 	struct s_flist	*next;	

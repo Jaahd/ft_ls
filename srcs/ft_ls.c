@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:10:43 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/20 18:41:49 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/21 16:12:08 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		ft_error(int error, char *cur_pb)
 	}
 	if (error == 3)
 		perror(cur_pb);
-	return (EXIT_FAILURE);
+	return (0);
 }
 
 int		main(int ac, char **av)
@@ -57,7 +57,6 @@ int		main(int ac, char **av)
 
 	i = -1;
 	ac_c = ac;
-//	printf("main\n");
 	lst = NULL;
 	get_options(&option, &ac_c, av);
 	option.arg_nb = ac_c;

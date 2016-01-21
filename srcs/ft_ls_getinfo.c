@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/08 12:48:37 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/20 17:14:33 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/21 16:12:12 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ t_flist		*lst_new(char *name, char *fpath)
 	new->owner = NULL;
 	new->group = NULL;
 	new->size = NULL;
-	new->link_nb = 0;
+	new->fsize_len = 0;
+	new->link_nb = NULL;
 	new->link = NULL;
 	new->next = NULL;
 	return (new);

@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 17:40:26 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/21 14:19:11 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/21 16:11:57 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int		fill_list(DIR *p_dir, t_flist **lst, t_arg *option)
 	while ((p_dirent = readdir(p_dir)) != NULL) 
 	{
 		ls_display(p_dirent, option, lst);	
-	//	printf("dir content :%s\n", p_dirent->d_name);
 		if (p_dirent->d_type == DT_DIR)
 			lst_pushback(lst, p_dirent->d_name);
 		i++;
@@ -76,5 +75,5 @@ int		open_dir(t_arg *option, char *dpath, char *dname)
 						ft_strlen(lst->name)), lst->name);
 		lst = lst->next;
 	}
-	return (0);
+	return (1);
 }
