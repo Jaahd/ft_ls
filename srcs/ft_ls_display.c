@@ -31,16 +31,16 @@ int		first_display(t_flist **lst, t_arg *option)
 	tmp = *lst;
 	while (tmp != NULL)
 	{
-		if (tmp->type == 'd' && ft_strcmp(tmp->name, ".") 
+		if (tmp->type == 'd' /* && ft_strcmp(tmp->name, ".")*/ 
 				&& ft_strcmp(tmp->name, ".."))
 		{
+
 			if(option->arg_nb >  1)
 			{
 				ft_putchar('\n');
 				ft_putstr(tmp->name); /* fonction d'affichage */
 				ft_putendl(":");
 			}
-//		printf("ds display tmp->name : %s\ttmp->path : %s\n", tmp->name, tmp->path);
 			open_dir(option, tmp->path, tmp->name);
 		}
 		tmp = tmp->next;

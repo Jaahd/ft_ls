@@ -78,12 +78,13 @@ int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 	{
 		new = lst_new(".", "./");
 		*lst = new;
+		return (0);
 	}
 	while (av[cpt] && av[cpt][0] == '-')
 		cpt++;
 	while (av[cpt])
 	{
-		new = lst_new(av[cpt], format_path("", av[cpt], ft_strlen(av[cpt])));
+		new = lst_new(av[cpt], format_path("./", av[cpt], ft_strlen(av[cpt])));
 		if (*lst == NULL)
 			*lst = new;
 		else
@@ -150,5 +151,6 @@ int		get_options(t_arg *opt, int *ac_c, char **av)
 		cpt++;
 	}
 	*ac_c -= cpt;
+//	printf("-------OPTIONS-------\n-R :%d\t-a%d\t-l%d\t-r%d\t-t%d\n", opt->recu, opt->a, opt->l, opt->r, opt->t);
 	return (0);
 }

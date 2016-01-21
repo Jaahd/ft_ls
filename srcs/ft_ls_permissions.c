@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/syslimits.h> /*pour path_max */
+//#include <sys/syslimits.h> /*pour path_max */
 #include <sys/errno.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -73,7 +73,7 @@ char	file_type(struct stat buff_stat)
 
 int		type_l(t_flist *lst)
 {
-	char				link_buff[PATH_MAX];
+	char				link_buff[1024];
 	int					ret;
 
 	printf("toto fait dodo\n");

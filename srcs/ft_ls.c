@@ -47,6 +47,16 @@ int		ft_error(int error, char *cur_pb)
 	return (0);
 }
 
+int		free_options(t_arg *option)
+{
+	option->recu = 0;
+	option->a = 0;
+	option->l = 0;
+	option->r = 0;
+	option->t = 0;
+	return (0);
+}
+
 int		main(int ac, char **av)
 {
 //	printf("fct : main\n");
@@ -58,8 +68,10 @@ int		main(int ac, char **av)
 	i = -1;
 	ac_c = ac;
 	lst = NULL;
+	free_options(&option);
 	get_options(&option, &ac_c, av);
 	option.arg_nb = ac_c;
+	printf("ac_c : %d\n", ac_c);
 	get_name(&option, &lst, ac_c, av);
 	first_display(&lst, &option);
 	return (0);
