@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:07:32 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/21 16:39:29 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/21 19:05:59 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,7 @@ int		option_l(struct stat b_stat, char *cheat[], t_flist *lst, t_arg *opt)
 	if ((len_tmp = ft_strlen(lst->link_nb)) > opt->lk_len)
 		opt->lk_len = len_tmp; 
 	if (lst->type == 'l')
-	{
 		type_l(lst);
-	}
 	return (0);
 }
 
