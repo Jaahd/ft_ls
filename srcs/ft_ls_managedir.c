@@ -45,16 +45,15 @@ int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *dpath)
 
 	while ((p_dirent = readdir(p_dir)) != NULL) 
 	{
-		if (ft_strcmp(p_dirent->d_name, ".") != 0 && ft_strcmp(p_dirent->d_name, "..") != 0)
-		{
-			new = lst_new(p_dirent->d_name, format_path(dpath,
-						p_dirent->d_name, ft_strlen(p_dirent->d_name)));
-			if (*lst2 == NULL)
-				*lst2 = new;
-			else
-				lst_insert(option, lst2, new);
-		}
-		if (p_dirent->d_name[0] != '.')
+		new = lst_new(p_dirent->d_name, format_path(dpath,
+					p_dirent->d_name, ft_strlen(p_dirent->d_name)));
+		if (*lst2 == NULL)
+			*lst2 = new;
+		else
+			lst_insert(option, lst2, new);
+		if (option->a == 1)
+			ls_display(p_dirent, option, lst2);	
+		else if (p_dirent->d_name[0] != '.')
 			ls_display(p_dirent, option, lst2);	
 	}
 	return (0);
@@ -62,11 +61,11 @@ int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *dpath)
 
 int		open_dir(t_arg *option, char *dpath, char *dname)
 {
-//	printf("fct : open_dir\n");
+	//	printf("fct : open_dir\n");
 	DIR					*p_dir;
 	t_flist				*lst2;
 	t_flist				*tmp;
-	
+
 	lst2 = NULL;
 	p_dir = opendir(dpath);
 	if (p_dir == NULL)
@@ -76,7 +75,7 @@ int		open_dir(t_arg *option, char *dpath, char *dname)
 	tmp = lst2;
 	while(tmp)
 	{
-//		printf("\n-------- lst2 -------\n name : %s,\npath :%s,\nowner : %s,\n-----option -R :%d\n", tmp->name, tmp->path, tmp->owner, option->recu);
+		//		printf("\n-------- lst2 -------\n name : %s,\npath :%s,\nowner : %s,\n-----option -R :%d\n", tmp->name, tmp->path, tmp->owner, option->recu);
 		tmp = tmp->next;	
 	}
 	while (option->recu == 1 && lst2)
