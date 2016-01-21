@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:07:32 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/21 16:12:05 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/21 16:39:29 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ int		file_rights(t_flist *lst, struct stat buff_stat)
 		lst->rights[7] = (buff_stat.st_mode & S_IROTH) ? 'r' : '-';
 		lst->rights[8] = (buff_stat.st_mode & S_IWOTH) ? 'w' : '-';
 		lst->rights[9] = (buff_stat.st_mode & S_IXOTH) ? 'x' : '-';
-		lst->rights[10] = '\0';
+		lst->rights[10] = ' ';
+		lst->rights[11] = ' ';
+		lst->rights[12] = '\0';
 		return (0);
 }
 

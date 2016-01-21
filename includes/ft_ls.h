@@ -6,13 +6,19 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:16:44 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/21 16:12:03 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/21 18:46:02 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_LS_H
 # define FT_LS_H
 /*
+	while(tmp)
+	{
+		printf("lst2 : name : %s,\npath :%s,\ntype : %d,\ndate : %s,\nowner : %s,\ngroup : %s,\nrights : %s,\n", tmp->name, tmp->path, tmp->type, tmp->date, tmp->owner, tmp->group, tmp->rights)
+		tmp = tmp->next;	
+	}
+
  NE PAS OUBLIER DE GERER LA "NON - TAILLE" POUR LES FICHIERS b OU c!!!!!!!!!!!!
  */
 #include <stdio.h>
@@ -44,7 +50,7 @@ typedef struct		s_flist
 	char			*date;
 	char			*owner;
 	char			*group;
-	char			rights[11];
+	char			rights[13];
 	char			*size; // -> cf si besoin de le changer en int //
 	int				fsize_len;
 	char			*link_nb;

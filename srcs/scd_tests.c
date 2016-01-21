@@ -85,6 +85,15 @@
 	long				tv_nsec;
 };
 
+struct dirent 
+{
+     ino_t d_ino;							* file number of entry *
+     __uint16_t d_reclen;					* length of this record *
+     __uint8_t  d_type;      				* file type, see below *
+     __uint8_t  d_namlen;					* length of string in d_name *
+     char d_name[__DARWIN_MAXNAMLEN + 1];   * name must be no longer than this *
+ };
+
 */
 
 int				main (int ac, char **av) 

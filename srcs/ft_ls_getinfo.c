@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/08 12:48:37 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/21 16:12:12 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/21 19:04:50 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,14 @@ t_flist		*lst_new(char *name, char *fpath)
 
 int		lst_insert(t_arg *option, t_flist **lst, t_flist *new)
 {
-//	printf("lst_insert\n");	
+//	printf("fct : lst_insert\n");	
 	t_flist			*tmp;
 	int				cmp;
 
 	tmp = *lst;
-	if ((cmp = (option->r ? ft_strcmp(tmp->name, new->name) :
-					ft_strcmp(new->name, tmp->name)) < 0))
+	cmp = (option->r ? ft_strcmp(tmp->name, new->name) :
+					ft_strcmp(new->name, tmp->name));
+	if (cmp < 0)
 	{
 		new->next = tmp;
 		*lst = new;

@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 17:40:26 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/21 16:11:57 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/21 19:04:47 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 #include "ft_ls.h"
 #include "libft.h"
 
-int		lst_pushback(t_flist **list, char *name)
+int		lst2_pushback(t_flist **list, char *name)
 {
-//	printf("fct : lst_pushback\n");
+//	printf("fct : lst2_pushback\n");
 	t_flist		*tmp;
 	t_flist		*new;
 
@@ -37,19 +37,25 @@ int		lst_pushback(t_flist **list, char *name)
 	return (0);
 }
 
-int		fill_list(DIR *p_dir, t_flist **lst, t_arg *option)
+int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *dpath)
 {
 //	printf("fct : fill_list\n");
 	struct dirent		*p_dirent;
-	int					i;
+	t_flist				*new;
 
-	i = 0;
 	while ((p_dirent = readdir(p_dir)) != NULL) 
 	{
-		ls_display(p_dirent, option, lst);	
-		if (p_dirent->d_type == DT_DIR)
-			lst_pushback(lst, p_dirent->d_name);
-		i++;
+		ls_display(p_dirent, option, lst2);	
+		if (p_dirent->d_type == DT_DIR && ft_strcmp(p_dirent->d_name, ".") != 0
+				&& ft_strcmp(p_dirent->d_name, "..") != 0)
+		{
+			new = lst_new(p_dirent->d_name, format_path(dpath,
+						p_dirent->d_name, ft_strlen(p_dirent->d_name)));
+			if (*lst2 == NULL)
+				*lst2 = new;
+			else
+				lst_insert(option, lst2, new);
+		}
 	}
 	return (0);
 }
@@ -57,23 +63,28 @@ int		fill_list(DIR *p_dir, t_flist **lst, t_arg *option)
 int		open_dir(t_arg *option, char *dpath, char *dname)
 {
 //	printf("fct : open_dir\n");
-	int					i;
 	DIR					*p_dir;
-	t_flist				*lst;
+	t_flist				*lst2;
+	t_flist				*tmp;
 	
-	i = 0;
-	lst = NULL;
+	lst2 = NULL;
 	p_dir = opendir(dpath);
 	if (p_dir == NULL)
 		return (ft_error(3, dname));
-	fill_list(p_dir, &lst, option);
+	fill_list(p_dir, &lst2, option, dpath);
 	closedir(p_dir);
-	while (option->recu == 1 && lst)
+	tmp = lst2;
+	while(tmp)
 	{
-		if (ft_strcmp(lst->name, ".") != 0 && ft_strcmp(lst->name, "..") != 0)
-			open_dir(option, format_path(dpath, lst->name, 
-						ft_strlen(lst->name)), lst->name);
-		lst = lst->next;
+		printf("\n-------- lst2 -------\n name : %s,\npath :%s,\ntype : %d,\ndate : %s,\nowner : %s,\ngroup : %s,\nrights : %s,\n\n", tmp->name, tmp->path, tmp->type, tmp->date, tmp->owner, tmp->group, tmp->rights);
+		tmp = tmp->next;	
+	}
+	while (option->recu == 1 && lst2)
+	{
+		if (ft_strcmp(lst2->name, ".") != 0 && ft_strcmp(lst2->name, "..") != 0)
+			open_dir(option, format_path(dpath, lst2->name, 
+						ft_strlen(lst2->name)), lst2->name);
+		lst2 = lst2->next;
 	}
 	return (1);
 }
