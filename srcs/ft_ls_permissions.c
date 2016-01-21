@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:07:32 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/20 20:02:45 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/21 14:18:36 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,29 @@
 #include "ft_ls.h"
 #include "libft.h"
 
-int		file_size(t_flist **lst, t_arg *option, struct stat buff_stat)
+int		file_size(t_flist *lst, t_arg *option, struct stat buff_stat)
 {
 	int						size;
-	(*lst)->size = ft_itoa(buff_stat.st_size);
-	size = ft_strlen((*lst)->size);
-	printf("taille de la size%d\n", size);
+	lst->size = ft_itoa(buff_stat.st_size);
+	size = ft_strlen(lst->size);
 	if (size > option->size_len)
 		option->size_len = size;
 	return (0);
 }
 
-int		file_rights(t_flist **lst, struct stat buff_stat)
+int		file_rights(t_flist *lst, struct stat buff_stat)
 {
-		(*lst)->rights[0] = (*lst)->type;
-		(*lst)->rights[1] = (buff_stat.st_mode & S_IRUSR) ? 'r' : '-';
-		(*lst)->rights[2] = (buff_stat.st_mode & S_IWUSR) ? 'w' : '-';
-		(*lst)->rights[3] = (buff_stat.st_mode & S_IXUSR) ? 'x' : '-';
-		(*lst)->rights[4] = (buff_stat.st_mode & S_IRGRP) ? 'r' : '-'; 
-		(*lst)->rights[5] = (buff_stat.st_mode & S_IWGRP) ? 'w' : '-'; 
-		(*lst)->rights[6] = (buff_stat.st_mode & S_IXGRP) ? 'x' : '-';
-		(*lst)->rights[7] = (buff_stat.st_mode & S_IROTH) ? 'r' : '-';
-		(*lst)->rights[8] = (buff_stat.st_mode & S_IWOTH) ? 'w' : '-';
-		(*lst)->rights[9] = (buff_stat.st_mode & S_IXOTH) ? 'x' : '-';
-		(*lst)->rights[10] = '\0';
+		lst->rights[0] = lst->type;
+		lst->rights[1] = (buff_stat.st_mode & S_IRUSR) ? 'r' : '-';
+		lst->rights[2] = (buff_stat.st_mode & S_IWUSR) ? 'w' : '-';
+		lst->rights[3] = (buff_stat.st_mode & S_IXUSR) ? 'x' : '-';
+		lst->rights[4] = (buff_stat.st_mode & S_IRGRP) ? 'r' : '-'; 
+		lst->rights[5] = (buff_stat.st_mode & S_IWGRP) ? 'w' : '-'; 
+		lst->rights[6] = (buff_stat.st_mode & S_IXGRP) ? 'x' : '-';
+		lst->rights[7] = (buff_stat.st_mode & S_IROTH) ? 'r' : '-';
+		lst->rights[8] = (buff_stat.st_mode & S_IWOTH) ? 'w' : '-';
+		lst->rights[9] = (buff_stat.st_mode & S_IXOTH) ? 'x' : '-';
+		lst->rights[10] = '\0';
 		return (0);
 }
 
@@ -69,35 +68,30 @@ char	file_type(struct stat buff_stat)
 	return (type);
 }
 
-int		option_l(struct stat b_stat, char *cheat[], t_flist **lst, t_arg *opt)
+int		option_l(struct stat b_stat, char *cheat[], t_flist *lst, t_arg *opt)
 {
 	int					len_tmp;
 
-		(*lst)->owner = ft_strdup(cheat[0]);
-		if ((len_tmp = ft_strlen((*lst)->owner)) > opt->own_len)
+		lst->owner = ft_strdup(cheat[0]);
+		if ((len_tmp = ft_strlen(lst->owner)) > opt->own_len)
 			opt->own_len = len_tmp; 
-		printf("owner : %s\t", (*lst)->owner);
-		(*lst)->group = ft_strdup(cheat[1]);
-		if ((len_tmp = ft_strlen((*lst)->group)) > opt->gr_len)
+		lst->group = ft_strdup(cheat[1]);
+		if ((len_tmp = ft_strlen(lst->group)) > opt->gr_len)
 			opt->gr_len = len_tmp; 
-		printf("grp : %s\t", (*lst)->group);
 		file_rights(lst, b_stat);
-		printf("rights : %s\t", (*lst)->rights);
 		file_size(lst, opt, b_stat);
-		printf("size : %s\n", (*lst)->size);
-		(*lst)->link_nb = ft_itoa(b_stat.st_nlink);
-		if ((len_tmp = ft_strlen((*lst)->link_nb)) > opt->lk_len)
+		lst->link_nb = ft_itoa(b_stat.st_nlink);
+		if ((len_tmp = ft_strlen(lst->link_nb)) > opt->lk_len)
 			opt->lk_len = len_tmp; 
-		printf("nb de liens : %s\n", (*lst)->link_nb);
-/*		if ((*lst)->type == 'l')
+/*		if (lst->type == 'l')
 		{
-			(*lst)->link = readlink();
-			printf("link : %s\n", (*lst)->link);
+			lst->link = readlink();
+			printf("link : %s\n", lst->link);
 		}*/
 		return (0);
 }
 		
-int		file_info(char *path, t_arg *option, t_flist **lst)
+int		file_info(char *path, t_arg *option, t_flist *lst)
 {
 	//	printf("fct : isadir\n");
 	struct stat			buff_stat;
@@ -112,14 +106,14 @@ int		file_info(char *path, t_arg *option, t_flist **lst)
  	if ((grp = getgrgid(buff_stat.st_gid)) == NULL)
 		grp->gr_name = ft_itoa(buff_stat.st_gid);
  	grp = getgrgid(buff_stat.st_gid);
-	(*lst)->type = file_type(buff_stat);
-	printf("type de fichier : %c\t", (*lst)->type);
+	lst->type = file_type(buff_stat);
+//	printf("type de fichier : %c\t", lst->type);
 	time_tmp = NULL;
 	if (option->l == 1 || option->t == 1)
 	{
 		time_tmp = ctime(&buff_stat.st_mtime);
-		(*lst)->date = ft_strsub(time_tmp, 4, 12);
-		printf("date : %s\t", (*lst)->date);
+		lst->date = ft_strsub(time_tmp, 4, 12);
+//		printf("date : %s\t", lst->date);
 	}
 	if (option->l == 1)
 	{
