@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/08 12:48:37 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/21 19:04:50 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/22 13:06:31 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,34 @@ t_flist		*lst_new(char *name, char *fpath)
 
 int		lst_insert(t_arg *option, t_flist **lst, t_flist *new)
 {
-//	printf("fct : lst_insert\n");	
+	printf("fct : lst_insert\n");	
 	t_flist			*tmp;
+	char			*tmp1;
+	char			*tmp2;
+	char			*new1;
 	int				cmp;
 
 	tmp = *lst;
-	cmp = (option->r ? ft_strcmp(tmp->name, new->name) :
-					ft_strcmp(new->name, tmp->name));
+	tmp1 = (option->t ? tmp->date : tmp->name);
+	printf("zut de zut\n");
+	tmp2 = (option->t ? tmp->next->date : tmp->next->name);
+	new1 = (option->t ? new->date : new->name);
+	cmp = (option->r ? ft_strcmp(tmp1, new1) : ft_strcmp(new1, tmp1));
 	if (cmp < 0)
 	{
+		printf("ca me soule\n");
 		new->next = tmp;
 		*lst = new;
 		return (0);
 	}
 	else if (tmp->next == NULL)
 	{
+		printf("aller come on...\n");
 		tmp->next = new;
 		return (0);
 	}
-	while (tmp->next != NULL && (cmp = (option->r ?
-					ft_strcmp(tmp->next->name, new->name) :
-					ft_strcmp(new->name, tmp->next->name)) > 0))
+	while (tmp->next != NULL && (cmp = (option->r ? ft_strcmp(tmp2, new1)
+					: ft_strcmp(new1, tmp2)) > 0))
 		tmp = tmp->next;
 	new->next = tmp->next;
 	tmp->next = new;

@@ -6,16 +6,17 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:16:44 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/21 18:46:02 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/22 13:06:49 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_LS_H
 # define FT_LS_H
 /*
+	tmp = *lst;
 	while(tmp)
 	{
-		printf("lst2 : name : %s,\npath :%s,\ntype : %d,\ndate : %s,\nowner : %s,\ngroup : %s,\nrights : %s,\n", tmp->name, tmp->path, tmp->type, tmp->date, tmp->owner, tmp->group, tmp->rights)
+		printf("lst2 : name : %s,\npath :%s,\ntype : %d,\ndate : %s,\nowner : %s,\ngroup : %s,\nrights : %s,\n", tmp->name, tmp->path, tmp->type, tmp->date, tmp->owner, tmp->group, tmp->rights);
 		tmp = tmp->next;	
 	}
 
@@ -59,6 +60,7 @@ typedef struct		s_flist
 }					t_flist;
 
 int					ft_error(int error, char *cur_pb);
+int					free_options(t_arg *option);
 
 // getinfo
 //int					get_mtime(t_arg *argmt);
@@ -78,6 +80,7 @@ int					file_info(char *path, t_arg *option, t_flist *lst);
 
 // display
 int					first_display(t_flist **lst, t_arg *options);
+int					long_display(t_flist *lst, t_arg *option);
 int					ls_display(struct dirent *p_dir, t_arg *opt, t_flist **lst);
 
 // managedir 

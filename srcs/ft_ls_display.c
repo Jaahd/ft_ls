@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/12 20:33:45 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/21 19:04:40 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/22 13:06:42 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@
 
 int		first_display(t_flist **lst, t_arg *option)
 {
-	//	printf("fct : first_display\n");
+		printf("fct : first_display\n");
 	t_flist		*tmp;
 	int			is_dir;
 
 	tmp = *lst;
+	printf("toto fait dodo\n");
 	while (tmp != NULL)
 	{
 		is_dir = file_info(tmp->path, option, tmp);
@@ -28,6 +29,7 @@ int		first_display(t_flist **lst, t_arg *option)
 			ft_putendl(tmp->name);/* fonction d'affichage */
 		tmp = tmp->next;
 	}
+	printf("j'aime le chocolat\n");
 	tmp = *lst;
 	while (tmp != NULL)
 	{
@@ -41,6 +43,7 @@ int		first_display(t_flist **lst, t_arg *option)
 				ft_putstr(tmp->name); /* fonction d'affichage */
 				ft_putendl(":");
 			}
+	printf("turlututu chapeau pointu\n");
 			open_dir(option, tmp->path, tmp->name);
 		}
 		tmp = tmp->next;
@@ -48,15 +51,32 @@ int		first_display(t_flist **lst, t_arg *option)
 	return (0);
 }
 
-int		long_display(t_flist *lst/*, t_arg *option*/)
+int		put_space(char *str, int len)
 {
+//		printf("fct : put_space\n");
+	int			i;
+
+	i = ft_strlen(str);
+//	printf("i : %d\tlen :%d\n", i, len);
+	while(i < len)
+	{
+		ft_putchar(' ');
+		i++;
+	}
+	return (0);
+}
+
+int		long_display(t_flist *lst, t_arg *option)
+{
+//		printf("fct : long_display\nlst->owner : %s\toption->l : %d\n");
 	ft_putstr(lst->rights);
-	//	display_link_nb(lst, option);
-	ft_putchar(' ');
+	ft_putstr(lst->link_nb);
+	put_space(lst->link_nb, (option->lk_len + 1));
 	ft_putstr(lst->owner);
-	ft_putstr("  ");
+	put_space(lst->owner, (option->own_len + 2));
 	ft_putstr(lst->group);
-	ft_putstr("  ");
+	put_space(lst->group, (option->gr_len + 2));
+	put_space(lst->size, option->size_len);
 	ft_putstr(lst->size);
 	ft_putchar(' ');
 	ft_putstr(lst->date);
@@ -66,10 +86,16 @@ int		long_display(t_flist *lst/*, t_arg *option*/)
 
 int		ls_display(struct dirent *p_dirent, t_arg *option, t_flist **lst)
 {
-	//	printf("fct : ls_display\n");
+//		printf("fct : ls_display\n");
 	t_flist		*tmp;
 	int			is_dir;
 
+	tmp = *lst;
+	while(tmp)
+	{
+		printf("lst2 : name : %s,\npath :%s,\ntype : %d,\ndate : %s,\nowner : %s,\ngroup : %s,\nrights : %s,\n", tmp->name, tmp->path, tmp->type, tmp->date, tmp->owner, tmp->group, tmp->rights);
+		tmp = tmp->next;	
+	}
 	tmp = *lst;
 	if (ft_strcmp(p_dirent->d_name, ".") && ft_strcmp(p_dirent->d_name, "..")
 			&& tmp)
@@ -77,7 +103,8 @@ int		ls_display(struct dirent *p_dirent, t_arg *option, t_flist **lst)
 		is_dir = file_info(tmp->path, option, tmp);
 		if (option->l == 1)
 		{
-			long_display(tmp);
+			printf("pouet\n");
+//			long_display(tmp, option);
 		}
 		ft_putendl(p_dirent->d_name);
 		if (option->l == 1 && (*lst)->type == 'l')
@@ -86,6 +113,6 @@ int		ls_display(struct dirent *p_dirent, t_arg *option, t_flist **lst)
 			ft_putstr((*lst)->link);
 		}
 	}
-	//	printf("\ndirent : %s\ntmp : %s\npath : %s\n", p_dirent->d_name, name, path);
+//		printf("\ndirent : %s\ntmp : %s\npath : %s\n", p_dirent->d_name, tmp->name, tmp->path);
 	return (0);
 }
