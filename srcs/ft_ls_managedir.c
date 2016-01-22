@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 17:40:26 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/22 13:06:46 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/22 14:28:06 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,32 +39,36 @@ int		lst2_pushback(t_flist **list, char *name)
 
 int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *dpath)
 {
-	printf("fct : fill_list\n");
+//	printf("fct : fill_list\n");
 	struct dirent		*p_dirent;
 	t_flist				*new;
+//	t_flist				*tmp;
 
 	while ((p_dirent = readdir(p_dir)) != NULL) 
 	{
 		new = lst_new(p_dirent->d_name, format_path(dpath,
-					p_dirent->d_name, ft_strlen(p_dirent->d_name)));
-	printf("plus d'idees\n");
+					p_dirent->d_name, ft_strlen(p_dirent->d_name)), option);
 		if (*lst2 == NULL)
 			*lst2 = new;
 		else
 			lst_insert(option, lst2, new);
-	printf("trololo\n");
-		if (option->a == 1)
-			ls_display(p_dirent, option, lst2);	
+/*		tmp=*lst2;
+	while(tmp)
+	{
+		printf("\n-------- lst2 -------\n name : %s,\npath :%s,\nsize : %s,\n-----option -R :%d\n", tmp->name, tmp->path, tmp->size, option->recu);
+		tmp = tmp->next;	
+	}
+*/		if (option->a == 1)
+			ls_display(option, *lst2);	
 		else if (p_dirent->d_name[0] != '.')
-			ls_display(p_dirent, option, lst2);	
-	printf("pouet\n");
+			ls_display(option, *lst2);	
 	}
 	return (0);
 }
 
 int		open_dir(t_arg *option, char *dpath, char *dname)
 {
-		printf("fct : open_dir\n");
+//		printf("fct : open_dir\n");
 	DIR					*p_dir;
 	t_flist				*lst2;
 	t_flist				*tmp;
@@ -73,23 +77,15 @@ int		open_dir(t_arg *option, char *dpath, char *dname)
 	p_dir = opendir(dpath);
 	if (p_dir == NULL)
 		return (ft_error(3, dname));
-	printf("prout\n");
 	fill_list(p_dir, &lst2, option, dpath);
-	printf("loilol\n");
 	closedir(p_dir);
 	tmp = lst2;
-	while(tmp)
+/*	while(tmp)
 	{
-		printf("lst2 : name : %s,\npath :%s,\ntype : %d,\ndate : %s,\nowner : %s,\ngroup : %s,\nrights : %s,\n", tmp->name, tmp->path, tmp->type, tmp->date, tmp->owner, tmp->group, tmp->rights);
+		printf("\n-------- lst2 -------\n name : %s,\npath :%s,\nsize : %s,\n-----option -R :%d\n", tmp->name, tmp->path, tmp->size, option->recu);
 		tmp = tmp->next;	
 	}
-	tmp = lst2;
-	while(tmp)
-	{
-		//		printf("\n-------- lst2 -------\n name : %s,\npath :%s,\nowner : %s,\n-----option -R :%d\n", tmp->name, tmp->path, tmp->owner, option->recu);
-		tmp = tmp->next;	
-	}
-	while (option->recu == 1 && lst2)
+*/	while (option->recu == 1 && lst2)
 	{
 		if (ft_strcmp(lst2->name, ".") != 0 && ft_strcmp(lst2->name, "..") != 0)
 			open_dir(option, format_path(dpath, lst2->name, 

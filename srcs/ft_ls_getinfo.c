@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/08 12:48:37 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/22 13:06:31 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/22 14:21:31 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "libft.h"
 #include "ft_ls.h"
 
-t_flist		*lst_new(char *name, char *fpath)
+t_flist		*lst_new(char *name, char *fpath, t_arg *option)
 {
 //	printf("fct : lst_new\n");
 	t_flist			*new;
@@ -35,12 +35,13 @@ t_flist		*lst_new(char *name, char *fpath)
 	new->link_nb = NULL;
 	new->link = NULL;
 	new->next = NULL;
+	file_info(new->path, option, new);
 	return (new);
 }
 
 int		lst_insert(t_arg *option, t_flist **lst, t_flist *new)
 {
-	printf("fct : lst_insert\n");	
+//	printf("fct : lst_insert\n");	
 	t_flist			*tmp;
 	char			*tmp1;
 	char			*tmp2;
@@ -49,20 +50,18 @@ int		lst_insert(t_arg *option, t_flist **lst, t_flist *new)
 
 	tmp = *lst;
 	tmp1 = (option->t ? tmp->date : tmp->name);
-	printf("zut de zut\n");
-	tmp2 = (option->t ? tmp->next->date : tmp->next->name);
+	if (tmp->next)
+		tmp2 = (option->t ? tmp->next->date : tmp->next->name);
 	new1 = (option->t ? new->date : new->name);
 	cmp = (option->r ? ft_strcmp(tmp1, new1) : ft_strcmp(new1, tmp1));
 	if (cmp < 0)
 	{
-		printf("ca me soule\n");
 		new->next = tmp;
 		*lst = new;
 		return (0);
 	}
 	else if (tmp->next == NULL)
 	{
-		printf("aller come on...\n");
 		tmp->next = new;
 		return (0);
 	}
@@ -83,7 +82,7 @@ int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 	cpt = 1;
 	if (ac_c == 0)
 	{
-		new = lst_new(".", "./");
+		new = lst_new(".", "./", option);
 		*lst = new;
 		return (0);
 	}
@@ -91,7 +90,8 @@ int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 		cpt++;
 	while (av[cpt])
 	{
-		new = lst_new(av[cpt], format_path("./", av[cpt], ft_strlen(av[cpt])));
+		new = lst_new(av[cpt], format_path("./", av[cpt], ft_strlen(av[cpt])),
+				option);
 		if (*lst == NULL)
 			*lst = new;
 		else

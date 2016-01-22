@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:16:44 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/22 13:06:49 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/22 14:16:52 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int					free_options(t_arg *option);
 //int					get_mtime(t_arg *argmt);
 char				*format_path(char *b_path, char *filename, int namelen);
 int					lst_insert(t_arg *option, t_flist **lst, t_flist *new);
-t_flist				*lst_new(char *name, char *fpath);
+t_flist				*lst_new(char *name, char *fpath, t_arg *option);
 int					get_name(t_arg *option, t_flist **lst, int ac_c, char **av);
 int					get_options(t_arg *option, int *ac_c, char **av);
 
@@ -81,7 +81,7 @@ int					file_info(char *path, t_arg *option, t_flist *lst);
 // display
 int					first_display(t_flist **lst, t_arg *options);
 int					long_display(t_flist *lst, t_arg *option);
-int					ls_display(struct dirent *p_dir, t_arg *opt, t_flist **lst);
+int					ls_display(t_arg *opt, t_flist *lst);
 
 // managedir 
 int					fill_dirlist(DIR *p_dir, t_flist **lst, t_arg *argmt);
