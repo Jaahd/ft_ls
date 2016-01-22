@@ -46,6 +46,9 @@ int		first_display(t_flist **lst, t_arg *option)
 				ft_putstr(tmp->name);
 				ft_putendl(":");
 			}
+			ft_putstr("total ");
+			ft_putendl("nb bizarre");
+			option->lk_len = 0;
 			open_dir(option, tmp->path, tmp->name);
 		}
 		tmp = tmp->next;

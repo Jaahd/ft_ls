@@ -59,7 +59,10 @@ int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *dpath)
 		if (option->a == 1)
 			ls_display(option, tmp);	
 		else if (tmp->name[0] != '.')
+		{
+//			printf("pouet\n");
 			ls_display(option, tmp);	
+		}
 		tmp = tmp->next;	
 	}
 	return (0);
