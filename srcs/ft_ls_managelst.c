@@ -39,34 +39,38 @@ t_flist		*lst_new(char *name, char *fpath, t_arg *option)
 	return (new);
 }
 
+int		lst_2nd_insert(char *new1, t_arg *option, t_flist *tmp, t_flist *new)
+{
+	char			*tmp1;
+	int				cmp;
+
+	tmp1 = (option->t ? tmp->next->date : tmp->next->name);
+	while (tmp->next != NULL && (cmp = (option->r ? ft_strcmp(tmp1, new1)
+					: ft_strcmp(new1, tmp1))) > 0)
+	{
+		tmp = tmp->next;
+		if (tmp->next)
+			tmp1 = (option->t ? tmp->next->date : tmp->next->name);
+	}
+	new->next = tmp->next;
+	tmp->next = new;
+	return (0);
+}
+
 int		lst_insert(t_arg *option, t_flist **lst, t_flist *new)
 {
 //	printf("fct : lst_insert\n");	
 	t_flist			*tmp;
 	char			*tmp1;
-	char			*tmp2;
 	char			*new1;
 	int				cmp;
-	int				cmp1;
-	int				cmp2;
 
-	/*tmp = *lst;
-	while(tmp)
-	{
-		printf("ds tmp, name = %s\n", tmp->name);
-		tmp = tmp->next;
-	}*/
-	ft_putchar('\n');
-	cmp1 = 0;
-	cmp2 = 0;
 	tmp = *lst;
 	tmp1 = (option->t ? tmp->date : tmp->name);
 	new1 = (option->t ? new->date : new->name);
 	cmp = (option->r ? ft_strcmp(tmp1, new1) : ft_strcmp(new1, tmp1));
-		//printf("->%d xxx %s xxx %s<-\n", cmp, new->name, tmp->name);
 	if (cmp < 0)
 	{
-//		printf("->%s|\t|%s<-\n", new->name, tmp->name);
 		new->next = tmp;
 		*lst = new;
 		return (0);
@@ -76,15 +80,6 @@ int		lst_insert(t_arg *option, t_flist **lst, t_flist *new)
 		tmp->next = new;
 		return (0);
 	}
-	tmp2 = (option->t ? tmp->next->date : tmp->next->name);
-	while (tmp->next != NULL && (cmp = (option->r ? ft_strcmp(tmp2, new1)
-					: ft_strcmp(new1, tmp2))) > 0)
-	{
-		tmp2 = (option->t ? tmp->next->date : tmp->next->name);
-		printf("cmp = %d\n", cmp);
-		tmp = tmp->next;
-	}
-	new->next = tmp->next;
-	tmp->next = new;
+	lst_2nd_insert(new1, option, tmp, new);
 	return (0);
 }

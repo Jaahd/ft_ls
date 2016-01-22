@@ -51,21 +51,7 @@ int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *dpath)
 		if (*lst2 == NULL)
 			*lst2 = new;
 		else
-		{
-			tmp = *lst2;
-			while(tmp)
-			{
-				printf("[%s]\n",tmp->name);
-				tmp = tmp->next;
-			}
 			lst_insert(option, lst2, new);
-			tmp = *lst2;
-			while(tmp)
-			{
-				printf("{%s}\n",tmp->name);
-				tmp = tmp->next;
-			}
-		}
 	}
 	tmp=*lst2;
 	while(tmp)
