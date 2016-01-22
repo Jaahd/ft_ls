@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/12 20:33:45 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/22 14:31:48 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/22 17:25:28 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -29,9 +29,8 @@ int		first_display(t_flist **lst, t_arg *option)
 	tmp = *lst;
 	while (tmp != NULL)
 	{
-		file_info(tmp->path, option, tmp);
 		if (tmp->type != 'd')	
-			ls_display(option, tmp);/* fonction d'affichage */
+			ls_display(option, tmp);
 		tmp = tmp->next;
 	}
 	tmp = *lst;
@@ -44,7 +43,7 @@ int		first_display(t_flist **lst, t_arg *option)
 			if(option->arg_nb >  1)
 			{
 				ft_putchar('\n');
-				ft_putstr(tmp->name); /* fonction d'affichage */
+				ft_putstr(tmp->name);
 				ft_putendl(":");
 			}
 			open_dir(option, tmp->path, tmp->name);
@@ -88,31 +87,16 @@ int		long_display(t_flist *lst, t_arg *option)
 
 int		ls_display(t_arg *option, t_flist *lst)
 {
-//		printf("fct : ls_display\n");
-	t_flist		*tmp;
-
-	tmp = lst;
-/*	while(tmp)
+	//		printf("fct : ls_display\n");
+	if (option->l == 1)
 	{
-		printf("lst2 : name : %s,\npath :%s,\ntype : %d,\ndate : %s,\nowner : %s,\ngroup : %s,\nrights : %s,\nsize :%s\n\n", tmp->name, tmp->path, tmp->type, tmp->date, tmp->owner, tmp->group, tmp->rights, tmp->size);
-		tmp = tmp->next;	
+		long_display(lst, option);
 	}
-	tmp = *lst;
-*/	printf("nom du fichier : %s\n", tmp->name);
-	if (ft_strcmp(tmp->name, ".") != 0 && ft_strcmp(tmp->name, "..") != 0)
+	ft_putendl(lst->name);
+	if (option->l == 1 && lst->type == 'l')
 	{
-//		is_dir = file_info(tmp->path, option, tmp);
-		if (option->l == 1)
-		{
-			long_display(tmp, option);
-		}
-		ft_putendl(tmp->name);
-		if (option->l == 1 && lst->type == 'l')
-		{
-			ft_putstr(" -> ");
-			ft_putstr(lst->link);
-		}
+		ft_putstr(" -> ");
+		ft_putstr(lst->link);
 	}
-//		printf("\ndirent : %s\ntmp : %s\npath : %s\n", p_dirent->d_name, tmp->name, tmp->path);
 	return (0);
 }

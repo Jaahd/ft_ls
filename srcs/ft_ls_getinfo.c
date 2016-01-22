@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/08 12:48:37 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/22 14:21:31 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/22 17:25:39 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,62 +16,6 @@
 #include "libft.h"
 #include "ft_ls.h"
 
-t_flist		*lst_new(char *name, char *fpath, t_arg *option)
-{
-//	printf("fct : lst_new\n");
-	t_flist			*new;
-	
-	if ((new = (t_flist *)malloc(sizeof(t_flist))) == NULL)
-		ft_error (1, "list creation"); // nom a reprendre
-	if ((new->name = ft_strdup(name)) == NULL)
-		ft_error(1, name);
-	new->path = fpath;
-	new->type = 0;
-	new->date = NULL;
-	new->owner = NULL;
-	new->group = NULL;
-	new->size = NULL;
-	new->fsize_len = 0;
-	new->link_nb = NULL;
-	new->link = NULL;
-	new->next = NULL;
-	file_info(new->path, option, new);
-	return (new);
-}
-
-int		lst_insert(t_arg *option, t_flist **lst, t_flist *new)
-{
-//	printf("fct : lst_insert\n");	
-	t_flist			*tmp;
-	char			*tmp1;
-	char			*tmp2;
-	char			*new1;
-	int				cmp;
-
-	tmp = *lst;
-	tmp1 = (option->t ? tmp->date : tmp->name);
-	if (tmp->next)
-		tmp2 = (option->t ? tmp->next->date : tmp->next->name);
-	new1 = (option->t ? new->date : new->name);
-	cmp = (option->r ? ft_strcmp(tmp1, new1) : ft_strcmp(new1, tmp1));
-	if (cmp < 0)
-	{
-		new->next = tmp;
-		*lst = new;
-		return (0);
-	}
-	else if (tmp->next == NULL)
-	{
-		tmp->next = new;
-		return (0);
-	}
-	while (tmp->next != NULL && (cmp = (option->r ? ft_strcmp(tmp2, new1)
-					: ft_strcmp(new1, tmp2)) > 0))
-		tmp = tmp->next;
-	new->next = tmp->next;
-	tmp->next = new;
-	return (0);
-}
 
 int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 {
@@ -116,17 +60,14 @@ char	*format_path(char *b_path, char *filename, int namelen)
 	{
 		if ((tmp = ft_strjoin(b_path, "/")) == NULL)
 			ft_error(1, b_path);
-//		printf("tmp(if) : %s\n", tmp);
 	}
 	else if (p_len > 0)
 	{
 		if ((tmp = ft_strdup(b_path)) == NULL)
 			ft_error(1, b_path);
-//		printf("tmp(else if) : %s\n", tmp);
 	}
 	if (((f_path = ft_properjoin(tmp, filename)) == NULL))
 		ft_error(1, filename);
-//	printf("path : %s\n", f_path);
 	ft_strdel(&tmp);
 	return (f_path);
 }
@@ -158,6 +99,5 @@ int		get_options(t_arg *opt, int *ac_c, char **av)
 		cpt++;
 	}
 	*ac_c -= cpt;
-//	printf("-------OPTIONS-------\n-R :%d\t-a%d\t-l%d\t-r%d\t-t%d\n", opt->recu, opt->a, opt->l, opt->r, opt->t);
 	return (0);
 }

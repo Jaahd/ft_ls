@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:07:32 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/22 13:39:36 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/22 17:25:17 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int		type_l(t_flist *lst)
 	char				link_buff[1024];
 	int					ret;
 
-	printf("toto fait dodo\n");
 	if ((ret = readlink(lst->path, link_buff, 1023)) == -1)
 		ft_error(1, lst->name);
 	else
@@ -84,7 +83,6 @@ int		type_l(t_flist *lst)
 		link_buff[ret] = '\0';
 		lst->link = link_buff;
 	}
-	printf("link : %s\tdans liste : %s\n", link_buff, lst->link);
 	return (0);
 }
 
@@ -118,22 +116,19 @@ int		file_info(char *path, t_arg *option, t_flist *lst)
 	char				*cheat[2];
 
 	lstat(path, &buff_stat);
-	if ((pwd = getpwuid(buff_stat.st_uid)) == NULL)
-		pwd->pw_name = ft_itoa(buff_stat.st_uid);
-	if ((grp = getgrgid(buff_stat.st_gid)) == NULL)
-		grp->gr_name = ft_itoa(buff_stat.st_gid);
-	grp = getgrgid(buff_stat.st_gid);
 	lst->type = file_type(buff_stat);
-	//	printf("type de fichier : %c\t", lst->type);
 	time_tmp = NULL;
 	if (option->l == 1 || option->t == 1)
 	{
 		time_tmp = ctime(&buff_stat.st_mtime);
 		lst->date = ft_strsub(time_tmp, 4, 12);
-		//		printf("date : %s\t", lst->date);
 	}
 	if (option->l == 1)
 	{
+		if ((pwd = getpwuid(buff_stat.st_uid)) == NULL)
+			pwd->pw_name = ft_itoa(buff_stat.st_uid);
+		if ((grp = getgrgid(buff_stat.st_gid)) == NULL)
+			grp->gr_name = ft_itoa(buff_stat.st_gid);
 		cheat[0] = pwd->pw_name;
 		cheat[1] = grp->gr_name;
 		option_l(buff_stat, cheat, lst, option);

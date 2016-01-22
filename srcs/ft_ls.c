@@ -6,7 +6,7 @@
 /*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 17:10:43 by avacher           #+#    #+#             */
-/*   Updated: 2016/01/22 13:44:30 by avacher          ###   ########.fr       */
+/*   Updated: 2016/01/22 17:26:19 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,10 @@ int		main(int ac, char **av)
 	i = -1;
 	ac_c = ac;
 	lst = NULL;
-//	printf("fct : main avt free_option\n");
 	free_options(&option);
-//	printf("fct : main avt get_option\n");
 	get_options(&option, &ac_c, av);
-//	printf("fct : main ap get option\n");
 	option.arg_nb = ac_c;
-//	printf("main avt get name \nac_c : %d\n", ac_c);
 	get_name(&option, &lst, ac_c, av);
-//	printf("fct : main avt display\n");
 	first_display(&lst, &option);
 	return (0);
 }
