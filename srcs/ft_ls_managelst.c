@@ -31,10 +31,11 @@ t_flist		*lst_new(char *name, char *fpath, t_arg *option)
 	new->owner = NULL;
 	new->group = NULL;
 	new->size = NULL;
-	new->fsize_len = 0;
 	new->link_nb = NULL;
 	new->link = NULL;
 	new->next = NULL;
+	new->fsize_len = 0;
+	new->block = 0;
 	file_info(new->path, option, new);
 	return (new);
 }

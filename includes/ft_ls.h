@@ -41,6 +41,7 @@ typedef struct		s_arg
 	int				gr_len;
 	int				lk_len;
 	int				size_len;
+	blkcnt_t			tot_blocks;
 }					t_arg;	
 
 typedef struct		s_flist
@@ -53,9 +54,10 @@ typedef struct		s_flist
 	char			*group;
 	char			rights[13];
 	char			*size; // -> cf si besoin de le changer en int //
-	int				fsize_len;
 	char			*link_nb;
 	char			*link;
+	int				fsize_len;
+	blkcnt_t		block;
 	struct s_flist	*next;	
 }					t_flist;
 
@@ -83,6 +85,7 @@ int					option_l(struct stat buff_stat, char *cheat[],
 int					file_info(char *path, t_arg *option, t_flist *lst);
 
 // display
+int					display_total(t_arg **option);
 int					first_display(t_flist **lst, t_arg *options);
 int					long_display(t_flist *lst, t_arg *option);
 int					ls_display(t_arg *opt, t_flist *lst);
@@ -90,6 +93,6 @@ int					ls_display(t_arg *opt, t_flist *lst);
 // managedir 
 int					fill_dirlist(DIR *p_dir, t_flist **lst, t_arg *argmt);
 int					lst_pushback(t_flist **lst, char *dname);
-int					open_dir(t_arg *opt, char *dpath, char *dname);
+int					open_dir(t_arg *opt, char *dpath);
 
 #endif

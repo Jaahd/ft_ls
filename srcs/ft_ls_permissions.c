@@ -99,6 +99,10 @@ int		option_l(struct stat b_stat, char *cheat[], t_flist *lst, t_arg *opt)
 	file_rights(lst, b_stat);
 	file_size(lst, opt, b_stat);
 	lst->link_nb = ft_itoa(b_stat.st_nlink);
+	printf("----------avant remplissage : nom du fichier : %s\nblock en cours : %ld\ttot blocks : %ld\n\n",lst->name, lst->block, opt->tot_blocks);
+	lst->block = b_stat.st_blocks;
+	opt->tot_blocks += lst->block;
+	printf("----------apres remplissage : nom du fichier : %s\nblock en cours : %ld\ttot blocks : %ld\n\n",lst->name, lst->block, opt->tot_blocks);
 	if ((len_tmp = ft_strlen(lst->link_nb)) > opt->lk_len)
 		opt->lk_len = len_tmp; 
 	if (lst->type == 'l')

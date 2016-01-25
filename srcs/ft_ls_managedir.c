@@ -54,6 +54,7 @@ int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *dpath)
 			lst_insert(option, lst2, new);
 	}
 	tmp=*lst2;
+		display_total(&option);
 	while(tmp)
 	{
 		if (option->a == 1)
@@ -68,7 +69,7 @@ int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *dpath)
 	return (0);
 }
 
-int		open_dir(t_arg *option, char *dpath, char *dname)
+int		open_dir(t_arg *option, char *dpath)
 {
 	//		printf("fct : open_dir\n");
 	DIR					*p_dir;
@@ -78,16 +79,20 @@ int		open_dir(t_arg *option, char *dpath, char *dname)
 	lst2 = NULL;
 	p_dir = opendir(dpath);
 	if (p_dir == NULL)
-		return (ft_error(3, dname));
+		return (0); // ft_error(3, dname));
 	fill_list(p_dir, &lst2, option, dpath);
 	closedir(p_dir);
 	tmp = lst2;
-	while (option->recu == 1 && lst2)
+	while (option->recu == 1 && tmp)
 	{
-		if (ft_strcmp(lst2->name, ".") != 0 && ft_strcmp(lst2->name, "..") != 0)
-			open_dir(option, format_path(dpath, lst2->name, 
-						ft_strlen(lst2->name)), lst2->name);
-		lst2 = lst2->next;
+		if (tmp->type == 'd' && ft_strcmp(tmp->name, ".") != 0 && ft_strcmp(tmp->name, "..") != 0)
+		{
+			ft_putchar('\n');
+			ft_putendl(ft_properjoin(tmp->path, ":"));
+			open_dir(option, format_path(dpath, tmp->name, 
+						ft_strlen(tmp->name)));
+		}
+		tmp = tmp->next;
 	}
 	return (1);
 }

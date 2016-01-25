@@ -59,6 +59,7 @@ int		free_options(t_arg *option)
 	option->gr_len = 0;
 	option->lk_len = 0;
 	option->size_len = 0;
+	option->tot_blocks = 0;
 	return (0);
 }
 

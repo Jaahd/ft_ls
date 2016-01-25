@@ -21,6 +21,20 @@
 #include "libft.h"
 #include "ft_ls.h"
 
+int		display_total(t_arg **option)
+{
+	if ((*option)->l == 1)
+	{
+		ft_putstr("total ");
+		ft_putnbrendl((*option)->tot_blocks);
+	}
+	(*option)->tot_blocks = 0;
+	ft_putendl("total apres reininit :");
+		ft_putnbrendl((*option)->tot_blocks);
+	(*option)->lk_len = 0;
+	return (0);
+}
+
 int		first_display(t_flist **lst, t_arg *option)
 {
 	//	printf("fct : first_display\n");
@@ -46,10 +60,7 @@ int		first_display(t_flist **lst, t_arg *option)
 				ft_putstr(tmp->name);
 				ft_putendl(":");
 			}
-			ft_putstr("total ");
-			ft_putendl("nb bizarre");
-			option->lk_len = 0;
-			open_dir(option, tmp->path, tmp->name);
+			open_dir(option, tmp->path);
 		}
 		tmp = tmp->next;
 	}
@@ -58,7 +69,7 @@ int		first_display(t_flist **lst, t_arg *option)
 
 int		put_space(char *str, int len)
 {
-//		printf("fct : put_space\n");
+	//		printf("fct : put_space\n");
 	int			i;
 
 	i = ft_strlen(str);
@@ -72,7 +83,7 @@ int		put_space(char *str, int len)
 
 int		long_display(t_flist *lst, t_arg *option)
 {
-//		printf("fct : long_display\nlst->owner : %s\toption->l : %d\n");
+	//		printf("fct : long_display\nlst->owner : %s\toption->l : %d\n");
 	ft_putstr(lst->rights);
 	ft_putstr(lst->link_nb);
 	put_space(lst->link_nb, (option->lk_len + 1));
