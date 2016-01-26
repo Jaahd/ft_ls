@@ -93,6 +93,7 @@ int		open_dir(t_arg *option, char *dpath)
 			open_dir(option, format_path(dpath, tmp->name, 
 						ft_strlen(tmp->name)));
 		}
+		option->size_len = 0;
 		tmp = tmp->next;
 	}
 	return (1);

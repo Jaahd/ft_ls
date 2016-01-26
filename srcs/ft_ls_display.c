@@ -29,7 +29,6 @@ int		display_total(t_arg **option)
 		ft_putnbrendl((*option)->tot_blocks);
 	}
 	(*option)->tot_blocks = 0;
-//	(*option)->lk_len = 0;
 	return (0);
 }
 
@@ -46,7 +45,6 @@ int		display_dirname(t_arg *option, char *str)
 
 int		first_display(t_flist **lst, t_arg *option)
 {
-	//	printf("fct : first_display\n");
 	t_flist		*tmp;
 
 	tmp = *lst;
@@ -59,16 +57,17 @@ int		first_display(t_flist **lst, t_arg *option)
 	tmp = *lst;
 	while (tmp != NULL)
 	{
-		if (option->a == 1 /* && (ft_strcmp(tmp->name, ".") == 0)*/
-		&& tmp->type == 'd'/* && (ft_strcmp(tmp->name, "..") == 0)*/)
-			display_dirname(option, tmp->name);
-		else if (tmp->type == 'd' && ft_strcmp(tmp->name, ".") 
-		option->a != 1 && ft_strcmp(tmp->name, ".."))
+		if (option->a == 1  && tmp->type == 'd')
 		{
 			display_dirname(option, tmp->name);
 			open_dir(option, tmp->path);
 		}
-		option->size_len = 0;
+		else if (tmp->type == 'd' && ft_strcmp(tmp->name, ".")
+		&& option->a != 1 && ft_strcmp(tmp->name, ".."))
+		{
+			display_dirname(option, tmp->name);
+			open_dir(option, tmp->path);
+		}
 		tmp = tmp->next;
 	}
 	return (0);
