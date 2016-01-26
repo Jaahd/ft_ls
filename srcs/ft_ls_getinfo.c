@@ -35,8 +35,11 @@ int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 		cpt++;
 	while (av[cpt])
 	{
-		new = lst_new(av[cpt], format_path("./", av[cpt], ft_strlen(av[cpt])),
-				option);
+		if (av[cpt][0] == '/')
+			new = lst_new("", av[cpt], option);
+		else
+			new = lst_new(av[cpt], format_path("./", av[cpt],
+						ft_strlen(av[cpt])), option);
 		if (*lst == NULL)
 			*lst = new;
 		else
