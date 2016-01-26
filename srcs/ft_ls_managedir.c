@@ -60,10 +60,7 @@ int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *dpath)
 		if (option->a == 1)
 			ls_display(option, tmp);	
 		else if (tmp->name[0] != '.')
-		{
-//			printf("pouet\n");
 			ls_display(option, tmp);	
-		}
 		tmp = tmp->next;	
 	}
 	return (0);
@@ -79,7 +76,7 @@ int		open_dir(t_arg *option, char *dpath)
 	lst2 = NULL;
 	p_dir = opendir(dpath);
 	if (p_dir == NULL)
-		return (0); // ft_error(3, dname));
+		return (0);
 	fill_list(p_dir, &lst2, option, dpath);
 	closedir(p_dir);
 	tmp = lst2;
@@ -88,8 +85,7 @@ int		open_dir(t_arg *option, char *dpath)
 		if (tmp->type == 'd' && ft_strcmp(tmp->name, ".")
 		&& ft_strcmp(tmp->name, ".."))
 		{
-			ft_putchar('\n');
-			ft_putendl(ft_properjoin(tmp->path, ":"));
+			display_dirname(option, tmp->path);
 			open_dir(option, format_path(dpath, tmp->name, 
 						ft_strlen(tmp->name)));
 		}
