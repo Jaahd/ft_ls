@@ -50,6 +50,7 @@ typedef struct		s_flist
 	char			*path;
 	char			type;
 	char			*date;
+	char			*epoc;
 	char			*owner;
 	char			*group;
 	char			rights[13];
@@ -73,6 +74,7 @@ int					get_options(t_arg *option, int *ac_c, char **av);
 // managelst
 int					lst_first_insert(t_flist **lst, t_flist *tmp, t_flist *new,
 								int cmp);
+int					lst_time_insert(t_arg *option, t_flist **lst, t_flist *new);
 int					lst_insert(t_arg *option, t_flist **lst, t_flist *new);
 t_flist				*lst_new(char *name, char *fpath, t_arg *option);
 

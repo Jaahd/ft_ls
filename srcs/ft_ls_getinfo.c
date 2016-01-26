@@ -25,12 +25,7 @@ int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 
 	cpt = 1;
 	if (ac_c == 0)
-	{
 		open_dir(option, "./");
-//		new = lst_new(".", "./", option);
-//		*lst = new;
-//		return (0);
-	}
 	while (av[cpt] && av[cpt][0] == '-')
 		cpt++;
 	while (av[cpt])
@@ -42,6 +37,8 @@ int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 						ft_strlen(av[cpt])), option);
 		if (*lst == NULL)
 			*lst = new;
+		else if(option->t == 1)
+			lst_time_insert(option, lst, new);
 		else
 			lst_insert(option, lst, new);
 		cpt++;

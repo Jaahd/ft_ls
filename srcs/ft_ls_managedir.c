@@ -50,6 +50,8 @@ int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *dpath)
 			p_dirent->d_name, ft_strlen(p_dirent->d_name)), option);
 		if (*lst2 == NULL)
 			*lst2 = new;
+		else if (option->t == 1)
+			lst_time_insert(option, lst2, new);
 		else
 			lst_insert(option, lst2, new);
 	}
