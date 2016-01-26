@@ -28,7 +28,7 @@ t_flist		*lst_new(char *name, char *fpath, t_arg *option)
 	new->path = fpath;
 	new->type = 0;
 	new->date = NULL;
-	new->epoc = NULL;
+	new->epoc = 0;
 	new->owner = NULL;
 	new->group = NULL;
 	new->size = NULL;
@@ -41,23 +41,17 @@ t_flist		*lst_new(char *name, char *fpath, t_arg *option)
 	return (new);
 }
 
-int		lst_2nd_t_insert(char *new1, t_arg *option, t_flist *tmp, t_flist *new)
+int		lst_2nd_t_insert(t_arg *option, t_flist *tmp, t_flist *new)
 {
 //	printf("fct : lst_2_t_insert\n");
-	char			*tmp1;
 	int				cmp;
 
-	tmp1 = (option->t ? tmp->next->epoc : tmp->next->name);
-	if((cmp = (option->r ? ft_strcmp(new1, tmp->next->epoc) :
-						ft_strcmp(tmp->next->epoc, new1))) == 0)
-		cmp = (option->r ? ft_strcmp(tmp->next->epoc, new1) :
-						ft_strcmp(new1, tmp->next->epoc));
+	if((cmp = (option->r ? intcmp(tmp->next->epoc, new->epoc) :
+					intcmp(new->epoc, tmp->next->epoc))) == 0)
+		cmp = (option->r ? intcmp(tmp->next->epoc, new->epoc) :
+						intcmp(new->epoc, tmp->next->epoc));
 	while (tmp->next != NULL && cmp > 0)
-	{
 		tmp = tmp->next;
-		if (tmp->next)
-			tmp1 = (option->t ? tmp->next->epoc : tmp->next->name);
-	}
 	new->next = tmp->next;
 	tmp->next = new;
 	return (0);
@@ -70,8 +64,8 @@ int		lst_time_insert(t_arg *option, t_flist **lst, t_flist *new)
 	int				cmp;
 	
 	tmp = *lst;
-	cmp = (option->r ? ft_strcmp(new->epoc, tmp->epoc) :
-					ft_strcmp(tmp->epoc, new->epoc));
+	cmp = (option->r ? intcmp(tmp->epoc, new->epoc) :
+				intcmp(new->epoc, tmp->epoc));
 		if (cmp == 0)  	
 			cmp = (option->r ? ft_strcmp(tmp->name, new->name)
 							: ft_strcmp(new->name, tmp->name));
@@ -86,7 +80,7 @@ int		lst_time_insert(t_arg *option, t_flist **lst, t_flist *new)
 			tmp->next = new;
 			return (0);
 		}
-		lst_2nd_t_insert(new->epoc, option, tmp, new);
+		lst_2nd_t_insert(option, tmp, new);
 		return (0);
 }
 

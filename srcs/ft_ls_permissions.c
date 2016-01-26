@@ -123,7 +123,7 @@ int		file_info(char *path, t_arg *option, t_flist *lst)
 	time_tmp = NULL;
 	if (option->l == 1 || option->t == 1)
 	{
-		lst->epoc = ft_itoa(buff_stat.st_mtime);
+		lst->epoc = buff_stat.st_mtime;
 		time_tmp = ctime(&buff_stat.st_mtime);
 		lst->date = ft_strsub(time_tmp, 4, 12);
 	}

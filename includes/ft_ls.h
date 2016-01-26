@@ -50,7 +50,7 @@ typedef struct		s_flist
 	char			*path;
 	char			type;
 	char			*date;
-	char			*epoc;
+	int			epoc;
 	char			*owner;
 	char			*group;
 	char			rights[13];

@@ -97,5 +97,6 @@ int					ft_atoi_base(char *str, int base);
 int					ft_hidenp(char *hiden, char *str);
 void				ft_swap(char **s1, char **s2);
 void				int_swap(int *i, int *j);
+int					intcmp(int a, int b);
 
 #endif
