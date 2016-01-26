@@ -86,6 +86,7 @@ int					file_info(char *path, t_arg *option, t_flist *lst);
 
 // display
 int					display_total(t_arg **option);
+int					display_dirname(t_arg *option, char *str);
 int					first_display(t_flist **lst, t_arg *options);
 int					long_display(t_flist *lst, t_arg *option);
 int					ls_display(t_arg *opt, t_flist *lst);

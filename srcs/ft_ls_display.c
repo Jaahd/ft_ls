@@ -29,9 +29,18 @@ int		display_total(t_arg **option)
 		ft_putnbrendl((*option)->tot_blocks);
 	}
 	(*option)->tot_blocks = 0;
-	ft_putendl("total apres reininit :");
-		ft_putnbrendl((*option)->tot_blocks);
-	(*option)->lk_len = 0;
+//	(*option)->lk_len = 0;
+	return (0);
+}
+
+int		display_dirname(t_arg *option, char *str)
+{
+	if(option->arg_nb >  1)
+	{
+		ft_putchar('\n');
+		ft_putstr(str);
+		ft_putendl(":");
+	}
 	return (0);
 }
 
@@ -50,18 +59,16 @@ int		first_display(t_flist **lst, t_arg *option)
 	tmp = *lst;
 	while (tmp != NULL)
 	{
-		if (tmp->type == 'd' && ft_strcmp(tmp->name, ".") 
-				&& ft_strcmp(tmp->name, ".."))
+		if (option->a == 1 /* && (ft_strcmp(tmp->name, ".") == 0)*/
+		&& tmp->type == 'd'/* && (ft_strcmp(tmp->name, "..") == 0)*/)
+			display_dirname(option, tmp->name);
+		else if (tmp->type == 'd' && ft_strcmp(tmp->name, ".") 
+		option->a != 1 && ft_strcmp(tmp->name, ".."))
 		{
-
-			if(option->arg_nb >  1)
-			{
-				ft_putchar('\n');
-				ft_putstr(tmp->name);
-				ft_putendl(":");
-			}
+			display_dirname(option, tmp->name);
 			open_dir(option, tmp->path);
 		}
+		option->size_len = 0;
 		tmp = tmp->next;
 	}
 	return (0);

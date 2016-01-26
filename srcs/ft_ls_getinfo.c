@@ -26,9 +26,10 @@ int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 	cpt = 1;
 	if (ac_c == 0)
 	{
-		new = lst_new(".", "./", option);
-		*lst = new;
-		return (0);
+		open_dir(option, "./");
+//		new = lst_new(".", "./", option);
+//		*lst = new;
+//		return (0);
 	}
 	while (av[cpt] && av[cpt][0] == '-')
 		cpt++;
