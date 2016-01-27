@@ -83,6 +83,7 @@ int		type_l(t_flist *lst)
 		link_buff[ret] = '\0';
 		lst->link = link_buff;
 	}
+	printf("lien ds buff : %s\tds liste : %s\n", link_buff, lst->link);
 	return (0);
 }
 
@@ -106,6 +107,7 @@ int		option_l(struct stat b_stat, char *cheat[], t_flist *lst, t_arg *opt)
 		opt->lk_len = len_tmp; 
 	if (lst->type == 'l')
 		type_l(lst);
+	printf("lien ds liste danss ret de fct : %s\n", link_buff, lst->link);
 	return (0);
 }
 

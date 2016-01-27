@@ -112,11 +112,13 @@ int		ls_display(t_arg *option, t_flist *lst)
 	{
 		long_display(lst, option);
 	}
-	ft_putendl(lst->name);
+	ft_putstr(lst->name);
 	if (option->l == 1 && lst->type == 'l')
 	{
 		ft_putstr(" -> ");
 		ft_putstr(lst->link);
+		ft_putchar('|');
 	}
+	ft_putendl("");
 	return (0);
 }
