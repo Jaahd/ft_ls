@@ -48,16 +48,14 @@ int		lst_2nd_t_insert(t_arg *option, t_flist **lst, t_flist *new)
 	t_flist			*tmp;
 
 	tmp = *lst;
-
 	while (tmp->next != NULL && (cmp = (option->r ? intcmp(tmp->next->epoc, new->epoc) :
 					intcmp(new->epoc, tmp->next->epoc))) <= 0)
 	{
 		if (cmp == 0)
 		{
-			while (tmp->next && ft_strcmp(new->name, tmp->next->name) > 0)
-			{
+			while (tmp->next && (option->r ? ft_strcmp(tmp->next->name, new->name) :
+											ft_strcmp(new->name, tmp->next->name)) > 0)
 				tmp = tmp->next;
-			}
 			new->next = tmp->next;
 			tmp->next = new;		
 			return (0);
@@ -78,48 +76,18 @@ int		lst_time_insert(t_arg *option, t_flist **lst, t_flist *new)
 	tmp = *lst;
 	cmp = (option->r ? intcmp(tmp->epoc, new->epoc) :
 			intcmp(new->epoc, tmp->epoc));
-	/*	if (cmp == 0)  	
-		cmp = (option->r ? ft_strcmp(tmp->name, new->name)
-		: ft_strcmp(new->name, tmp->name));
-		*/	ft_putendl("--------------");
-	printf("nouveau maillon : [%s\t%d]\n", new->name, new->epoc);
-	while(tmp != NULL)
-	{
-		printf("liste avant{%s\t%d}\n", tmp->name, tmp->epoc);
-		tmp = tmp->next;
-	}
-	ft_putendl("--------------");
 	if (cmp > 0)
 	{
 		new->next = tmp;	
 		*lst = new;
-		tmp= *lst;
-		while(tmp != NULL)
-		{
-			printf("liste apres {%s\t%d}\n", tmp->name, tmp->epoc);
-			tmp = tmp->next;
-		}
 		return (0);
 	}
 	else if (tmp->next == NULL)
 	{
-		printf("toto\n");
 		tmp->next = new;
-		tmp = *lst;
-		while(tmp != NULL)
-		{
-			printf("liste apres {%s\t%d}\n", tmp->name, tmp->epoc);
-			tmp = tmp->next;
-		}
 		return (0);
 	}
 	lst_2nd_t_insert(option, lst, new);
-	tmp = *lst;
-	while(tmp != NULL)
-	{
-		printf("liste apres {%s\t%d}\n", tmp->name, tmp->epoc);
-		tmp = tmp->next;
-	}
 	return (0);
 }
 
