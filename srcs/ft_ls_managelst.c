@@ -16,7 +16,7 @@
 #include "libft.h"
 #include "ft_ls.h"
 
-t_flist		*lst_new(char *name, char *fpath, t_arg *option)
+t_flist		*lst_new(char *name, char *fpath, t_arg **option)
 {
 	//	printf("fct : lst_new\n");
 	t_flist			*new;
@@ -28,6 +28,7 @@ t_flist		*lst_new(char *name, char *fpath, t_arg *option)
 	new->path = fpath;
 	new->type = 0;
 	new->date = NULL;
+	new->year = NULL;
 	new->epoc = 0;
 	new->owner = NULL;
 	new->group = NULL;
@@ -37,7 +38,8 @@ t_flist		*lst_new(char *name, char *fpath, t_arg *option)
 	new->next = NULL;
 	new->fsize_len = 0;
 	new->block = 0;
-	file_info(new->path, option, new);
+	file_info(new->path, *option, &new);
+//printf("\nlongeur des lien : %d\n", (*option)->lk_len);
 	return (new);
 }
 

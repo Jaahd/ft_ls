@@ -17,6 +17,7 @@
 #include "ft_ls.h"
 
 
+// printf("\nlst->link_nb : %s\tlongeur des lien : %d\n", (*lst)->link_nb, option->lk_len);
 int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 {
 //	printf("fct : get_name\n");
@@ -31,16 +32,17 @@ int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 	while (av[cpt])
 	{
 		if (av[cpt][0] == '/')
-			new = lst_new("", av[cpt], option);
+			new = lst_new("", av[cpt], &option);
 		else
 			new = lst_new(av[cpt], format_path("./", av[cpt],
-						ft_strlen(av[cpt])), option);
+						ft_strlen(av[cpt])), &option);
 		if (*lst == NULL)
 			*lst = new;
 		else if(option->t == 1)
 			lst_time_insert(option, lst, new);
 		else
 			lst_insert(option, lst, new);
+//		 printf("\nlst->link_nb : %s\tlongeur des lien : %d\n", (*lst)->link_nb, option->lk_len);
 		cpt++;
 	}
 	return (0);

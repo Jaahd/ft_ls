@@ -47,7 +47,7 @@ int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *dpath)
 	while ((p_dirent = readdir(p_dir)) != NULL) 
 	{
 		new = lst_new(p_dirent->d_name, format_path(dpath,
-			p_dirent->d_name, ft_strlen(p_dirent->d_name)), option);
+			p_dirent->d_name, ft_strlen(p_dirent->d_name)), &option);
 		if (*lst2 == NULL)
 			*lst2 = new;
 		else if (option->t == 1)
@@ -60,9 +60,9 @@ int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *dpath)
 	while(tmp)
 	{
 		if (option->a == 1)
-			ls_display(option, tmp);	
+			ls_display(option, &tmp);	
 		else if (tmp->name[0] != '.')
-			ls_display(option, tmp);	
+			ls_display(option, &tmp);	
 		tmp = tmp->next;	
 	}
 	return (0);

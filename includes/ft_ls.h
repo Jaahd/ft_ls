@@ -50,6 +50,7 @@ typedef struct		s_flist
 	char			*path;
 	char			type;
 	char			*date;
+	char			*year;
 	int			epoc;
 	char			*owner;
 	char			*group;
@@ -76,22 +77,22 @@ int					lst_first_insert(t_flist **lst, t_flist *tmp, t_flist *new,
 								int cmp);
 int					lst_time_insert(t_arg *option, t_flist **lst, t_flist *new);
 int					lst_insert(t_arg *option, t_flist **lst, t_flist *new);
-t_flist				*lst_new(char *name, char *fpath, t_arg *option);
+t_flist				*lst_new(char *name, char *fpath, t_arg **option);
 
 // permissions
-int					file_size(t_flist *lst, t_arg *option, struct stat b_stat);
-int					file_rights(t_flist *lst, struct stat buff_stat);
+int					file_size(t_flist **lst, t_arg *option, struct stat b_stat);
+int					file_rights(t_flist **lst, struct stat buff_stat);
 char				file_type(struct stat buff_stat);
 int					option_l(struct stat buff_stat, char *cheat[],
-								t_flist *lst, t_arg *option);
-int					file_info(char *path, t_arg *option, t_flist *lst);
+								t_flist **lst, t_arg **option);
+int					file_info(char *path, t_arg *option, t_flist **lst);
 
 // display
 int					display_total(t_arg **option);
 int					display_dirname(t_arg *option, char *str);
 int					first_display(t_flist **lst, t_arg *options);
-int					long_display(t_flist *lst, t_arg *option);
-int					ls_display(t_arg *opt, t_flist *lst);
+int					long_display(t_flist **lst, t_arg *option);
+int					ls_display(t_arg *opt, t_flist **lst);
 
 // managedir 
 int					fill_dirlist(DIR *p_dir, t_flist **lst, t_arg *argmt);

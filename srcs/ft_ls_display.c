@@ -29,6 +29,7 @@ int		display_total(t_arg **option)
 		ft_putnbrendl((*option)->tot_blocks);
 	}
 	(*option)->tot_blocks = 0;
+//	(*option)->lk_len = 0;
 	return (0);
 }
 
@@ -51,7 +52,7 @@ int		first_display(t_flist **lst, t_arg *option)
 	while (tmp != NULL)
 	{
 		if (tmp->type != 'd')	
-			ls_display(option, tmp);
+			ls_display(option, &tmp);
 		tmp = tmp->next;
 	}
 	tmp = *lst;
@@ -87,37 +88,37 @@ int		put_space(char *str, int len)
 	return (0);
 }
 
-int		long_display(t_flist *lst, t_arg *option)
+int		long_display(t_flist **lst, t_arg *option)
 {
-	//		printf("fct : long_display\nlst->owner : %s\toption->l : %d\n");
-	ft_putstr(lst->rights);
-	ft_putstr(lst->link_nb);
-	put_space(lst->link_nb, (option->lk_len + 1));
-	ft_putstr(lst->owner);
-	put_space(lst->owner, (option->own_len + 2));
-	ft_putstr(lst->group);
-	put_space(lst->group, (option->gr_len + 2));
-	put_space(lst->size, option->size_len);
-	ft_putstr(lst->size);
+//		printf("fct : long_display : option->link_len : %d\n", option->lk_len);
+	ft_putstr((*lst)->rights);
+	ft_putstr((*lst)->link_nb);
+	put_space((*lst)->link_nb, (option->lk_len + 1));
+	ft_putstr((*lst)->owner);
+	put_space((*lst)->owner, (option->own_len + 2));
+	ft_putstr((*lst)->group);
+	put_space((*lst)->group, (option->gr_len + 2));
+	put_space((*lst)->size, option->size_len);
+	ft_putstr((*lst)->size);
 	ft_putchar(' ');
-	ft_putstr(lst->date);
+	ft_putstr((*lst)->date);
+	ft_putstr((*lst)->year);
 	ft_putchar(' ');
 	return (0);
 }
 
-int		ls_display(t_arg *option, t_flist *lst)
+int		ls_display(t_arg *option, t_flist **lst)
 {
 	//		printf("fct : ls_display\n");
 	if (option->l == 1)
 	{
 		long_display(lst, option);
 	}
-	ft_putstr(lst->name);
-	if (option->l == 1 && lst->type == 'l')
+	ft_putstr((*lst)->name);
+	if (option->l == 1 && (*lst)->type == 'l')
 	{
 		ft_putstr(" -> ");
-		ft_putstr(lst->link);
-		ft_putchar('|');
+		ft_putstr((*lst)->link);
 	}
 	ft_putendl("");
 	return (0);
