@@ -133,7 +133,6 @@ int		option_l(struct stat b_stat, char *cheat[], t_flist **lst, t_arg **opt)
 	(*lst)->group = ft_strdup(cheat[1]);
 	if ((len_tmp = ft_strlen((*lst)->group)) > (*opt)->gr_len)
 		(*opt)->gr_len = len_tmp; 
-	file_rights(lst, b_stat);
 	file_size(lst, (*opt), b_stat);
 	(*lst)->link_nb = ft_itoa(b_stat.st_nlink);
 	if ((*opt)->a == 1 || ((*opt)->a != 1 && (*lst)->name[0] != '.'))
@@ -186,11 +185,10 @@ int		file_info(char *path, t_arg *option, t_flist **lst)
 
 	lstat(path, &buff_stat);
 	(*lst)->type = file_type(buff_stat);
+	file_rights(lst, buff_stat);
 	time_tmp = NULL;
 	if (option->l == 1 || option->t == 1)
-	{
 		get_time(lst, buff_stat, time_tmp);
-	}
 	if (option->l == 1)
 	{
 		if ((pwd = getpwuid(buff_stat.st_uid)) == NULL)
