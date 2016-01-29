@@ -129,9 +129,9 @@ int		display_colors(t_flist **lst)
 	if ((*lst)->rights[3] == 'S' || (*lst)->rights[6] == 'S')
 		ft_putstr("\033[1;100m");
 	if ((*lst)->rights[9] == 't')
-		ft_putstr("\033[1;32;42m");
+		ft_putstr("\033[1;32;46m");
 	if ((*lst)->rights[9] == 'T')
-		ft_putstr("\033[1;42m");
+		ft_putstr("\033[1;46m");
 	return (0);
 }
 
