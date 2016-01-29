@@ -44,19 +44,46 @@ int		ft_error(int error, char *cur_pb)
 	return (0);
 }
 
-int		free_options(t_arg *option)
+int		init_options(t_arg *option)
 {
 	option->recu = 0;
 	option->a = 0;
 	option->l = 0;
 	option->r = 0;
 	option->t = 0;
+	option->colors = 0;
 	option->arg_nb = 0;
 	option->own_len = 0;
 	option->gr_len = 0;
 	option->lk_len = 0;
+	option->maj_len = 0;
+	option->min_len = 0;
 	option->size_len = 0;
 	option->tot_blocks = 0;
+	return (0);
+}
+
+int		free_s_flist(t_flist **lst)
+{
+	t_flist		*tmp;
+
+	while (*lst)
+	{
+		ft_strdel(&(*lst)->name);
+		ft_strdel(&(*lst)->path);
+		ft_strdel(&(*lst)->date);
+		ft_strdel(&(*lst)->year);
+		ft_strdel(&(*lst)->owner);
+		ft_strdel(&(*lst)->group);
+		ft_strdel(&(*lst)->size);
+		ft_strdel(&(*lst)->major);
+		ft_strdel(&(*lst)->minor);
+		ft_strdel(&(*lst)->link_nb);
+		ft_strdel(&(*lst)->link);
+		tmp = *lst;
+		(*lst) = (*lst)->next;
+		free(tmp);
+	}
 	return (0);
 }
 
@@ -71,10 +98,12 @@ int		main(int ac, char **av)
 	i = -1;
 	ac_c = ac;
 	lst = NULL;
-	free_options(&option);
+	init_options(&option);
 	get_options(&option, &ac_c, av);
 	option.arg_nb = ac_c;
 	get_name(&option, &lst, ac_c, av);
 	first_display(&lst, &option);
+	free_s_flist(&lst);
+	while (1);
 	return (0);
 }

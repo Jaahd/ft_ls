@@ -27,13 +27,11 @@ char	*ft_properjoin(char *s1, char *s2)
 	if (s2 == NULL)
 	{
 		ret = ft_strdup(s1);
-		ft_strdel(&s1);
 		return (ret);
 	}
 	if (s1 != NULL && s2 != NULL)
 	{
 		ret = ft_strjoin(s1, s2);
-//		ft_strdel(&s1);
 		return (ret);
 	}
 	return (NULL);

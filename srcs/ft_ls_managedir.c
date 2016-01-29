@@ -16,38 +16,18 @@
 #include "ft_ls.h"
 #include "libft.h"
 
-int		lst2_pushback(t_flist **list, char *name)
-{
-	//	printf("fct : lst2_pushback\n");
-	t_flist		*tmp;
-	t_flist		*new;
-
-	tmp = *list;
-	while (tmp != NULL && tmp->next != NULL)
-		tmp = tmp->next;
-	if ((new = (t_flist *)malloc(sizeof(t_flist))) == NULL)
-		ft_error(1, name);
-	new->next = NULL;
-	if ((new->name = ft_strdup(name)) == NULL)
-		ft_error(1, name);
-	if (tmp)
-		tmp->next = new;
-	else
-		*list = new;
-	return (0);
-}
-
 int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *dpath)
 {
-	//	printf("fct : fill_list\n");
 	struct dirent		*p_dirent;
 	t_flist				*new;
 	t_flist				*tmp;
+	char				*str;
 
 	while ((p_dirent = readdir(p_dir)) != NULL) 
 	{
-		new = lst_new(p_dirent->d_name, format_path(dpath,
-			p_dirent->d_name, ft_strlen(p_dirent->d_name)), &option);
+		new = lst_new(p_dirent->d_name, (str = format_path(dpath,
+			p_dirent->d_name, ft_strlen(p_dirent->d_name))), &option);
+//		ft_strdel(&str);
 		if (*lst2 == NULL)
 			*lst2 = new;
 		else if (option->t == 1)
@@ -55,13 +35,11 @@ int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *dpath)
 		else
 			lst_insert(option, lst2, new);
 	}
-	tmp=*lst2;
-		display_total(&option);
+	tmp = *lst2;
+	display_total(&option);
 	while(tmp)
 	{
-		if (option->a == 1)
-			ls_display(option, &tmp);	
-		else if (tmp->name[0] != '.')
+		if (option->a == 1 || (option->a == 0 && tmp->name[0] != '.'))
 			ls_display(option, &tmp);	
 		tmp = tmp->next;	
 	}
@@ -74,6 +52,7 @@ int		open_dir(t_arg *option, char *dpath)
 	DIR					*p_dir;
 	t_flist				*lst2;
 	t_flist				*tmp;
+	char				*str;
 
 	lst2 = NULL;
 	p_dir = opendir(dpath);
@@ -88,8 +67,9 @@ int		open_dir(t_arg *option, char *dpath)
 		&& ft_strcmp(tmp->name, ".."))
 		{
 			display_dirname(option, tmp->path);
-			open_dir(option, format_path(dpath, tmp->name, 
-						ft_strlen(tmp->name)));
+			open_dir(option, (str = format_path(dpath, tmp->name, 
+						ft_strlen(tmp->name))));
+			ft_strdel(&str);
 		}
 		option->size_len = 0;
 		tmp = tmp->next;

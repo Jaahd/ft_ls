@@ -36,13 +36,15 @@ typedef struct		s_arg
 	int				l;
 	int				r;
 	int				t;
-	int				G;
+	int				colors;
 	int				arg_nb;
 	int				own_len;
 	int				gr_len;
 	int				lk_len;
+	int				maj_len;
+	int				min_len;
 	int				size_len;
-	blkcnt_t			tot_blocks;
+	blkcnt_t		tot_blocks;
 }					t_arg;	
 
 typedef struct		s_flist
@@ -52,11 +54,13 @@ typedef struct		s_flist
 	char			type;
 	char			*date;
 	char			*year;
-	int			epoc;
+	int				epoc;
 	char			*owner;
 	char			*group;
 	char			rights[13];
-	char			*size; // -> cf si besoin de le changer en int //
+	char			*size;
+	char			*major;
+	char			*minor;
 	char			*link_nb;
 	char			*link;
 	int				fsize_len;
@@ -65,7 +69,7 @@ typedef struct		s_flist
 }					t_flist;
 
 int					ft_error(int error, char *cur_pb);
-int					free_options(t_arg *option);
+int					init_options(t_arg *option);
 
 // getinfo
 //int					get_mtime(t_arg *argmt);
@@ -81,7 +85,7 @@ int					lst_insert(t_arg *option, t_flist **lst, t_flist *new);
 t_flist				*lst_new(char *name, char *fpath, t_arg **option);
 
 // permissions
-int					file_size(t_flist **lst, t_arg *option, struct stat b_stat);
+int					file_size(t_flist **lst, t_arg **option, struct stat b_stat);
 int					file_rights(t_flist **lst, struct stat buff_stat);
 char				file_type(struct stat buff_stat);
 int					option_l(struct stat buff_stat, char *cheat[],

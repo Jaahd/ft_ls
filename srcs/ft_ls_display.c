@@ -88,16 +88,50 @@ int		put_space(char *str, int len)
 	return (0);
 }
 
+int		format_majmin(t_flist **lst, t_arg **option)
+{
+	char		len[(*option)->min_len + 1];
+	char		*tmp;
+	int			size;
+	int			i;
+	int			j;
+
+	i = -1;
+	j = -1;
+	len[(*option)->min_len] = '\0';
+	size = ((*option)->min_len - ft_strlen((*lst)->minor));
+	while(++i < size)
+		len[i] = ' ';
+	while((*lst)->minor[++j])
+	{
+		len[i] = (*lst)->minor[j];
+		i++;
+	}
+//	printf("minor : %s\tlen : |%s|\tmin_len : %d\t size : %d\n", (*lst)->minor, len, (*option)->min_len, size);
+	tmp = ft_strjoin((*lst)->major, len);
+	(*lst)->size = ft_strdup(tmp);
+	(*lst)->fsize_len = ft_strlen((*lst)->size);
+	if (((*option)->a == 1 || ((*option)->a == 0 && (*lst)->name[0] != '.'))
+			&& (*lst)->fsize_len > (*option)->size_len)
+		(*option)->size_len = (*lst)->fsize_len;
+	ft_strdel(&tmp);
+	return (0);
+}
+
 int		long_display(t_flist **lst, t_arg *option)
 {
 //		printf("fct : long_display : option->link_len : %d\n", option->lk_len);
 	ft_putstr((*lst)->rights);
+	put_space((*lst)->link_nb, option->lk_len);
 	ft_putstr((*lst)->link_nb);
-	put_space((*lst)->link_nb, (option->lk_len + 1));
+	ft_putchar(' ');
 	ft_putstr((*lst)->owner);
 	put_space((*lst)->owner, (option->own_len + 2));
 	ft_putstr((*lst)->group);
 	put_space((*lst)->group, (option->gr_len + 2));
+	if ((option->a == 1 || (option->a == 0 && (*lst)->name[0] != '.'))
+			&& ((*lst)->type == 'b' || (*lst)->type == 'c'))
+		format_majmin(lst, &option);
 	put_space((*lst)->size, option->size_len);
 	ft_putstr((*lst)->size);
 	ft_putchar(' ');
@@ -122,7 +156,7 @@ int		display_colors(t_flist **lst)
 	if ((*lst)->rights[0] == 's')
 		ft_putstr("\033[1;37m");
 	if ((*lst)->rights[0] == '-' && ((*lst)->rights[3] == 'x' ||
-		(*lst)->rights[6] == 'x' || (*lst)->rights[9] == 'x'))
+				(*lst)->rights[6] == 'x' || (*lst)->rights[9] == 'x'))
 		ft_putstr("\033[1;32m");
 	if ((*lst)->rights[3] == 's' || (*lst)->rights[6] == 's')
 		ft_putstr("\033[1;32;100m");
@@ -140,10 +174,11 @@ int		ls_display(t_arg *option, t_flist **lst)
 	//		printf("fct : ls_display\n");
 	if (option->l == 1)
 		long_display(lst, option);
-	if (option->G == 1)
+	if (option->colors == 1)
 		display_colors(lst);
 	ft_putstr((*lst)->name);
-	ft_putstr("\033[0m");
+	if (option->colors)
+		ft_putstr("\033[0m");
 	if (option->l == 1 && (*lst)->type == 'l')
 	{
 		ft_putstr(" -> ");
