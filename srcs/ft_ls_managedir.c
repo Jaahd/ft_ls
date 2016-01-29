@@ -27,7 +27,7 @@ int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *dpath)
 	{
 		new = lst_new(p_dirent->d_name, (str = format_path(dpath,
 			p_dirent->d_name, ft_strlen(p_dirent->d_name))), &option);
-//		ft_strdel(&str);
+		free(str);
 		if (*lst2 == NULL)
 			*lst2 = new;
 		else if (option->t == 1)
@@ -69,10 +69,11 @@ int		open_dir(t_arg *option, char *dpath)
 			display_dirname(option, tmp->path);
 			open_dir(option, (str = format_path(dpath, tmp->name, 
 						ft_strlen(tmp->name))));
-			ft_strdel(&str);
+			free(str);
 		}
 		option->size_len = 0;
 		tmp = tmp->next;
 	}
+	free_s_flist(&lst2);
 	return (1);
 }

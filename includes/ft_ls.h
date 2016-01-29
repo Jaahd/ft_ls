@@ -69,6 +69,7 @@ typedef struct		s_flist
 }					t_flist;
 
 int					ft_error(int error, char *cur_pb);
+int		free_s_flist(t_flist **lst);
 int					init_options(t_arg *option);
 
 // getinfo

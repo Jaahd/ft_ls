@@ -9,14 +9,7 @@
 /*   Updated: 2016/01/22 17:25:28 by avacher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-/*
-	if(tmp->next != NULL)
-	{
-		t2 = (option->t ? tmp->next->date : tmp->next->name);
-		while (i = (option->r ? ft_strcmp(t2, new1) : ft_strcmp(new1, t2)) > 0))
-		tmp = tmp->next;
-	}
-	*/
+
 #include <dirent.h>
 #include "libft.h"
 #include "ft_ls.h"
@@ -44,6 +37,22 @@ int		display_dirname(t_arg *option, char *str)
 	return (0);
 }
 
+int		second_display(t_arg *option, t_flist *tmp)
+{
+		if (option->a == 1  && tmp->type == 'd')
+		{
+			display_dirname(option, tmp->name);
+			open_dir(option, tmp->path);
+		}
+		else if (tmp->type == 'd' && ft_strcmp(tmp->name, ".")
+		&& option->a != 1 && ft_strcmp(tmp->name, ".."))
+		{
+			display_dirname(option, tmp->name);
+			open_dir(option, tmp->path);
+		}
+		return (0);
+}
+
 int		first_display(t_flist **lst, t_arg *option)
 {
 	t_flist		*tmp;
@@ -58,19 +67,10 @@ int		first_display(t_flist **lst, t_arg *option)
 	tmp = *lst;
 	while (tmp != NULL)
 	{
-		if (option->a == 1  && tmp->type == 'd')
-		{
-			display_dirname(option, tmp->name);
-			open_dir(option, tmp->path);
-		}
-		else if (tmp->type == 'd' && ft_strcmp(tmp->name, ".")
-		&& option->a != 1 && ft_strcmp(tmp->name, ".."))
-		{
-			display_dirname(option, tmp->name);
-			open_dir(option, tmp->path);
-		}
+		second_display(option, tmp);
 		tmp = tmp->next;
 	}
+	free_s_flist(lst);
 	return (0);
 }
 

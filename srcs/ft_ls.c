@@ -69,17 +69,17 @@ int		free_s_flist(t_flist **lst)
 
 	while (*lst)
 	{
-		ft_strdel(&(*lst)->name);
-		ft_strdel(&(*lst)->path);
-		ft_strdel(&(*lst)->date);
-		ft_strdel(&(*lst)->year);
-		ft_strdel(&(*lst)->owner);
-		ft_strdel(&(*lst)->group);
-		ft_strdel(&(*lst)->size);
-		ft_strdel(&(*lst)->major);
-		ft_strdel(&(*lst)->minor);
-		ft_strdel(&(*lst)->link_nb);
-		ft_strdel(&(*lst)->link);
+		free(&(*lst)->name); // pb mem
+		free(&(*lst)->path); //pb mem
+		free(&(*lst)->date);
+		free(&(*lst)->year);
+		free(&(*lst)->owner);
+		free(&(*lst)->group);
+		free(&(*lst)->size);
+		free(&(*lst)->major);
+		free(&(*lst)->minor);
+		free(&(*lst)->link_nb);
+		free(&(*lst)->link);
 		tmp = *lst;
 		(*lst) = (*lst)->next;
 		free(tmp);

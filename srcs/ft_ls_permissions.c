@@ -183,13 +183,17 @@ int		get_time(t_flist **lst, struct stat buff_stat)
 {
 	int					today;
 	char				*tmp;
+	char				*str;
 
+	str = NULL;
 	today = time(NULL);
 	tmp = ctime(&buff_stat.st_mtime);	
 	(*lst)->epoc = buff_stat.st_mtime;
 	(*lst)->date = ft_strsub(tmp, 4, 7);
 	(*lst)->year = ((today - (*lst)->epoc) > 15768000 ?
-		ft_strjoin(" ", ft_strsub(tmp, 20, 4)) : ft_strsub(tmp, 11, 5));
+		ft_strjoin(" ", (str = ft_strsub(tmp, 20, 4))) :
+		ft_strsub(tmp, 11, 5));
+	free(str);
 	return (0);
 }
 

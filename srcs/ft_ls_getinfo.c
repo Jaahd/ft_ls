@@ -16,6 +16,13 @@
 #include "libft.h"
 #include "ft_ls.h"
 
+int		fonction(t_flist **new, char *av, char *tmp, t_arg *option)
+{
+	*new = lst_new(av, tmp, &option);
+	ft_strdel(&tmp);
+	return (0);
+}
+
 int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 {
 	t_flist			*new;
@@ -29,14 +36,11 @@ int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 		cpt++;
 	while (av[cpt])
 	{
+		tmp = format_path("./", av[cpt], ft_strlen(av[cpt]));
 		if (av[cpt][0] == '/')
 			new = lst_new("", av[cpt], &option);
 		else
-		{
-			new = lst_new(av[cpt], (tmp = format_path("./", av[cpt],
-						ft_strlen(av[cpt]))), &option);
-	//		ft_strdel(&tmp);
-		}
+			fonction(&new, av[cpt], tmp, option);
 		if (*lst == NULL)
 			*lst = new;
 		else if(option->t == 1)
@@ -70,7 +74,7 @@ char	*format_path(char *b_path, char *filename, int namelen)
 	}
 	if (((f_path = ft_properjoin(tmp, filename)) == NULL))
 		ft_error(1, filename);
-//	ft_strdel(&tmp);
+	free(tmp);
 	return (f_path);
 }
 
