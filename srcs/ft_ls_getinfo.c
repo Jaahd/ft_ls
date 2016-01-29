@@ -81,25 +81,25 @@ int		get_options(t_arg *opt, int *ac_c, char **av)
 	int				i;
 	int				cpt;
 
-	cpt = 1;
-	while (cpt < *ac_c)
+	cpt = 0;
+	while (++cpt < *ac_c)
 	{
 		i = 1;
 		while (av[cpt][0] == '-' && av[cpt][i])
 		{
 			if (av[cpt][i] != 'R' && av[cpt][i] != 'a' && av[cpt][i] != 'l' &&
-					av[cpt][i] != 'r' && av[cpt][i] != 't')
+					av[cpt][i] != 'r' && av[cpt][i] != 't' && av[cpt][i] != 'G')
 				ft_error(2, &av[cpt][i]);
 			opt->recu = (av[cpt][i] == 'R') ? 1 : opt->recu;
 			opt->a = (av[cpt][i] == 'a') ? 1 : opt->a;
 			opt->l = (av[cpt][i] == 'l') ? 1 : opt->l;
 			opt->r = (av[cpt][i] == 'r') ? 1 : opt->r;
 			opt->t = (av[cpt][i] == 't') ? 1 : opt->t;
+			opt->G = (av[cpt][i] == 'G') ? 1 : opt->G;
 			i++;
 		}
 		if (av[cpt][0] != '-')
 			break ;
-		cpt++;
 	}
 	*ac_c -= cpt;
 	return (0);

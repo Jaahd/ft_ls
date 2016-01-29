@@ -107,14 +107,43 @@ int		long_display(t_flist **lst, t_arg *option)
 	return (0);
 }
 
+int		display_colors(t_flist **lst)
+{
+	if ((*lst)->rights[0] == 'd')
+		ft_putstr("\033[1;34m");
+	if ((*lst)->rights[0] == 'l')
+		ft_putstr("\033[1;36m");
+	if ((*lst)->rights[0] == 'b')
+		ft_putstr("\033[1;33m");
+	if ((*lst)->rights[0] == 'c')
+		ft_putstr("\033[1;31m");
+	if ((*lst)->rights[0] == 'p')
+		ft_putstr("\033[1;35m");
+	if ((*lst)->rights[0] == 's')
+		ft_putstr("\033[1;37m");
+	if ((*lst)->rights[0] == '-' && ((*lst)->rights[3] == 'x' ||
+		(*lst)->rights[6] == 'x' || (*lst)->rights[9] == 'x'))
+		ft_putstr("\033[1;32m");
+	if ((*lst)->rights[3] == 's' || (*lst)->rights[6] == 's')
+		ft_putstr("\033[1;32;100m");
+	if ((*lst)->rights[3] == 'S' || (*lst)->rights[6] == 'S')
+		ft_putstr("\033[1;100m");
+	if ((*lst)->rights[9] == 't')
+		ft_putstr("\033[1;32;42m");
+	if ((*lst)->rights[9] == 'T')
+		ft_putstr("\033[1;42m");
+	return (0);
+}
+
 int		ls_display(t_arg *option, t_flist **lst)
 {
 	//		printf("fct : ls_display\n");
 	if (option->l == 1)
-	{
 		long_display(lst, option);
-	}
+	if (option->G == 1)
+		display_colors(lst);
 	ft_putstr((*lst)->name);
+	ft_putstr("\033[0m");
 	if (option->l == 1 && (*lst)->type == 'l')
 	{
 		ft_putstr(" -> ");

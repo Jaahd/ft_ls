@@ -171,7 +171,6 @@ int		get_minmaj(struct stat buff_stat, t_flist **lst)
 	tmp = ft_strjoin(maj, ", ");
 	maj = ft_strjoin(tmp, min);
 	size = ft_strlen(maj);
-	printf("min : %s\tmaj : %s\n", min, maj);
 	(*lst)->size = maj;
 	return (0);
 }

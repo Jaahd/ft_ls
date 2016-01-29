@@ -36,6 +36,7 @@ typedef struct		s_arg
 	int				l;
 	int				r;
 	int				t;
+	int				G;
 	int				arg_nb;
 	int				own_len;
 	int				gr_len;
