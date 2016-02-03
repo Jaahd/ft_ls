@@ -46,6 +46,7 @@ int		second_display(t_arg *option, t_flist *tmp)
 		if (option->arg_nb > 1)
 			display_dirname(option, tmp->name);
 		open_dir(option, tmp->path, tmp->name);
+	option->lk_len = 0;
 	}
 	else if (tmp->type == 'd' && ft_strcmp(tmp->name, ".")
 			&& option->a != 1 && ft_strcmp(tmp->name, ".."))
@@ -53,6 +54,7 @@ int		second_display(t_arg *option, t_flist *tmp)
 		if (option->arg_nb > 1)
 			display_dirname(option, tmp->name);
 		open_dir(option, tmp->path, tmp->name);
+	option->lk_len = 0;
 	}
 	return (0);
 }
@@ -75,7 +77,6 @@ int		first_display(t_flist **lst, t_arg *option)
 		second_display(option, tmp);
 		tmp = tmp->next;
 	}
-	option->lk_len = 0;
 //	free_s_flist(lst);
 	return (0);
 }
