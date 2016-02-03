@@ -18,13 +18,19 @@
 
 t_flist		*lst_new(char *name, char *fpath, t_arg **option)
 {
-	//	printf("fct : lst_new\n");
+//	printf("fct : lst_new\n");
 	t_flist			*new;
 
 	if ((new = (t_flist *)malloc(sizeof(t_flist))) == NULL)
 		ft_error (1, "list creation"); // nom a reprendre
-	if ((new->name = ft_strdup(name)) == NULL)
-		ft_error(1, name);
+/*	if (ft_strcmp(name, ""))
+	{
+		if ((new->name = ft_strdup(fpath)) == NULL)
+			ft_error(1, name);
+	}
+	else
+*/		if ((new->name = ft_strdup(name)) == NULL)
+			ft_error(1, name);
 	new->path = ft_strdup(fpath);
 	new->type = 0;
 	new->date = NULL;
@@ -45,7 +51,7 @@ t_flist		*lst_new(char *name, char *fpath, t_arg **option)
 
 int		lst_2nd_t_insert(t_arg *option, t_flist **lst, t_flist *new)
 {
-	//	printf("fct : lst_2_t_insert\n");
+//	printf("fct : lst_2_t_insert\n");
 	int				cmp;
 	t_flist			*tmp;
 
@@ -73,7 +79,7 @@ int		lst_2nd_t_insert(t_arg *option, t_flist **lst, t_flist *new)
 
 int		lst_time_insert(t_arg *option, t_flist **lst, t_flist *new)
 {
-	//	printf("fct : lst_time_insert\n");
+//	printf("fct : lst_time_insert\n");
 	t_flist			*tmp;
 	int				cmp;
 
@@ -97,7 +103,7 @@ int		lst_time_insert(t_arg *option, t_flist **lst, t_flist *new)
 
 int		lst_insert(t_arg *option, t_flist **lst, t_flist *new)
 {
-	//	printf("fct : lst_insert\n");	
+//	printf("fct : lst_insert\n");	
 	t_flist			*tmp;
 	int				cmp;
 

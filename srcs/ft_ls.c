@@ -89,7 +89,7 @@ int		free_s_flist(t_flist **lst)
 
 int		main(int ac, char **av)
 {
-//	printf("fct : main\n");
+	printf("fct : main\n");
 	t_flist			*lst;
 	t_arg			option;
 	int				ac_c;
@@ -103,7 +103,7 @@ int		main(int ac, char **av)
 	option.arg_nb = ac_c;
 	get_name(&option, &lst, ac_c, av);
 	first_display(&lst, &option);
-	free_s_flist(&lst);
-	while (1);
+//	free_s_flist(&lst);
+//	while (1);
 	return (0);
 }

@@ -18,6 +18,7 @@
 
 int		fonction(t_flist **new, char *av, char *tmp, t_arg *option)
 {
+	printf("fct : fonction\n");
 	*new = lst_new(av, tmp, &option);
 	ft_strdel(&tmp);
 	return (0);
@@ -25,8 +26,11 @@ int		fonction(t_flist **new, char *av, char *tmp, t_arg *option)
 
 int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 {
+	printf("fct : get_name\n");
 	t_flist			*new;
+	t_flist			*tmplst;
 	char			*tmp;
+	char			*t2;
 	int				cpt;
 
 	cpt = 1;
@@ -36,9 +40,9 @@ int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 		cpt++;
 	while (av[cpt])
 	{
-		tmp = format_path("./", av[cpt], ft_strlen(av[cpt]));
+		tmp = format_path("./", (t2 = ft_strdup(av[cpt])), ft_strlen(av[cpt]));
 		if (av[cpt][0] == '/')
-			new = lst_new("", av[cpt], &option);
+			new = lst_new(av[cpt], av[cpt], &option);
 		else
 			fonction(&new, av[cpt], tmp, option);
 		if (*lst == NULL)
@@ -49,11 +53,19 @@ int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 			lst_insert(option, lst, new);
 		cpt++;
 	}
+	tmplst = *lst;
+	while (tmplst)
+	{
+		printf("name : [%s]\n", tmplst->name);
+		tmplst=tmplst->next;
+	}
+//	free(t2);
 	return (0);
 }
 
 char	*format_path(char *b_path, char *filename, int namelen)
 {
+//	printf("fct : format_path\n");
 	char			*tmp;
 	char			*f_path;
 	int				p_len;
@@ -74,12 +86,13 @@ char	*format_path(char *b_path, char *filename, int namelen)
 	}
 	if (((f_path = ft_properjoin(tmp, filename)) == NULL))
 		ft_error(1, filename);
-	free(tmp);
+//	free(tmp);
 	return (f_path);
 }
 
 int		get_options(t_arg *opt, int *ac_c, char **av)
 {
+	printf("fct : get_options\n");
 	int				i;
 	int				cpt;
 

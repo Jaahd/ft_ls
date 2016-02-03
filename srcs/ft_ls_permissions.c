@@ -23,6 +23,7 @@
 
 int		get_minmaj(struct stat buff_stat, t_arg **opt, t_flist **lst)
 {
+//	printf("getminmaj\n");
 	char	*maj;
 	char	*tmp;
 	int		i;
@@ -47,6 +48,7 @@ int		get_minmaj(struct stat buff_stat, t_arg **opt, t_flist **lst)
 
 int		file_size(t_flist **lst, t_arg **option, struct stat buff_stat)
 {
+//	printf("file_size\n");
 	if (((*option)->a == 1 || ((*option)->a == 0 && (*lst)->name[0] != '.'))
 			&& ((*lst)->type == 'b' || (*lst)->type == 'c'))
 		get_minmaj(buff_stat, option, lst);
@@ -99,24 +101,26 @@ char		sticky_bit(struct stat buff_stat)
 
 int		file_rights(t_flist **lst, struct stat buff_stat)
 {
-		(*lst)->rights[0] = (*lst)->type;
-		(*lst)->rights[1] = (buff_stat.st_mode & S_IRUSR) ? 'r' : '-';
-		(*lst)->rights[2] = (buff_stat.st_mode & S_IWUSR) ? 'w' : '-';
-		(*lst)->rights[3] = get_uid(buff_stat); 
-		(*lst)->rights[4] = (buff_stat.st_mode & S_IRGRP) ? 'r' : '-'; 
-		(*lst)->rights[5] = (buff_stat.st_mode & S_IWGRP) ? 'w' : '-'; 
-		(*lst)->rights[6] = get_gid(buff_stat); 
-		(*lst)->rights[7] = (buff_stat.st_mode & S_IROTH) ? 'r' : '-';
-		(*lst)->rights[8] = (buff_stat.st_mode & S_IWOTH) ? 'w' : '-';
-		(*lst)->rights[9] = sticky_bit(buff_stat);
-		(*lst)->rights[10] = ' ';
-		(*lst)->rights[11] = ' ';
-		(*lst)->rights[12] = '\0';
-		return (0);
+//	printf("file_rights\n");
+	(*lst)->rights[0] = (*lst)->type;
+	(*lst)->rights[1] = (buff_stat.st_mode & S_IRUSR) ? 'r' : '-';
+	(*lst)->rights[2] = (buff_stat.st_mode & S_IWUSR) ? 'w' : '-';
+	(*lst)->rights[3] = get_uid(buff_stat); 
+	(*lst)->rights[4] = (buff_stat.st_mode & S_IRGRP) ? 'r' : '-'; 
+	(*lst)->rights[5] = (buff_stat.st_mode & S_IWGRP) ? 'w' : '-'; 
+	(*lst)->rights[6] = get_gid(buff_stat); 
+	(*lst)->rights[7] = (buff_stat.st_mode & S_IROTH) ? 'r' : '-';
+	(*lst)->rights[8] = (buff_stat.st_mode & S_IWOTH) ? 'w' : '-';
+	(*lst)->rights[9] = sticky_bit(buff_stat);
+	(*lst)->rights[10] = ' ';
+	(*lst)->rights[11] = ' ';
+	(*lst)->rights[12] = '\0';
+	return (0);
 }
 
 char	file_type(struct stat buff_stat)
 {
+//	printf("file_type\n");
 	char				type;
 
 	if(S_ISBLK(buff_stat.st_mode))
@@ -140,6 +144,7 @@ char	file_type(struct stat buff_stat)
 
 int		type_l(t_flist **lst)
 {
+//	printf("type_l\n");
 	char				link_buff[1024];
 	int					ret;
 
@@ -155,6 +160,7 @@ int		type_l(t_flist **lst)
 
 int		option_l(struct stat b_stat, char *cheat[], t_flist **lst, t_arg **opt)
 {
+//	printf("option_l\n");
 	int					len_tmp;
 
 	(*lst)->owner = ft_strdup(cheat[0]);
@@ -181,6 +187,7 @@ int		option_l(struct stat b_stat, char *cheat[], t_flist **lst, t_arg **opt)
 
 int		get_time(t_flist **lst, struct stat buff_stat)
 {
+//	printf("get_time\n");
 	int					today;
 	char				*tmp;
 	char				*str;
@@ -191,15 +198,15 @@ int		get_time(t_flist **lst, struct stat buff_stat)
 	(*lst)->epoc = buff_stat.st_mtime;
 	(*lst)->date = ft_strsub(tmp, 4, 7);
 	(*lst)->year = ((today - (*lst)->epoc) > 15768000 ?
-		ft_strjoin(" ", (str = ft_strsub(tmp, 20, 4))) :
-		ft_strsub(tmp, 11, 5));
-	free(str);
+			ft_strjoin(" ", (str = ft_strsub(tmp, 20, 4))) :
+			ft_strsub(tmp, 11, 5));
+//		free(str);
 	return (0);
 }
 
 int		file_info(char *path, t_arg *option, t_flist **lst)
 {
-	//	printf("fct : isadir\n");
+//	printf("fct : file_info\n");
 	struct stat			buff_stat;
 	struct passwd		*pwd;
 	struct group		*grp;

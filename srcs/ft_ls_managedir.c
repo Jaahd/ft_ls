@@ -18,6 +18,7 @@
 
 int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *dpath)
 {
+//		printf("fct : fill_list\n");
 	struct dirent		*p_dirent;
 	t_flist				*new;
 	t_flist				*tmp;
@@ -27,7 +28,7 @@ int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *dpath)
 	{
 		new = lst_new(p_dirent->d_name, (str = format_path(dpath,
 			p_dirent->d_name, ft_strlen(p_dirent->d_name))), &option);
-		free(str);
+		//	free(str);
 		if (*lst2 == NULL)
 			*lst2 = new;
 		else if (option->t == 1)
@@ -48,7 +49,7 @@ int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *dpath)
 
 int		open_dir(t_arg *option, char *dpath)
 {
-	//		printf("fct : open_dir\n");
+//		printf("fct : open_dir\n");
 	DIR					*p_dir;
 	t_flist				*lst2;
 	t_flist				*tmp;
@@ -69,11 +70,11 @@ int		open_dir(t_arg *option, char *dpath)
 			display_dirname(option, tmp->path);
 			open_dir(option, (str = format_path(dpath, tmp->name, 
 						ft_strlen(tmp->name))));
-			free(str);
+		//	free(str);
 		}
 		option->size_len = 0;
 		tmp = tmp->next;
 	}
-	free_s_flist(&lst2);
+//	//	free_s_flist(&lst2); ////	free a revoir
 	return (1);
 }
