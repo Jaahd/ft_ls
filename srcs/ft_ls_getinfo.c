@@ -86,7 +86,7 @@ char	*format_path(char *b_path, char *filename, int namelen)
 	}
 	if (((f_path = ft_properjoin(tmp, filename)) == NULL))
 		ft_error(1, filename);
-//	free(tmp);
+	free(tmp);
 	return (f_path);
 }
 

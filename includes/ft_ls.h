@@ -103,6 +103,6 @@ int					ls_display(t_arg *opt, t_flist **lst);
 // managedir 
 int					fill_dirlist(DIR *p_dir, t_flist **lst, t_arg *argmt);
 int					lst_pushback(t_flist **lst, char *dname);
-int					open_dir(t_arg *opt, char *dpath);
+int					open_dir(t_arg *opt, char *dpath, char *name);
 
 #endif
