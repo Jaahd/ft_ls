@@ -166,13 +166,13 @@ int		display_colors(t_flist **lst)
 				(*lst)->rights[6] == 'x' || (*lst)->rights[9] == 'x'))
 		ft_putstr("\033[1;32m");
 	if ((*lst)->rights[3] == 's' || (*lst)->rights[6] == 's')
-		ft_putstr("\033[1;32;100m");
-	if ((*lst)->rights[3] == 'S' || (*lst)->rights[6] == 'S')
-		ft_putstr("\033[1;100m");
-	if ((*lst)->rights[9] == 't')
 		ft_putstr("\033[1;32;46m");
-	if ((*lst)->rights[9] == 'T')
+	if ((*lst)->rights[3] == 'S' || (*lst)->rights[6] == 'S')
 		ft_putstr("\033[1;46m");
+	if ((*lst)->rights[9] == 't')
+		ft_putstr("\033[1;32;100m");
+	if ((*lst)->rights[9] == 'T')
+		ft_putstr("\033[1;100m");
 	return (0);
 }
 

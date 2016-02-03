@@ -64,7 +64,8 @@ int		lst_2nd_t_insert(t_arg *option, t_flist **lst, t_flist *new)
 		{
 			while (tmp->next && (option->r ?
 						ft_strcmp(tmp->next->name, new->name) :
-						ft_strcmp(new->name, tmp->next->name)) > 0)
+						ft_strcmp(new->name, tmp->next->name)) > 0
+						&& intcmp(tmp->next->epoc, new->epoc) == 0)
 				tmp = tmp->next;
 			new->next = tmp->next;
 			tmp->next = new;		
@@ -86,18 +87,30 @@ int		lst_time_insert(t_arg *option, t_flist **lst, t_flist *new)
 	tmp = *lst;
 	cmp = (option->r ? intcmp(tmp->epoc, new->epoc) :
 			intcmp(new->epoc, tmp->epoc));
-	if (cmp > 0)
+	//printf("%s\tnew : %d\t tmp : %d\t cmp : %d\n", new->name, new->epoc, tmp->epoc, cmp);
+	if (cmp > 0 || (cmp == 0 && (option->r ? ft_strcmp(tmp->name, new->name) :
+										ft_strcmp(new->name, tmp->name)) < 0))
 	{
+//		printf("if : cmp>0\n");
 		new->next = tmp;	
 		*lst = new;
 		return (0);
 	}
 	else if (tmp->next == NULL)
 	{
+//		printf("if cmp<0 et tmp->next == NULL\n");
 		tmp->next = new;
 		return (0);
 	}
 	lst_2nd_t_insert(option, lst, new);
+	tmp = *lst;
+	printf("*NEW* [%s]\t", new->name);
+	while (tmp)
+	{
+		printf("[%s]->", tmp->name);
+		tmp = tmp->next;
+	}
+	printf("\n");
 	return (0);
 }
 
