@@ -39,7 +39,8 @@ t_flist		*lst_new(char *name, char *fpath, t_arg **option)
 	new->next = NULL;
 	new->fsize_len = 0;
 	new->block = 0;
-	file_info(new->path, new->name, *option, &new);
+	if (file_info(new->path, new->name, *option, &new) == -1)
+		return (NULL);
 //printf("\nlongeur des lien : %d\n", (*option)->lk_len);
 	return (new);
 }

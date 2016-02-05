@@ -16,12 +16,14 @@
 #include "libft.h"
 #include "ft_ls.h"
 
-int		fonction(t_flist **new, char *av, char *tmp, t_arg *option)
+t_flist		*fonction(char *av, char *tmp, t_arg *option)
 {
 //	printf("fct : fonction\n");
-	*new = lst_new(av, tmp, &option);
+	t_flist			*new;
+
+	new = lst_new(av, tmp, &option);
 	ft_strdel(&tmp);
-	return (0);
+	return (new);
 }
 
 int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
@@ -44,12 +46,12 @@ int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 		if (av[cpt][0] == '/')
 			new = lst_new(av[cpt], av[cpt], &option);
 		else
-			fonction(&new, av[cpt], tmp, option);
-		if (*lst == NULL)
+			new = fonction(av[cpt], tmp, option);
+		if (*lst == NULL && new)
 			*lst = new;
-		else if(option->t == 1)
+		else if(option->t == 1 && new)
 			lst_time_insert(option, lst, new);
-		else
+		else if (new)
 			lst_insert(option, lst, new);
 		cpt++;
 	}

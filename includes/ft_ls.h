@@ -91,7 +91,8 @@ int					file_rights(t_flist **lst, struct stat buff_stat);
 char				file_type(struct stat buff_stat);
 int					option_l(struct stat buff_stat, char *cheat[],
 								t_flist **lst, t_arg **option);
-int					file_info(char *path, t_arg *option, t_flist **lst);
+int					file_info(char *path, char *name, t_arg *option,
+								t_flist **lst);
 
 // display
 int					display_total(t_arg **option);

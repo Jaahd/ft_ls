@@ -204,7 +204,7 @@ int		get_time(t_flist **lst, struct stat buff_stat)
 	return (0);
 }
 
-int		file_info(char *path, t_arg *option, t_flist **lst)
+int		file_info(char *path, char *name, t_arg *option, t_flist **lst)
 {
 //	printf("fct : file_info\n");
 	struct stat			buff_stat;
@@ -213,7 +213,10 @@ int		file_info(char *path, t_arg *option, t_flist **lst)
 	char				*cheat[2];
 
 	if(lstat(path, &buff_stat) == -1)
-		ft_error(3, path);
+	{
+		ft_error(3, name);
+		return (-1);
+	}
 	(*lst)->type = file_type(buff_stat);
 	file_rights(lst, buff_stat);
 	if (option->l == 1 || option->t == 1)
