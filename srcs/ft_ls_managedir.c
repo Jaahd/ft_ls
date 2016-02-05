@@ -72,6 +72,8 @@ int		open_dir(t_arg *option, char *dpath, char *name)
 			|| (option->a != 1 && tmp->name[0] != '.')))
 		{
 			display_dirname(option, tmp->path);
+		option->lk_len = 0;
+		option->size_len = 0;
 			open_dir(option, (str = format_path(dpath, tmp->name, 
 						ft_strlen(tmp->name))), tmp->name);
 	free(str);

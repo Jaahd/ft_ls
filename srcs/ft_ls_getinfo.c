@@ -18,7 +18,7 @@
 
 int		fonction(t_flist **new, char *av, char *tmp, t_arg *option)
 {
-	printf("fct : fonction\n");
+//	printf("fct : fonction\n");
 	*new = lst_new(av, tmp, &option);
 	ft_strdel(&tmp);
 	return (0);
@@ -26,7 +26,7 @@ int		fonction(t_flist **new, char *av, char *tmp, t_arg *option)
 
 int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 {
-	printf("fct : get_name\n");
+//	printf("fct : get_name\n");
 	t_flist			*new;
 	t_flist			*tmplst;
 	char			*tmp;
@@ -35,7 +35,7 @@ int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 
 	cpt = 1;
 	if (ac_c == 0)
-		open_dir(option, "./");
+		open_dir(option, "./", ".");
 	while (av[cpt] && av[cpt][0] == '-')
 		cpt++;
 	while (av[cpt])
@@ -56,7 +56,7 @@ int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 	tmplst = *lst;
 	while (tmplst)
 	{
-		printf("name : [%s]\n", tmplst->name);
+//		printf("name : [%s]\n", tmplst->name);
 		tmplst=tmplst->next;
 	}
 //	free(t2);
@@ -92,7 +92,7 @@ char	*format_path(char *b_path, char *filename, int namelen)
 
 int		get_options(t_arg *opt, int *ac_c, char **av)
 {
-	printf("fct : get_options\n");
+//	printf("fct : get_options\n");
 	int				i;
 	int				cpt;
 

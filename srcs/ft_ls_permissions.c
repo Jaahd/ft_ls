@@ -212,7 +212,8 @@ int		file_info(char *path, t_arg *option, t_flist **lst)
 	struct group		*grp;
 	char				*cheat[2];
 
-	lstat(path, &buff_stat);
+	if(lstat(path, &buff_stat) == -1)
+		ft_error(3, path);
 	(*lst)->type = file_type(buff_stat);
 	file_rights(lst, buff_stat);
 	if (option->l == 1 || option->t == 1)

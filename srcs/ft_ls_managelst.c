@@ -25,7 +25,8 @@ t_flist		*lst_new(char *name, char *fpath, t_arg **option)
 		ft_error (1, "list creation"); // nom a reprendre
 	if ((new->name = ft_strdup(name)) == NULL)
 		ft_error(1, name);
-	new->path = ft_strdup(fpath);
+	if ((new->path = ft_strdup(fpath)) == NULL)
+		ft_error(1, fpath);
 	new->type = 0;
 	new->date = NULL;
 	new->year = NULL;
@@ -38,7 +39,7 @@ t_flist		*lst_new(char *name, char *fpath, t_arg **option)
 	new->next = NULL;
 	new->fsize_len = 0;
 	new->block = 0;
-	file_info(new->path, *option, &new);
+	file_info(new->path, new->name, *option, &new);
 //printf("\nlongeur des lien : %d\n", (*option)->lk_len);
 	return (new);
 }

@@ -16,7 +16,7 @@
 
 int		display_total(t_arg **option)
 {
-//	printf("fct : display_total\n");
+	//	printf("fct : display_total\n");
 	if ((*option)->l == 1)
 	{
 		ft_putstr("total ");
@@ -28,7 +28,7 @@ int		display_total(t_arg **option)
 
 int		display_dirname(t_arg *option, char *str)
 {
-//	printf("fct : display_dirname\n");
+	//	printf("fct : display_dirname\n");
 	if(option->arg_nb >  1 || option->recu == 1)
 	{
 		ft_putchar('\n');
@@ -40,13 +40,12 @@ int		display_dirname(t_arg *option, char *str)
 
 int		second_display(t_arg *option, t_flist *tmp)
 {
-//	printf("fct : second_display\n");
+	//	printf("fct : second_display\n");
 	if (option->a == 1  && tmp->type == 'd')
 	{
 		if (option->arg_nb > 1)
 			display_dirname(option, tmp->name);
 		open_dir(option, tmp->path, tmp->name);
-	option->lk_len = 0;
 	}
 	else if (tmp->type == 'd' && ft_strcmp(tmp->name, ".")
 			&& option->a != 1 && ft_strcmp(tmp->name, ".."))
@@ -54,14 +53,13 @@ int		second_display(t_arg *option, t_flist *tmp)
 		if (option->arg_nb > 1)
 			display_dirname(option, tmp->name);
 		open_dir(option, tmp->path, tmp->name);
-	option->lk_len = 0;
 	}
 	return (0);
 }
 
 int		first_display(t_flist **lst, t_arg *option)
 {
-//	printf("fct : first_display\n");
+	//	printf("fct : first_display\n");
 	t_flist		*tmp;
 
 	tmp = *lst;
@@ -74,16 +72,18 @@ int		first_display(t_flist **lst, t_arg *option)
 	tmp = *lst;
 	while (tmp != NULL)
 	{
+	//	option->lk_len = 0;
+	//	option->size_len = 0;
 		second_display(option, tmp);
 		tmp = tmp->next;
 	}
-//	free_s_flist(lst);
+	//	free_s_flist(lst);
 	return (0);
 }
 
 int		put_space(char *str, int len)
 {
-//	printf("fct : put_space\n");
+	//	printf("fct : put_space\n");
 	int			i;
 
 	i = ft_strlen(str);
@@ -97,7 +97,7 @@ int		put_space(char *str, int len)
 
 int		format_majmin(t_flist **lst, t_arg **option)
 {
-//	printf("fct : format_majmin\n");
+	//	printf("fct : format_majmin\n");
 	char		len[(*option)->min_len + 1];
 	char		*tmp;
 	int			size;
@@ -115,7 +115,6 @@ int		format_majmin(t_flist **lst, t_arg **option)
 		len[i] = (*lst)->minor[j];
 		i++;
 	}
-	//	printf("minor : %s\tlen : |%s|\tmin_len : %d\t size : %d\n", (*lst)->minor, len, (*option)->min_len, size);
 	tmp = ft_strjoin((*lst)->major, len);
 	(*lst)->size = ft_strdup(tmp);
 	(*lst)->fsize_len = ft_strlen((*lst)->size);
@@ -128,7 +127,7 @@ int		format_majmin(t_flist **lst, t_arg **option)
 
 int		long_display(t_flist **lst, t_arg *option)
 {
-//		printf("fct : long_display : option->link_len : %d\n", option->lk_len);
+	//		printf("fct : long_display : option->link_len : %d\n", option->lk_len);
 	ft_putstr((*lst)->rights);
 	put_space((*lst)->link_nb, option->lk_len);
 	ft_putstr((*lst)->link_nb);
@@ -179,7 +178,7 @@ int		display_colors(t_flist **lst)
 
 int		ls_display(t_arg *option, t_flist **lst)
 {
-//		printf("fct : ls_display\n");
+	//		printf("fct : ls_display\n");
 	if (option->l == 1)
 		long_display(lst, option);
 	if (option->colors == 1)
