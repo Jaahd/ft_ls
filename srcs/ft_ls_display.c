@@ -125,31 +125,31 @@ int		format_majmin(t_flist **lst, t_arg **option)
 	return (0);
 }
 
-int		long_display(t_flist **lst, t_arg *option)
+int		long_display(t_flist **lst, t_arg *opt)
 {
-	//		printf("fct : long_display : option->link_len : %d\n", option->lk_len);
-	if (option->g == 0 || (option->g == 1 && option->l == 1))
+	//		printf("fct : long_display : opt->link_len : %d\n", opt->lk_len);
+	if (opt->g == 0 || opt->l == 1 || opt->o == 1)
 	{
 		ft_putstr((*lst)->rights);
-		put_space((*lst)->link_nb, option->lk_len);
+		put_space((*lst)->link_nb, opt->lk_len);
 		ft_putstr((*lst)->link_nb);
 		ft_putchar(' ');
-		if (option->g == 0)
+		if (opt->g == 0)
 			ft_putstr((*lst)->owner);
-		if (option->g == 0)
-			put_space((*lst)->owner, (option->own_len + 2));
+		if (opt->g == 0)
+			put_space((*lst)->owner, (opt->own_len + 2));
 	}
-	if (option->g == 1 || option->o == 0)
+	if (opt->g == 1 || opt->o == 0)
 	{
 		ft_putstr((*lst)->group);
-		put_space((*lst)->group, (option->gr_len + 2));
+		put_space((*lst)->group, (opt->gr_len + 2));
 	}
-	if ((option->a == 1 || (option->a == 0 && (*lst)->name[0] != '.'))
+	if ((opt->a == 1 || (opt->a == 0 && (*lst)->name[0] != '.'))
 			&& ((*lst)->type == 'b' || (*lst)->type == 'c'))
-		format_majmin(lst, &option);
-	if (option->g == 0 || (option->g ==1 && option->l == 1))
+		format_majmin(lst, &opt);
+	if (opt->g == 0 || opt->l == 1 || opt->o == 1)
 	{
-		put_space((*lst)->size, option->size_len);
+		put_space((*lst)->size, opt->size_len);
 		ft_putstr((*lst)->size);
 		ft_putchar(' ');
 		ft_putstr((*lst)->date);
