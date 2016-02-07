@@ -36,7 +36,7 @@ int		ft_error(int error, char *cur_pb)
 	{
 		ft_putstr_fd("illegal option -- ", 2);
 		ft_putchar_fd(*cur_pb, 2);
-		ft_putendl_fd("\nusage: ft_ls [Ralrt] [file ...]", 2);
+		ft_putendl_fd("\nusage: ft_ls [GRalrt] [file ...]", 2);
 		exit(EXIT_FAILURE);
 	}
 	if (error == 3)
@@ -51,7 +51,10 @@ int		init_options(t_arg *option)
 {
 	option->recu = 0;
 	option->a = 0;
+	option->g = 0;
 	option->l = 0;
+	option->o = 0;
+	option->p = 0;
 	option->r = 0;
 	option->t = 0;
 	option->colors = 0;

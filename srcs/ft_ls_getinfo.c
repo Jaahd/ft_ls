@@ -105,11 +105,15 @@ int		get_options(t_arg *opt, int *ac_c, char **av)
 		while (av[cpt][0] == '-' && av[cpt][i])
 		{
 			if (av[cpt][i] != 'R' && av[cpt][i] != 'a' && av[cpt][i] != 'l' &&
-					av[cpt][i] != 'r' && av[cpt][i] != 't' && av[cpt][i] != 'G')
+					av[cpt][i] != 'r' && av[cpt][i] != 't' && av[cpt][i] != 'G' &&
+					av[cpt][i] != 'g' && av[cpt][i] != 'o' && av[cpt][i] != 'p')
 				ft_error(2, &av[cpt][i]);
 			opt->recu = (av[cpt][i] == 'R') ? 1 : opt->recu;
 			opt->a = (av[cpt][i] == 'a') ? 1 : opt->a;
+			opt->g = (av[cpt][i] == 'g') ? 1 : opt->g;
 			opt->l = (av[cpt][i] == 'l') ? 1 : opt->l;
+			opt->o = (av[cpt][i] == 'o') ? 1 : opt->o;
+			opt->p = (av[cpt][i] == 'p') ? 1 : opt->p;
 			opt->r = (av[cpt][i] == 'r') ? 1 : opt->r;
 			opt->t = (av[cpt][i] == 't') ? 1 : opt->t;
 			opt->colors = (av[cpt][i] == 'G') ? 1 : opt->colors;

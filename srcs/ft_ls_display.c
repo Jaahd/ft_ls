@@ -128,23 +128,34 @@ int		format_majmin(t_flist **lst, t_arg **option)
 int		long_display(t_flist **lst, t_arg *option)
 {
 	//		printf("fct : long_display : option->link_len : %d\n", option->lk_len);
-	ft_putstr((*lst)->rights);
-	put_space((*lst)->link_nb, option->lk_len);
-	ft_putstr((*lst)->link_nb);
-	ft_putchar(' ');
-	ft_putstr((*lst)->owner);
-	put_space((*lst)->owner, (option->own_len + 2));
-	ft_putstr((*lst)->group);
-	put_space((*lst)->group, (option->gr_len + 2));
+	if (option->g == 0 || (option->g == 1 && option->l == 1))
+	{
+		ft_putstr((*lst)->rights);
+		put_space((*lst)->link_nb, option->lk_len);
+		ft_putstr((*lst)->link_nb);
+		ft_putchar(' ');
+		if (option->g == 0)
+			ft_putstr((*lst)->owner);
+		if (option->g == 0)
+			put_space((*lst)->owner, (option->own_len + 2));
+	}
+	if (option->g == 1 || option->o == 0)
+	{
+		ft_putstr((*lst)->group);
+		put_space((*lst)->group, (option->gr_len + 2));
+	}
 	if ((option->a == 1 || (option->a == 0 && (*lst)->name[0] != '.'))
 			&& ((*lst)->type == 'b' || (*lst)->type == 'c'))
 		format_majmin(lst, &option);
-	put_space((*lst)->size, option->size_len);
-	ft_putstr((*lst)->size);
-	ft_putchar(' ');
-	ft_putstr((*lst)->date);
-	ft_putstr((*lst)->year);
-	ft_putchar(' ');
+	if (option->g == 0 || (option->g ==1 && option->l == 1))
+	{
+		put_space((*lst)->size, option->size_len);
+		ft_putstr((*lst)->size);
+		ft_putchar(' ');
+		ft_putstr((*lst)->date);
+		ft_putstr((*lst)->year);
+		ft_putchar(' ');
+	}
 	return (0);
 }
 
@@ -179,11 +190,13 @@ int		display_colors(t_flist **lst)
 int		ls_display(t_arg *option, t_flist **lst)
 {
 	//		printf("fct : ls_display\n");
-	if (option->l == 1)
+	if (option->l == 1 || option->g == 1 || option->o == 1)
 		long_display(lst, option);
 	if (option->colors == 1)
 		display_colors(lst);
 	ft_putstr((*lst)->name);
+	if (option->p && (*lst)->type == 'd')
+		ft_putchar('/');
 	if (option->colors)
 		ft_putstr("\033[0m");
 	if (option->l == 1 && (*lst)->type == 'l')

@@ -33,7 +33,10 @@ typedef struct		s_arg
 {
 	int				recu;
 	int				a;
+	int				g;
 	int				l;
+	int				o;
+	int				p;
 	int				r;
 	int				t;
 	int				colors;
