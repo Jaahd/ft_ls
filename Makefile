@@ -18,9 +18,12 @@ LIBS = -L $(LIBPATH) -lft
 SRC = 	ft_ls.c \
 		ft_ls_getinfo.c \
 		ft_ls_display.c \
+		ft_ls_fileinfo.c \
 		ft_ls_managedir.c \
 		ft_ls_managelst.c \
-		ft_ls_permissions.c 
+		ft_ls_permissions.c \
+		ft_ls_manageoptions.c \
+		ft_ls_displayoptions.c
 
 OFILES = $(patsubst %.c, $(OPATH)/%.o, $(SRC))
 
@@ -46,13 +49,13 @@ clean:
 	@echo "Deleting OBJ files"
 	@$(RM) -rf $(OPATH)
 
+lib.fclean:
+	@$(MAKE) fclean -C $(LIBPATH)
+
 fclean: clean lib.fclean
 	@echo "Deleting $(NAME)"
 	@$(RM) -f $(NAME)
 	@echo "\033[36mAll clear!\033[0m"
-
-lib.fclean:
-	@$(MAKE) fclean -C $(LIBPATH)
 
 re: fclean all
 

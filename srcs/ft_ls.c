@@ -47,28 +47,6 @@ int		ft_error(int error, char *cur_pb)
 	return (0);
 }
 
-int		init_options(t_arg *option)
-{
-	option->recu = 0;
-	option->a = 0;
-	option->g = 0;
-	option->l = 0;
-	option->o = 0;
-	option->p = 0;
-	option->r = 0;
-	option->t = 0;
-	option->colors = 0;
-	option->arg_nb = 0;
-	option->own_len = 0;
-	option->gr_len = 0;
-	option->lk_len = 0;
-	option->maj_len = 0;
-	option->min_len = 0;
-	option->size_len = 0;
-	option->tot_blocks = 0;
-	return (0);
-}
-
 int		free_s_flist(t_flist **lst)
 {
 	t_flist		*tmp;

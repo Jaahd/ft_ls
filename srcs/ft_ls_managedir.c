@@ -16,15 +16,29 @@
 #include "ft_ls.h"
 #include "libft.h"
 
-int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *dpath)
+static int		first_display_dir(t_flist **lst2, t_arg *option)
+{
+	t_flist				*tmp;
+
+	tmp = *lst2;
+	display_total(&option);
+	while(tmp)
+	{
+		if (option->a == 1 || (option->a == 0 && tmp->name[0] != '.'))
+			ls_display(option, &tmp);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+static int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *dpath)
 {
 //		printf("fct : fill_list\n");
 	struct dirent		*p_dirent;
 	t_flist				*new;
-	t_flist				*tmp;
 	char				*str;
 
-	while ((p_dirent = readdir(p_dir)) != NULL) 
+	while ((p_dirent = readdir(p_dir)) != NULL)
 	{
 		new = lst_new(p_dirent->d_name, (str = format_path(dpath,
 			p_dirent->d_name, ft_strlen(p_dirent->d_name))), &option);
@@ -36,51 +50,47 @@ int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *dpath)
 		else
 			lst_insert(option, lst2, new);
 	}
-	tmp = *lst2;
-	display_total(&option);
-	while(tmp)
-	{
-		if (option->a == 1 || (option->a == 0 && tmp->name[0] != '.'))
-			ls_display(option, &tmp);	
-		tmp = tmp->next;	
-	}
+	first_display_dir(lst2, option);
 	return (0);
 }
 
-int		open_dir(t_arg *option, char *dpath, char *name)
+static int		open_dir(t_flist **lst2, t_arg *option, char *dpath, char *name)
+{
+	DIR					*p_dir;
+
+	if ((p_dir = opendir(dpath)) == NULL)
+		return (ft_error(3, name));
+	fill_list(p_dir, lst2, option, dpath);
+	closedir(p_dir);
+	return (0);
+}
+
+int				recu_dir(t_arg *option, char *dpath, char *name)
 {
 //		printf("fct : open_dir\n");
-	DIR					*p_dir;
 	t_flist				*lst2;
 	t_flist				*tmp;
 	char				*str;
 
 	lst2 = NULL;
-	p_dir = opendir(dpath);
-	if (p_dir == NULL)
-	{
-		ft_error(3, name);
-		return (0);
-	}
-	fill_list(p_dir, &lst2, option, dpath);
-	closedir(p_dir);
+	open_dir(&lst2, option, dpath, name);
 	tmp = lst2;
 	while (option->recu == 1 && tmp)
 	{
 		if (tmp->type == 'd' && ft_strcmp(tmp->name, ".")
-		&& ft_strcmp(tmp->name, "..") && (option->a == 1
-			|| (option->a != 1 && tmp->name[0] != '.')))
+				&& ft_strcmp(tmp->name, "..") && (option->a == 1
+					|| (option->a != 1 && tmp->name[0] != '.')))
 		{
 			display_dirname(option, tmp->path);
-		option->lk_len = 0;
-		option->size_len = 0;
-			open_dir(option, (str = format_path(dpath, tmp->name, 
-						ft_strlen(tmp->name))), tmp->name);
-	free(str);
+			option->lk_len = 0;
+			option->size_len = 0;
+			recu_dir(option, (str = format_path(dpath, tmp->name, 
+							ft_strlen(tmp->name))), tmp->name);
+			free(str);
 		}
 		option->size_len = 0;
 		tmp = tmp->next;
 	}
-//	//	free_s_flist(&lst2); ////	free a revoir
+	//	//	free_s_flist(&lst2); ////	free a revoir
 	return (1);
 }

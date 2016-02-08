@@ -16,7 +16,7 @@
 #include "libft.h"
 #include "ft_ls.h"
 
-t_flist		*lst_new(char *name, char *fpath, t_arg **option)
+t_flist			*lst_new(char *name, char *fpath, t_arg **option)
 {
 //	printf("fct : lst_new\n");
 	t_flist			*new;
@@ -45,7 +45,7 @@ t_flist		*lst_new(char *name, char *fpath, t_arg **option)
 	return (new);
 }
 
-int		lst_2nd_t_insert(t_arg *option, t_flist **lst, t_flist *new)
+static int		lst_2nd_t_insert(t_arg *option, t_flist **lst, t_flist *new)
 {
 //	printf("fct : lst_2_t_insert\n");
 	int				cmp;
@@ -74,7 +74,7 @@ int		lst_2nd_t_insert(t_arg *option, t_flist **lst, t_flist *new)
 	return (0);
 }
 
-int		lst_time_insert(t_arg *option, t_flist **lst, t_flist *new)
+int				lst_time_insert(t_arg *option, t_flist **lst, t_flist *new)
 {
 //	printf("fct : lst_time_insert\n");
 	t_flist			*tmp;
@@ -99,7 +99,7 @@ int		lst_time_insert(t_arg *option, t_flist **lst, t_flist *new)
 	return (0);
 }
 
-int		lst_insert(t_arg *option, t_flist **lst, t_flist *new)
+int				lst_insert(t_arg *option, t_flist **lst, t_flist *new)
 {
 //	printf("fct : lst_insert\n");	
 	t_flist			*tmp;

@@ -13,40 +13,63 @@
 #include <sys/stat.h>
 #include <string.h>
 #include <dirent.h>
+#include <time.h>
 #include "libft.h"
 #include "ft_ls.h"
 
-t_flist		*fonction(char *av, char *tmp, t_arg *option)
-{
-//	printf("fct : fonction\n");
-	t_flist			*new;
 
-	new = lst_new(av, tmp, &option);
-	ft_strdel(&tmp);
-	return (new);
+int				get_time(t_flist **lst, struct stat buff_stat)
+{
+//	printf("get_time\n");
+	int					today;
+	char				*tmp;
+	char				*str;
+
+	str = NULL;
+	today = time(NULL);
+	tmp = ctime(&buff_stat.st_mtime);	
+	(*lst)->epoc = buff_stat.st_mtime;
+	(*lst)->date = ft_strsub(tmp, 4, 7);
+	(*lst)->year = ((today - (*lst)->epoc) > 15768000 ?
+			ft_strjoin(" ", (str = ft_strsub(tmp, 20, 4))) :
+			ft_strsub(tmp, 11, 5));
+//		free(str);
+	return (0);
 }
 
-int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
+static int		first_link(char *str, t_arg *option, t_flist **new)
 {
-//	printf("fct : get_name\n");
-	t_flist			*new;
-	t_flist			*tmplst;
+//	printf("fct : fonction\n");
 	char			*tmp;
 	char			*t2;
+
+	tmp = NULL;
+	t2 = NULL;
+	if (str[0] == '/')
+		*new = lst_new(str, str, &option);
+	else
+	{
+		tmp = format_path("./", (t2 = ft_strdup(str)), ft_strlen(str));
+		*new = lst_new(str, tmp, &option);
+		ft_strdel(&tmp);
+	}
+	return (0);
+}
+
+int				get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
+{
+	//	printf("fct : get_name\n");
+	t_flist			*new;
 	int				cpt;
 
 	cpt = 1;
 	if (ac_c == 0)
-		open_dir(option, "./", ".");
+		recu_dir(option, "./", ".");
 	while (av[cpt] && av[cpt][0] == '-')
 		cpt++;
 	while (av[cpt])
 	{
-		tmp = format_path("./", (t2 = ft_strdup(av[cpt])), ft_strlen(av[cpt]));
-		if (av[cpt][0] == '/')
-			new = lst_new(av[cpt], av[cpt], &option);
-		else
-			new = fonction(av[cpt], tmp, option);
+		first_link(av[cpt], option, &new);
 		if (*lst == NULL && new)
 			*lst = new;
 		else if(option->t == 1 && new)
@@ -55,19 +78,13 @@ int		get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 			lst_insert(option, lst, new);
 		cpt++;
 	}
-	tmplst = *lst;
-	while (tmplst)
-	{
-//		printf("name : [%s]\n", tmplst->name);
-		tmplst=tmplst->next;
-	}
-//	free(t2);
+	//	free(t2);
 	return (0);
 }
 
 char	*format_path(char *b_path, char *filename, int namelen)
 {
-//	printf("fct : format_path\n");
+	//	printf("fct : format_path\n");
 	char			*tmp;
 	char			*f_path;
 	int				p_len;
@@ -90,38 +107,4 @@ char	*format_path(char *b_path, char *filename, int namelen)
 		ft_error(1, filename);
 	free(tmp);
 	return (f_path);
-}
-
-int		get_options(t_arg *opt, int *ac_c, char **av)
-{
-//	printf("fct : get_options\n");
-	int				i;
-	int				cpt;
-
-	cpt = 0;
-	while (++cpt < *ac_c)
-	{
-		i = 1;
-		while (av[cpt][0] == '-' && av[cpt][i])
-		{
-			if (av[cpt][i] != 'R' && av[cpt][i] != 'a' && av[cpt][i] != 'l' &&
-					av[cpt][i] != 'r' && av[cpt][i] != 't' && av[cpt][i] != 'G' &&
-					av[cpt][i] != 'g' && av[cpt][i] != 'o' && av[cpt][i] != 'p')
-				ft_error(2, &av[cpt][i]);
-			opt->recu = (av[cpt][i] == 'R') ? 1 : opt->recu;
-			opt->a = (av[cpt][i] == 'a') ? 1 : opt->a;
-			opt->g = (av[cpt][i] == 'g') ? 1 : opt->g;
-			opt->l = (av[cpt][i] == 'l') ? 1 : opt->l;
-			opt->o = (av[cpt][i] == 'o') ? 1 : opt->o;
-			opt->p = (av[cpt][i] == 'p') ? 1 : opt->p;
-			opt->r = (av[cpt][i] == 'r') ? 1 : opt->r;
-			opt->t = (av[cpt][i] == 't') ? 1 : opt->t;
-			opt->colors = (av[cpt][i] == 'G') ? 1 : opt->colors;
-			i++;
-		}
-		if (av[cpt][0] != '-')
-			break ;
-	}
-	*ac_c -= cpt;
-	return (0);
 }

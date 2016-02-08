@@ -19,8 +19,6 @@
 		printf("lst2 : name : %s,\npath :%s,\ntype : %d,\ndate : %s,\nowner : %s,\ngroup : %s,\nrights : %s,\n", tmp->name, tmp->path, tmp->type, tmp->date, tmp->owner, tmp->group, tmp->rights);
 		tmp = tmp->next;	
 	}
-
- NE PAS OUBLIER DE GERER LA "NON - TAILLE" POUR LES FICHIERS b OU c!!!!!!!!!!!!
  */
 #include <stdio.h>
 #include <sys/types.h>
@@ -73,40 +71,41 @@ typedef struct		s_flist
 
 int					ft_error(int error, char *cur_pb);
 int					free_s_flist(t_flist **lst);
+
+/* getinfo */
+char				*format_path(char *b_path, char *filename, int namelen);
+int					get_time(t_flist **lst, struct stat buff_stat);
+int					get_name(t_arg *option, t_flist **lst, int ac_c, char **av);
+
+/* manage options */
+int					get_options(t_arg *option, int *ac_c, char **av);
 int					init_options(t_arg *option);
 
-// getinfo
-//int					get_mtime(t_arg *argmt);
-char				*format_path(char *b_path, char *filename, int namelen);
-int					get_name(t_arg *option, t_flist **lst, int ac_c, char **av);
-int					get_options(t_arg *option, int *ac_c, char **av);
-
-// managelst
-int					lst_first_insert(t_flist **lst, t_flist *tmp, t_flist *new,
-								int cmp);
+/* managelst */
+t_flist				*lst_new(char *name, char *fpath, t_arg **option);
 int					lst_time_insert(t_arg *option, t_flist **lst, t_flist *new);
 int					lst_insert(t_arg *option, t_flist **lst, t_flist *new);
-t_flist				*lst_new(char *name, char *fpath, t_arg **option);
 
-// permissions
-int					file_size(t_flist **lst, t_arg **option, struct stat b_stat);
+/* managedir */
+int					recu_dir(t_arg *opt, char *dpath, char *name);
+
+/* permissions */
 int					file_rights(t_flist **lst, struct stat buff_stat);
 char				file_type(struct stat buff_stat);
-int					option_l(struct stat buff_stat, char *cheat[],
-								t_flist **lst, t_arg **option);
+
+/* file info */
 int					file_info(char *path, char *name, t_arg *option,
 								t_flist **lst);
 
-// display
+/* bonus display */
 int					display_total(t_arg **option);
-int					display_dirname(t_arg *option, char *str);
-int					first_display(t_flist **lst, t_arg *options);
+int					display_colors(t_flist **lst);
 int					long_display(t_flist **lst, t_arg *option);
-int					ls_display(t_arg *opt, t_flist **lst);
 
-// managedir 
-int					fill_dirlist(DIR *p_dir, t_flist **lst, t_arg *argmt);
-int					lst_pushback(t_flist **lst, char *dname);
-int					open_dir(t_arg *opt, char *dpath, char *name);
+/* display */
+int					first_display(t_flist **lst, t_arg *options);
+int					display_dirname(t_arg *option, char *str);
+int					put_space(char *str, int len);
+int					ls_display(t_arg *opt, t_flist **lst);
 
 #endif
