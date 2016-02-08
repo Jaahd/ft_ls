@@ -1,4 +1,3 @@
-
 #include "ft_ls.h"
 
 int				init_options(t_arg *option)
