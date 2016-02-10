@@ -16,7 +16,7 @@ int		ft_error(int error, char *cur_pb)
 {
 	if (error == 1)
 	{
-		ft_putstr("ft_ls: ");
+		ft_putstr_fd("ft_ls: ", 2);
 		perror(cur_pb);
 		exit(EXIT_FAILURE);
 	}
@@ -29,7 +29,7 @@ int		ft_error(int error, char *cur_pb)
 	}
 	if (error == 3)
 	{
-		ft_putstr("ft_ls: ");
+		ft_putstr_fd("ft_ls: ", 2);
 		perror(cur_pb);
 	}
 	return (0);
@@ -61,10 +61,9 @@ int		free_s_flist(t_flist **lst)
 
 int		main(int ac, char **av)
 {
-//	printf("fct : main\n");
-	t_flist			*lst;
-	t_arg			option;
-	int				ac_c;
+	t_flist		*lst;
+	t_arg		option;
+	int			ac_c;
 	int	i;
 
 	i = -1;

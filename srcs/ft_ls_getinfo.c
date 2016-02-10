@@ -5,40 +5,49 @@
 #include "libft.h"
 #include "ft_ls.h"
 
-
 int				get_time(t_flist **lst, struct stat buff_stat)
 {
-//	printf("get_time\n");
-	int					today;
-	char				*tmp;
-	char				*str;
+	if (DEBUG == 1)
+		printf("fct : get_time\n");
+	int				today;
+	char			*tmp;
+	char			*str;
 
 	str = NULL;
 	today = time(NULL);
-	tmp = ctime(&buff_stat.st_mtime);	
+	tmp = ctime(&buff_stat.st_mtime);
 	(*lst)->epoc = buff_stat.st_mtime;
-	(*lst)->date = ft_strsub(tmp, 4, 7);
-	(*lst)->year = ((today - (*lst)->epoc) > 15768000 ?
+	if (((*lst)->date = ft_strsub(tmp, 4, 7)) == NULL)
+		ft_error(3, tmp);
+	if (((*lst)->year = ((today - (*lst)->epoc) > 15768000 ?
 			ft_strjoin(" ", (str = ft_strsub(tmp, 20, 4))) :
-			ft_strsub(tmp, 11, 5));
+			ft_strsub(tmp, 11, 5))) == NULL)
+		ft_error(3, tmp);
 //		free(str);
 	return (0);
 }
 
 static int		first_link(char *str, t_arg *option, t_flist **new)
 {
-//	printf("fct : fonction\n");
+	if (DEBUG == 1)
+		printf("fct : first_link\n");
 	char			*tmp;
 	char			*t2;
 
 	tmp = NULL;
 	t2 = NULL;
 	if (str[0] == '/')
-		*new = lst_new(str, str, &option);
+	{
+		if ((*new = lst_new(str, str, &option)) == NULL)
+			return (-1);
+	}
 	else
 	{
-		tmp = format_path("./", (t2 = ft_strdup(str)), ft_strlen(str));
-		*new = lst_new(str, tmp, &option);
+		if ((t2 = ft_strdup(str)) == NULL)
+			ft_error(3, str);
+		tmp = format_path("./", t2, ft_strlen(str));
+		if ((*new = lst_new(str, tmp, &option)) == NULL)
+			return (-1);
 		ft_strdel(&tmp);
 	}
 	return (0);
@@ -46,7 +55,8 @@ static int		first_link(char *str, t_arg *option, t_flist **new)
 
 int				get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 {
-	//	printf("fct : get_name\n");
+	if (DEBUG == 1)
+		printf("fct : get_name\n");
 	t_flist			*new;
 	int				cpt;
 
@@ -57,10 +67,14 @@ int				get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 		cpt++;
 	while (av[cpt])
 	{
-		first_link(av[cpt], option, &new);
+		if((first_link(av[cpt], option, &new)) == -1)
+		{
+			cpt++;
+			break;
+		}
 		if (*lst == NULL && new)
 			*lst = new;
-		else if(option->t == 1 && new)
+		else if (option->t == 1 && new)
 			lst_time_insert(option, lst, new);
 		else if (new)
 			lst_insert(option, lst, new);
@@ -70,9 +84,10 @@ int				get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 	return (0);
 }
 
-char	*format_path(char *b_path, char *filename, int namelen)
+char			*format_path(char *b_path, char *filename, int namelen)
 {
-	//	printf("fct : format_path\n");
+	if (DEBUG == 1)
+		printf("fct : format_path\n");
 	char			*tmp;
 	char			*f_path;
 	int				p_len;

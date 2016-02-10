@@ -1,19 +1,14 @@
 #ifndef FT_LS_H
 # define FT_LS_H
-/*
-	tmp = *lst;
-	while(tmp)
-	{
-		printf("lst2 : name : %s,\npath :%s,\ntype : %d,\ndate : %s,\nowner : %s,\ngroup : %s,\nrights : %s,\n", tmp->name, tmp->path, tmp->type, tmp->date, tmp->owner, tmp->group, tmp->rights);
-		tmp = tmp->next;	
-	}
- */
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <dirent.h>
-#include <pwd.h>
-#include <grp.h>
+
+# define DEBUG 0
+
+# include <stdio.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <dirent.h>
+# include <pwd.h>
+# include <grp.h>
 
 typedef struct		s_arg
 {
@@ -34,7 +29,7 @@ typedef struct		s_arg
 	int				min_len;
 	int				size_len;
 	blkcnt_t		tot_blocks;
-}					t_arg;	
+}					t_arg;
 
 typedef struct		s_flist
 {
@@ -54,7 +49,7 @@ typedef struct		s_flist
 	char			*link;
 	int				fsize_len;
 	blkcnt_t		block;
-	struct s_flist	*next;	
+	struct s_flist	*next;
 }					t_flist;
 
 int					ft_error(int error, char *cur_pb);
@@ -68,6 +63,8 @@ int					get_name(t_arg *option, t_flist **lst, int ac_c, char **av);
 /* manage options */
 int					get_options(t_arg *option, int *ac_c, char **av);
 int					init_options(t_arg *option);
+int					getpwgr(struct passwd **pwd, struct group **grp,
+						struct stat bs);
 
 /* managelst */
 t_flist				*lst_new(char *name, char *fpath, t_arg **option);

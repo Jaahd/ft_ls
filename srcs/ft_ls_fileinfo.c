@@ -8,7 +8,8 @@
 
 static int		get_minmaj(struct stat buff_stat, t_arg **opt, t_flist **lst)
 {
-//	printf("getminmaj\n");
+	if (DEBUG == 1)
+		printf("fct : getminmaj\n");
 	char	*maj;
 	char	*tmp;
 	int		i;
@@ -33,7 +34,8 @@ static int		get_minmaj(struct stat buff_stat, t_arg **opt, t_flist **lst)
 
 static int		file_size(t_flist **lst, t_arg **option, struct stat buff_stat)
 {
-//	printf("file_size\n");
+	if (DEBUG == 1)
+		printf("fct : file_size\n");
 	if (((*option)->a == 1 || ((*option)->a == 0 && (*lst)->name[0] != '.'))
 			&& ((*lst)->type == 'b' || (*lst)->type == 'c'))
 		get_minmaj(buff_stat, option, lst);
@@ -50,7 +52,8 @@ static int		file_size(t_flist **lst, t_arg **option, struct stat buff_stat)
 
 static int		type_l(t_flist **lst)
 {
-//	printf("type_l\n");
+	if (DEBUG == 1)
+		printf("fct : type_l\n");
 	char				link_buff[1024];
 	int					ret;
 
@@ -64,19 +67,21 @@ static int		type_l(t_flist **lst)
 	return (0);
 }
 
-static int		option_l(struct stat b_stat, char *cheat[], t_flist **lst, t_arg **opt)
+static int		option_l(struct stat b_stat, char *cheat[], t_flist **lst,
+				t_arg **opt)
 {
-//	printf("option_l\n");
+	if (DEBUG == 1)
+		printf("fct : option_l\n");
 	int					len_tmp;
 
 	(*lst)->owner = ft_strdup(cheat[0]);
 	if (((*opt)->a == 1 || ((*opt)->a == 0 && (*lst)->name[0] != '.'))
 			&& (len_tmp = ft_strlen((*lst)->owner)) > (*opt)->own_len)
-		(*opt)->own_len = len_tmp; 
+		(*opt)->own_len = len_tmp;
 	(*lst)->group = ft_strdup(cheat[1]);
 	if (((*opt)->a == 1 || ((*opt)->a == 0 && (*lst)->name[0] != '.'))
 			&& (len_tmp = ft_strlen((*lst)->group)) > (*opt)->gr_len)
-		(*opt)->gr_len = len_tmp; 
+		(*opt)->gr_len = len_tmp;
 	file_size(lst, opt, b_stat);
 	(*lst)->link_nb = ft_itoa(b_stat.st_nlink);
 	if ((*opt)->a == 1 || ((*opt)->a != 1 && (*lst)->name[0] != '.'))
@@ -84,7 +89,7 @@ static int		option_l(struct stat b_stat, char *cheat[], t_flist **lst, t_arg **o
 	(*opt)->tot_blocks += (*lst)->block;
 	if (((*opt)->a == 1 || ((*opt)->a == 0 && (*lst)->name[0] != '.'))
 			&& (len_tmp = ft_strlen((*lst)->link_nb)) > (*opt)->lk_len)
-		(*opt)->lk_len = len_tmp; 
+		(*opt)->lk_len = len_tmp;
 	if (((*opt)->a == 1 || ((*opt)->a == 0 && (*lst)->name[0] != '.'))
 			&& (*lst)->type == 'l')
 		type_l(lst);
@@ -93,13 +98,14 @@ static int		option_l(struct stat b_stat, char *cheat[], t_flist **lst, t_arg **o
 
 int				file_info(char *path, char *name, t_arg *option, t_flist **lst)
 {
-//	printf("fct : file_info\n");
+	if (DEBUG == 1)
+		printf("fct : file_info\n");
 	struct stat			buff_stat;
 	struct passwd		*pwd;
 	struct group		*grp;
 	char				*cheat[2];
 
-	if(lstat(path, &buff_stat) == -1)
+	if (lstat(path, &buff_stat) == -1)
 	{
 		ft_error(3, name);
 		return (-1);
@@ -110,10 +116,7 @@ int				file_info(char *path, char *name, t_arg *option, t_flist **lst)
 		get_time(lst, buff_stat);
 	if (option->l == 1 || option->o == 1 || option->g == 1)
 	{
-		if ((pwd = getpwuid(buff_stat.st_uid)) == NULL)
-			pwd->pw_name = ft_itoa(buff_stat.st_uid);
-		if ((grp = getgrgid(buff_stat.st_gid)) == NULL)
-			grp->gr_name = ft_itoa(buff_stat.st_gid);
+		getpwgr(&pwd, &grp, buff_stat);
 		cheat[0] = pwd->pw_name;
 		cheat[1] = grp->gr_name;
 		option_l(buff_stat, cheat, lst, &option);

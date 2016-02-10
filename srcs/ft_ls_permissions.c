@@ -10,8 +10,8 @@
 
 static char		get_uid(struct stat buff_stat)
 {
-	char 	ret;
-	
+	char	ret;
+
 	ret = (buff_stat.st_mode & S_IXUSR) ? 'x' : '-';
 	if (ret == 'x' && (buff_stat.st_mode & S_ISUID))
 		ret = 's';
@@ -46,14 +46,15 @@ static char		sticky_bit(struct stat buff_stat)
 
 int				file_rights(t_flist **lst, struct stat buff_stat)
 {
-//	printf("file_rights\n");
+	if (DEBUG == 1)
+		printf("file_rights\n");
 	(*lst)->rights[0] = (*lst)->type;
 	(*lst)->rights[1] = (buff_stat.st_mode & S_IRUSR) ? 'r' : '-';
 	(*lst)->rights[2] = (buff_stat.st_mode & S_IWUSR) ? 'w' : '-';
-	(*lst)->rights[3] = get_uid(buff_stat); 
-	(*lst)->rights[4] = (buff_stat.st_mode & S_IRGRP) ? 'r' : '-'; 
-	(*lst)->rights[5] = (buff_stat.st_mode & S_IWGRP) ? 'w' : '-'; 
-	(*lst)->rights[6] = get_gid(buff_stat); 
+	(*lst)->rights[3] = get_uid(buff_stat);
+	(*lst)->rights[4] = (buff_stat.st_mode & S_IRGRP) ? 'r' : '-';
+	(*lst)->rights[5] = (buff_stat.st_mode & S_IWGRP) ? 'w' : '-';
+	(*lst)->rights[6] = get_gid(buff_stat);
 	(*lst)->rights[7] = (buff_stat.st_mode & S_IROTH) ? 'r' : '-';
 	(*lst)->rights[8] = (buff_stat.st_mode & S_IWOTH) ? 'w' : '-';
 	(*lst)->rights[9] = sticky_bit(buff_stat);
@@ -65,22 +66,23 @@ int				file_rights(t_flist **lst, struct stat buff_stat)
 
 char			file_type(struct stat buff_stat)
 {
-//	printf("file_type\n");
+	if (DEBUG == 1)
+		printf("file_type\n");
 	char				type;
 
-	if(S_ISBLK(buff_stat.st_mode))
+	if (S_ISBLK(buff_stat.st_mode))
 		type = 'b';
-	else if(S_ISREG(buff_stat.st_mode))
+	else if (S_ISREG(buff_stat.st_mode))
 		type = '-';
-	else if(S_ISCHR(buff_stat.st_mode))
+	else if (S_ISCHR(buff_stat.st_mode))
 		type = 'c';
-	else if(S_ISDIR(buff_stat.st_mode))
+	else if (S_ISDIR(buff_stat.st_mode))
 		type = 'd';
-	else if(S_ISFIFO(buff_stat.st_mode))
+	else if (S_ISFIFO(buff_stat.st_mode))
 		type = 'p';
-	else if(S_ISLNK(buff_stat.st_mode))
+	else if (S_ISLNK(buff_stat.st_mode))
 		type = 'l';
-	else if(S_ISSOCK(buff_stat.st_mode))
+	else if (S_ISSOCK(buff_stat.st_mode))
 		type = 's';
 	else
 		type = '?';

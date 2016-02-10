@@ -4,8 +4,9 @@
 
 int				display_dirname(t_arg *option, char *str)
 {
-	//	printf("fct : display_dirname\n");
-	if(option->arg_nb >  1 || option->recu == 1)
+	if (DEBUG == 1)
+		printf("fct : display dirname\n");
+	if (option->arg_nb >  1 || option->recu == 1)
 	{
 		ft_putchar('\n');
 		ft_putstr(str);
@@ -16,7 +17,8 @@ int				display_dirname(t_arg *option, char *str)
 
 static int		second_display(t_arg *option, t_flist *tmp)
 {
-	//	printf("fct : second_display\n");
+	if (DEBUG == 1)
+		printf("fct : 2nd dispaly\n");
 	if (option->a == 1  && tmp->type == 'd')
 	{
 		if (option->arg_nb > 1)
@@ -35,13 +37,14 @@ static int		second_display(t_arg *option, t_flist *tmp)
 
 int				first_display(t_flist **lst, t_arg *option)
 {
-	//	printf("fct : first_display\n");
+	if (DEBUG == 1)
+		printf("fct : 1st display\n");
 	t_flist		*tmp;
 
 	tmp = *lst;
 	while (tmp != NULL)
 	{
-		if (tmp->type != 'd')	
+		if (tmp->type != 'd')
 			ls_display(option, &tmp);
 		tmp = tmp->next;
 	}
@@ -57,11 +60,10 @@ int				first_display(t_flist **lst, t_arg *option)
 
 int				put_space(char *str, int len)
 {
-	//	printf("fct : put_space\n");
 	int			i;
 
 	i = ft_strlen(str);
-	while(i < len)
+	while (i < len)
 	{
 		ft_putchar(' ');
 		i++;
@@ -71,16 +73,17 @@ int				put_space(char *str, int len)
 
 int				ls_display(t_arg *option, t_flist **lst)
 {
-	//		printf("fct : ls_display\n");
+	if (DEBUG == 1)
+		printf("fct : ls display\n");
 	if (option->l == 1 || option->o == 1 || option->g == 1)
 		long_display(lst, option);
 	if (option->colors == 1)
 		display_colors(lst);
 	ft_putstr((*lst)->name);
-	if (option->p && (*lst)->type == 'd')
-		ft_putchar('/');
 	if (option->colors)
 		ft_putstr("\033[0m");
+	if (option->p && (*lst)->type == 'd')
+		ft_putchar('/');
 	if (option->l == 1 && (*lst)->type == 'l')
 	{
 		ft_putstr(" -> ");

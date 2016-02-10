@@ -1,7 +1,13 @@
+#include <string.h>
+#include <pwd.h>
+#include <grp.h>
+#include "libft.h"
 #include "ft_ls.h"
 
 int				init_options(t_arg *option)
 {
+	if (DEBUG == 1)
+		printf("fct : init_options\n");
 	option->recu = 0;
 	option->a = 0;
 	option->g = 0;
@@ -24,6 +30,8 @@ int				init_options(t_arg *option)
 
 static int		fill_options(char to_check, t_arg *opt)
 {
+	if (DEBUG == 1)
+		printf("fct : fill_options\n");
 	opt->a = (to_check == 'a') ? 1 : opt->a;
 	opt->g = (to_check == 'g') ? 1 : opt->g;
 	opt->l = (to_check == 'l') ? 1 : opt->l;
@@ -38,7 +46,8 @@ static int		fill_options(char to_check, t_arg *opt)
 
 int				get_options(t_arg *opt, int *ac_c, char **av)
 {
-	//	printf("fct : get_options\n");
+	if (DEBUG == 1)
+		printf("fct : get_options\n");
 	int				i;
 	int				cpt;
 
@@ -49,8 +58,8 @@ int				get_options(t_arg *opt, int *ac_c, char **av)
 		while (av[cpt][0] == '-' && av[cpt][i])
 		{
 			if (av[cpt][i] != 'R' && av[cpt][i] != 'a' && av[cpt][i] != 'l' &&
-					av[cpt][i] != 'r' && av[cpt][i] != 't' && av[cpt][i] != 'G' &&
-					av[cpt][i] != 'g' && av[cpt][i] != 'o' && av[cpt][i] != 'p')
+				av[cpt][i] != 'r' && av[cpt][i] != 't' && av[cpt][i] != 'G' &&
+				av[cpt][i] != 'g' && av[cpt][i] != 'o' && av[cpt][i] != 'p')
 				ft_error(2, &av[cpt][i]);
 			fill_options(av[cpt][i], opt);
 			i++;
@@ -59,5 +68,24 @@ int				get_options(t_arg *opt, int *ac_c, char **av)
 			break ;
 	}
 	*ac_c -= cpt;
+	return (0);
+}
+
+int				getpwgr(struct passwd **pwd, struct group **grp, struct stat bs)
+{
+	if (DEBUG == 1)
+		printf("fct : getpwgr\n");
+	if ((*pwd = getpwuid(bs.st_uid)) == NULL)
+	{
+		if ((*pwd = (struct passwd *)malloc(sizeof(struct passwd))) == NULL)
+			ft_error(1, "ower info");
+		(*pwd)->pw_name = ft_itoa(bs.st_uid);
+	}
+	if ((*grp = getgrgid(bs.st_gid)) == NULL)
+	{
+		if ((*grp = (struct group *)malloc(sizeof(struct group))) == NULL)
+			ft_error(1, "group info");
+		(*grp)->gr_name = ft_itoa(bs.st_gid);
+	}
 	return (0);
 }
