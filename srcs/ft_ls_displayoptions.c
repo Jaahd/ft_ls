@@ -46,19 +46,16 @@ static int		display_size_date(t_flist **lst, t_arg *opt)
 int				long_display(t_flist **lst, t_arg *opt)
 {
 	//		printf("fct : long_display : opt->link_len : %d\n", opt->lk_len);
-	if (opt->g == 0 || opt->l == 1 || opt->o == 1)
+	ft_putstr((*lst)->rights);
+	put_space((*lst)->link_nb, opt->lk_len);
+	ft_putstr((*lst)->link_nb);
+	ft_putchar(' ');
+	if (opt->g == 0)
 	{
-		ft_putstr((*lst)->rights);
-		put_space((*lst)->link_nb, opt->lk_len);
-		ft_putstr((*lst)->link_nb);
-		ft_putchar(' ');
-		if (opt->g == 0)
-		{
-			ft_putstr((*lst)->owner);
-			put_space((*lst)->owner, (opt->own_len + 2));
-		}
+		ft_putstr((*lst)->owner);
+		put_space((*lst)->owner, (opt->own_len + 2));
 	}
-	if (opt->g == 1 || opt->o == 0)
+	if (opt->o == 0)
 	{
 		ft_putstr((*lst)->group);
 		put_space((*lst)->group, (opt->gr_len + 2));
@@ -66,8 +63,7 @@ int				long_display(t_flist **lst, t_arg *opt)
 	if ((opt->a == 1 || (opt->a == 0 && (*lst)->name[0] != '.'))
 			&& ((*lst)->type == 'b' || (*lst)->type == 'c'))
 		format_majmin(lst, &opt);
-	if (opt->g == 0 || opt->l == 1 || opt->o == 1)
-		display_size_date(lst, opt);
+	display_size_date(lst, opt);
 	return (0);
 }
 

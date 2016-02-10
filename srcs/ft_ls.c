@@ -24,7 +24,7 @@ int		ft_error(int error, char *cur_pb)
 	{
 		ft_putstr_fd("illegal option -- ", 2);
 		ft_putchar_fd(*cur_pb, 2);
-		ft_putendl_fd("\nusage: ft_ls [GRalrt] [file ...]", 2);
+		ft_putendl_fd("\nusage: ft_ls [GRagloprt] [file ...]", 2);
 		exit(EXIT_FAILURE);
 	}
 	if (error == 3)
