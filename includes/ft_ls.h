@@ -1,7 +1,7 @@
 #ifndef FT_LS_H
 # define FT_LS_H
 
-# define DEBUG 1
+# define DEBUG 0
 
 # include <stdio.h>
 # include <sys/types.h>

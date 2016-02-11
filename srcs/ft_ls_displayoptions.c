@@ -1,8 +1,6 @@
 #include "libft.h"
 #include "ft_ls.h"
 
-#define malloc(x) 0
-
 static int		format_majmin(t_flist **lst, t_arg **option)
 {
 	if (DEBUG == 1)
