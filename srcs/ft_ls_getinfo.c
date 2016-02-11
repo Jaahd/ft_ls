@@ -70,7 +70,7 @@ int				get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 		if((first_link(av[cpt], option, &new)) == -1)
 		{
 			cpt++;
-			break;
+			continue ;
 		}
 		if (*lst == NULL && new)
 			*lst = new;

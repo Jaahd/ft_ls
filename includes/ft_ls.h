@@ -1,7 +1,7 @@
 #ifndef FT_LS_H
 # define FT_LS_H
 
-# define DEBUG 0
+# define DEBUG 1
 
 # include <stdio.h>
 # include <sys/types.h>
@@ -9,6 +9,7 @@
 # include <dirent.h>
 # include <pwd.h>
 # include <grp.h>
+
 
 typedef struct		s_arg
 {

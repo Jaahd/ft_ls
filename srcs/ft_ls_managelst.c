@@ -30,7 +30,6 @@ t_flist			*lst_new(char *name, char *fpath, t_arg **option)
 	new->block = 0;
 	if (file_info(new->path, new->name, *option, &new) == -1)
 		return (NULL);
-//printf("\nlongeur des lien : %d\n", (*option)->lk_len);
 	return (new);
 }
 

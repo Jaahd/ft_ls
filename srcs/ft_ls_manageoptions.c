@@ -6,8 +6,6 @@
 
 int				init_options(t_arg *option)
 {
-	if (DEBUG == 1)
-		printf("fct : init_options\n");
 	option->recu = 0;
 	option->a = 0;
 	option->g = 0;
@@ -78,7 +76,7 @@ int				getpwgr(struct passwd **pwd, struct group **grp, struct stat bs)
 	if ((*pwd = getpwuid(bs.st_uid)) == NULL)
 	{
 		if ((*pwd = (struct passwd *)malloc(sizeof(struct passwd))) == NULL)
-			ft_error(1, "ower info");
+			ft_error(1, "owner info");
 		(*pwd)->pw_name = ft_itoa(bs.st_uid);
 	}
 	if ((*grp = getgrgid(bs.st_gid)) == NULL)
