@@ -1,3 +1,4 @@
+#include <sys/errno.h>
 #include <sys/stat.h>
 #include <string.h>
 #include <dirent.h>
@@ -62,7 +63,8 @@ int				get_name(t_arg *option, t_flist **lst, int ac_c, char **av)
 
 	cpt = 1;
 	if (ac_c == 0)
-		recu_dir(option, "./", ".");
+		if (recu_dir(option, "./", ".") == -1)
+			return (-1);
 	while (av[cpt] && av[cpt][0] == '-')
 		cpt++;
 	while (av[cpt])

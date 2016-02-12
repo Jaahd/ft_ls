@@ -12,15 +12,13 @@
 #include "ft_ls.h"
 #include "libft.h"
 
-#define malloc(x) 0
-
 int		ft_error(int error, char *cur_pb)
 {
 	if (error == 1)
 	{
 		ft_putstr_fd("ft_ls: ", 2);
 		perror(cur_pb);
-		ft_putendl_fd("", 2);
+//		ft_putendl_fd("", 2);
 		exit(EXIT_FAILURE);
 	}
 	if (error == 2)
@@ -28,14 +26,14 @@ int		ft_error(int error, char *cur_pb)
 		ft_putstr_fd("illegal option -- ", 2);
 		ft_putchar_fd(*cur_pb, 2);
 		ft_putendl_fd("\nusage: ft_ls [GRagloprt] [file ...]", 2);
-		ft_putendl_fd("", 2);
+//		ft_putendl_fd("", 2);
 		exit(EXIT_FAILURE);
 	}
 	if (error == 3)
 	{
 		ft_putstr_fd("ft_ls: ", 2);
 		perror(cur_pb);
-		ft_putendl_fd("", 2);
+//		ft_putendl_fd("", 2);
 	}
 	return (0);
 }

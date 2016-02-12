@@ -33,7 +33,7 @@ static int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *path)
 	{
 		str = format_path(path, p_dirent->d_name, ft_strlen(p_dirent->d_name));
 		if ((new = lst_new(p_dirent->d_name, str, &option)) == NULL)
-			return (-1);
+			continue ;
 		free(str);
 		if (*lst2 == NULL)
 			*lst2 = new;
@@ -54,8 +54,7 @@ static int		open_dir(t_flist **lst2, t_arg *option, char *dpath, char *name)
 
 	if ((p_dir = opendir(dpath)) == NULL)
 		return (ft_error(3, name));
-	if ((fill_list(p_dir, lst2, option, dpath)) == -1)
-		return (-1);
+	fill_list(p_dir, lst2, option, dpath);
 	closedir(p_dir);
 	return (0);
 }

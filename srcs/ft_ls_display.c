@@ -23,14 +23,16 @@ static int		second_display(t_arg *option, t_flist *tmp)
 	{
 		if (option->arg_nb > 1)
 			display_dirname(option, tmp->name);
-		recu_dir(option, tmp->path, tmp->name);
+		if (recu_dir(option, tmp->path, tmp->name) == -1)
+			return (-1);
 	}
 	else if (tmp->type == 'd' && ft_strcmp(tmp->name, ".")
 			&& option->a != 1 && ft_strcmp(tmp->name, ".."))
 	{
 		if (option->arg_nb > 1)
 			display_dirname(option, tmp->name);
-		recu_dir(option, tmp->path, tmp->name);
+		if (recu_dir(option, tmp->path, tmp->name) == -1)
+			return (-1);
 	}
 	return (0);
 }

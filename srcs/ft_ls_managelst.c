@@ -1,4 +1,5 @@
 #include <sys/stat.h>
+#include <sys/errno.h>
 #include <string.h>
 #include <dirent.h>
 #include "libft.h"

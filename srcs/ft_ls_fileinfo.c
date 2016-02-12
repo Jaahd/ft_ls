@@ -56,14 +56,21 @@ static int		type_l(t_flist **lst)
 		printf("fct : type_l\n");
 	char				link_buff[1024];
 	int					ret;
+	char				*tmp;
 
+	tmp = NULL;
 	if ((ret = readlink((*lst)->path, link_buff, 1023)) == -1)
-		ft_error(1, (*lst)->name);
+	{
+		ft_error(3, (tmp = ft_strjoin("cannot read symbolic link ",
+									(*lst)->name)));
+		return (-1);
+	}
 	else
 	{
 		link_buff[ret] = '\0';
 		(*lst)->link = ft_strdup(link_buff);
 	}
+	free(tmp);
 	return (0);
 }
 
@@ -72,27 +79,28 @@ static int		option_l(struct stat b_stat, char *cheat[], t_flist **lst,
 {
 	if (DEBUG == 1)
 		printf("fct : option_l\n");
-	int					len_tmp;
+	int					tmp;
 
 	(*lst)->owner = ft_strdup(cheat[0]);
 	if (((*opt)->a == 1 || ((*opt)->a == 0 && (*lst)->name[0] != '.'))
-			&& (len_tmp = ft_strlen((*lst)->owner)) > (*opt)->own_len)
-		(*opt)->own_len = len_tmp;
+			&& (tmp = ft_strlen((*lst)->owner)) > (*opt)->own_len)
+		(*opt)->own_len = tmp;
 	(*lst)->group = ft_strdup(cheat[1]);
 	if (((*opt)->a == 1 || ((*opt)->a == 0 && (*lst)->name[0] != '.'))
-			&& (len_tmp = ft_strlen((*lst)->group)) > (*opt)->gr_len)
-		(*opt)->gr_len = len_tmp;
+			&& (tmp = ft_strlen((*lst)->group)) > (*opt)->gr_len)
+		(*opt)->gr_len = tmp;
 	file_size(lst, opt, b_stat);
 	(*lst)->link_nb = ft_itoa(b_stat.st_nlink);
 	if ((*opt)->a == 1 || ((*opt)->a != 1 && (*lst)->name[0] != '.'))
 		(*lst)->block = b_stat.st_blocks;
 	(*opt)->tot_blocks += (*lst)->block;
 	if (((*opt)->a == 1 || ((*opt)->a == 0 && (*lst)->name[0] != '.'))
-			&& (len_tmp = ft_strlen((*lst)->link_nb)) > (*opt)->lk_len)
-		(*opt)->lk_len = len_tmp;
+			&& (tmp = ft_strlen((*lst)->link_nb)) > (*opt)->lk_len)
+		(*opt)->lk_len = tmp;
 	if (((*opt)->a == 1 || ((*opt)->a == 0 && (*lst)->name[0] != '.'))
 			&& (*lst)->type == 'l')
-		type_l(lst);
+		if((tmp = type_l(lst)) == -1)
+			return (-1);
 	return (0);
 }
 
@@ -119,7 +127,8 @@ int				file_info(char *path, char *name, t_arg *option, t_flist **lst)
 		getpwgr(&pwd, &grp, buff_stat);
 		cheat[0] = pwd->pw_name;
 		cheat[1] = grp->gr_name;
-		option_l(buff_stat, cheat, lst, &option);
+		if (option_l(buff_stat, cheat, lst, &option) == -1)
+			return (-1);
 	}
 	return (S_ISDIR(buff_stat.st_mode));
 }

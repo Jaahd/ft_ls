@@ -1,3 +1,4 @@
+#include <sys/errno.h>
 #include "libft.h"
 #include "ft_ls.h"
 
@@ -31,10 +32,11 @@ static int		format_majmin(t_flist **lst, t_arg **option)
 	return (0);
 }
 
-static int		display_size_date(t_flist **lst)
+static int		display_size_date(t_flist **lst, t_arg *opt)
 {
 	if (DEBUG == 1)
 		printf("fct : display size date\n");
+	put_space((*lst)->size, opt->size_len);
 	ft_putstr((*lst)->size);
 	ft_putchar(' ');
 	ft_putstr((*lst)->date);
@@ -64,7 +66,7 @@ int				long_display(t_flist **lst, t_arg *opt)
 	if ((opt->a == 1 || (opt->a == 0 && (*lst)->name[0] != '.'))
 			&& ((*lst)->type == 'b' || (*lst)->type == 'c'))
 		format_majmin(lst, &opt);
-	display_size_date(lst);
+	display_size_date(lst, opt);
 	return (0);
 }
 
