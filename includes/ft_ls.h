@@ -1,7 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ls.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/13 17:03:22 by avacher           #+#    #+#             */
+/*   Updated: 2016/02/13 17:03:22 by avacher          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_LS_H
 # define FT_LS_H
-
-# define DEBUG 0
 
 # include <stdio.h>
 # include <sys/types.h>
@@ -9,7 +19,6 @@
 # include <dirent.h>
 # include <pwd.h>
 # include <grp.h>
-
 
 typedef struct		s_arg
 {
@@ -56,39 +65,29 @@ typedef struct		s_flist
 int					ft_error(int error, char *cur_pb);
 int					free_s_flist(t_flist **lst);
 
-/* getinfo */
 char				*format_path(char *b_path, char *filename, int namelen);
 int					get_time(t_flist **lst, struct stat buff_stat);
 int					get_name(t_arg *option, t_flist **lst, int ac_c, char **av);
 
-/* manage options */
 int					get_options(t_arg *option, int *ac_c, char **av);
 int					init_options(t_arg *option);
 int					getpwgr(struct passwd **pwd, struct group **grp,
 						struct stat bs);
-
-/* managelst */
 t_flist				*lst_new(char *name, char *fpath, t_arg **option);
 int					lst_time_insert(t_arg *option, t_flist **lst, t_flist *new);
 int					lst_insert(t_arg *option, t_flist **lst, t_flist *new);
 
-/* managedir */
 int					recu_dir(t_arg *opt, char *dpath, char *name);
 
-/* permissions */
 int					file_rights(t_flist **lst, struct stat buff_stat);
 char				file_type(struct stat buff_stat);
 
-/* file info */
 int					file_info(char *path, char *name, t_arg *option,
 								t_flist **lst);
-
-/* bonus display */
 int					display_total(t_arg **option);
 int					display_colors(t_flist **lst);
 int					long_display(t_flist **lst, t_arg *option);
 
-/* display */
 int					first_display(t_flist **lst, t_arg *options);
 int					display_dirname(t_arg *option, char *str);
 int					put_space(char *str, int len);

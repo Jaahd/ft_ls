@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ls_manageoptions.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/13 17:03:22 by avacher           #+#    #+#             */
+/*   Updated: 2016/02/13 17:03:22 by avacher          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <string.h>
 #include <pwd.h>
 #include <grp.h>
@@ -28,8 +40,6 @@ int				init_options(t_arg *option)
 
 static int		fill_options(char to_check, t_arg *opt)
 {
-	if (DEBUG == 1)
-		printf("fct : fill_options\n");
 	opt->a = (to_check == 'a') ? 1 : opt->a;
 	opt->g = (to_check == 'g') ? 1 : opt->g;
 	opt->l = (to_check == 'l') ? 1 : opt->l;
@@ -44,8 +54,6 @@ static int		fill_options(char to_check, t_arg *opt)
 
 int				get_options(t_arg *opt, int *ac_c, char **av)
 {
-	if (DEBUG == 1)
-		printf("fct : get_options\n");
 	int				i;
 	int				cpt;
 
@@ -71,8 +79,6 @@ int				get_options(t_arg *opt, int *ac_c, char **av)
 
 int				getpwgr(struct passwd **pwd, struct group **grp, struct stat bs)
 {
-	if (DEBUG == 1)
-		printf("fct : getpwgr\n");
 	if ((*pwd = getpwuid(bs.st_uid)) == NULL)
 	{
 		if ((*pwd = (struct passwd *)malloc(sizeof(struct passwd))) == NULL)

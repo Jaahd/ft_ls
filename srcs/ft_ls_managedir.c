@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ls_managedir.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/13 17:03:22 by avacher           #+#    #+#             */
+/*   Updated: 2016/02/13 17:03:22 by avacher          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <sys/errno.h>
 #include <dirent.h>
 #include <string.h>
@@ -6,8 +18,6 @@
 
 static int		first_display_dir(t_flist **lst2, t_arg *option)
 {
-	if (DEBUG == 1)
-		printf("fct : first_display_dir\n");
 	t_flist				*tmp;
 
 	tmp = *lst2;
@@ -23,8 +33,6 @@ static int		first_display_dir(t_flist **lst2, t_arg *option)
 
 static int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *path)
 {
-	if (DEBUG == 1)
-		printf("fct : fill_list\n");
 	struct dirent		*p_dirent;
 	t_flist				*new;
 	char				*str;
@@ -48,8 +56,6 @@ static int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *path)
 
 static int		open_dir(t_flist **lst2, t_arg *option, char *dpath, char *name)
 {
-	if (DEBUG == 1)
-		printf("fct : open_dir\n");
 	DIR					*p_dir;
 
 	if ((p_dir = opendir(dpath)) == NULL)
@@ -61,8 +67,6 @@ static int		open_dir(t_flist **lst2, t_arg *option, char *dpath, char *name)
 
 int				recu_dir(t_arg *option, char *dpath, char *name)
 {
-	if (DEBUG == 1)
-		printf("fct : recu_dir\n");
 	t_flist				*lst2;
 	t_flist				*tmp;
 	char				*str;
@@ -87,6 +91,5 @@ int				recu_dir(t_arg *option, char *dpath, char *name)
 		option->size_len = 0;
 		tmp = tmp->next;
 	}
-	//	//	free_s_flist(&lst2); ////	free a revoir
 	return (1);
 }

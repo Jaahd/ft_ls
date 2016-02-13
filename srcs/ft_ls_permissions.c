@@ -1,8 +1,18 @@
-//#include <sys/syslimits.h> /*pour path_max */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ls_permissions.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/13 17:03:22 by avacher           #+#    #+#             */
+/*   Updated: 2016/02/13 17:03:22 by avacher          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <sys/errno.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <unistd.h> /*pour la fonction readlink */
 #include <pwd.h>
 #include <grp.h>
 #include "ft_ls.h"
@@ -46,8 +56,6 @@ static char		sticky_bit(struct stat buff_stat)
 
 int				file_rights(t_flist **lst, struct stat buff_stat)
 {
-	if (DEBUG == 1)
-		printf("file_rights\n");
 	(*lst)->rights[0] = (*lst)->type;
 	(*lst)->rights[1] = (buff_stat.st_mode & S_IRUSR) ? 'r' : '-';
 	(*lst)->rights[2] = (buff_stat.st_mode & S_IWUSR) ? 'w' : '-';
@@ -66,8 +74,6 @@ int				file_rights(t_flist **lst, struct stat buff_stat)
 
 char			file_type(struct stat buff_stat)
 {
-	if (DEBUG == 1)
-		printf("file_type\n");
 	char				type;
 
 	if (S_ISBLK(buff_stat.st_mode))

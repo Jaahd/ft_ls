@@ -1,11 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ls.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/13 17:03:22 by avacher           #+#    #+#             */
+/*   Updated: 2016/02/13 17:03:22 by avacher          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <dirent.h>
-#include <sys/types.h> /* -> getpwduid */
-#include <pwd.h> /* -> getpwduid */
-#include <grp.h> /* -> get grgid */
+#include <sys/types.h>
+#include <pwd.h>
+#include <grp.h>
 #include <sys/errno.h>
 #include <sys/stat.h>
-#include <time.h> /* for ctime -> pour modif format de time */
-
+#include <time.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -18,7 +29,6 @@ int		ft_error(int error, char *cur_pb)
 	{
 		ft_putstr_fd("ft_ls: ", 2);
 		perror(cur_pb);
-//		ft_putendl_fd("", 2);
 		exit(EXIT_FAILURE);
 	}
 	if (error == 2)
@@ -26,14 +36,12 @@ int		ft_error(int error, char *cur_pb)
 		ft_putstr_fd("illegal option -- ", 2);
 		ft_putchar_fd(*cur_pb, 2);
 		ft_putendl_fd("\nusage: ft_ls [GRagloprt] [file ...]", 2);
-//		ft_putendl_fd("", 2);
 		exit(EXIT_FAILURE);
 	}
 	if (error == 3)
 	{
 		ft_putstr_fd("ft_ls: ", 2);
 		perror(cur_pb);
-//		ft_putendl_fd("", 2);
 	}
 	return (0);
 }
@@ -44,8 +52,8 @@ int		free_s_flist(t_flist **lst)
 
 	while (*lst)
 	{
-		free(&(*lst)->name); // pb mem
-		free(&(*lst)->path); //pb mem
+		free(&(*lst)->name);
+		free(&(*lst)->path);
 		free(&(*lst)->date);
 		free(&(*lst)->year);
 		free(&(*lst)->owner);
@@ -67,9 +75,7 @@ int		main(int ac, char **av)
 	t_flist		*lst;
 	t_arg		option;
 	int			ac_c;
-	int	i;
 
-	i = -1;
 	ac_c = ac;
 	lst = NULL;
 	init_options(&option);
@@ -77,7 +83,6 @@ int		main(int ac, char **av)
 	option.arg_nb = ac_c;
 	get_name(&option, &lst, ac_c, av);
 	first_display(&lst, &option);
-//	free_s_flist(&lst);
-//	while (1);
+	free_s_flist(&lst);
 	return (0);
 }

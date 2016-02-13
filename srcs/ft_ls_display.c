@@ -1,12 +1,21 @@
-//#include <dirent.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ls_display.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/13 17:03:22 by avacher           #+#    #+#             */
+/*   Updated: 2016/02/13 17:03:22 by avacher          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "ft_ls.h"
 
 int				display_dirname(t_arg *option, char *str)
 {
-	if (DEBUG == 1)
-		printf("fct : display dirname\n");
-	if (option->arg_nb >  1 || option->recu == 1)
+	if (option->arg_nb > 1 || option->recu == 1)
 	{
 		ft_putchar('\n');
 		ft_putstr(str);
@@ -17,9 +26,7 @@ int				display_dirname(t_arg *option, char *str)
 
 static int		second_display(t_arg *option, t_flist *tmp)
 {
-	if (DEBUG == 1)
-		printf("fct : 2nd dispaly\n");
-	if (option->a == 1  && tmp->type == 'd')
+	if (option->a == 1 && tmp->type == 'd')
 	{
 		if (option->arg_nb > 1)
 			display_dirname(option, tmp->name);
@@ -39,8 +46,6 @@ static int		second_display(t_arg *option, t_flist *tmp)
 
 int				first_display(t_flist **lst, t_arg *option)
 {
-	if (DEBUG == 1)
-		printf("fct : 1st display\n");
 	t_flist		*tmp;
 
 	tmp = *lst;
@@ -53,10 +58,11 @@ int				first_display(t_flist **lst, t_arg *option)
 	tmp = *lst;
 	while (tmp != NULL)
 	{
+		option->tot_blocks = 0;
 		second_display(option, tmp);
 		tmp = tmp->next;
 	}
-	//	free_s_flist(lst);
+	free_s_flist(lst);
 	return (0);
 }
 
@@ -75,8 +81,6 @@ int				put_space(char *str, int len)
 
 int				ls_display(t_arg *option, t_flist **lst)
 {
-	if (DEBUG == 1)
-		printf("fct : ls display\n");
 	if (option->l == 1 || option->o == 1 || option->g == 1)
 		long_display(lst, option);
 	if (option->colors == 1)

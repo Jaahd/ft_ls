@@ -1,11 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ls_displayoptions.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/13 17:03:22 by avacher           #+#    #+#             */
+/*   Updated: 2016/02/13 17:03:22 by avacher          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <sys/errno.h>
 #include "libft.h"
 #include "ft_ls.h"
 
 static int		format_majmin(t_flist **lst, t_arg **option)
 {
-	if (DEBUG == 1)
-		printf("fct : format minmaj\n");
 	char		len[(*option)->min_len + 1];
 	char		*tmp;
 	int			size;
@@ -28,14 +38,12 @@ static int		format_majmin(t_flist **lst, t_arg **option)
 	if (((*option)->a == 1 || ((*option)->a == 0 && (*lst)->name[0] != '.'))
 			&& (*lst)->fsize_len > (*option)->size_len)
 		(*option)->size_len = (*lst)->fsize_len;
-//	ft_strdel(&tmp);
+	ft_strdel(&tmp);
 	return (0);
 }
 
 static int		display_size_date(t_flist **lst, t_arg *opt)
 {
-	if (DEBUG == 1)
-		printf("fct : display size date\n");
 	put_space((*lst)->size, opt->size_len);
 	ft_putstr((*lst)->size);
 	ft_putchar(' ');
@@ -47,8 +55,6 @@ static int		display_size_date(t_flist **lst, t_arg *opt)
 
 int				long_display(t_flist **lst, t_arg *opt)
 {
-	if (DEBUG == 1)
-		printf("fct : long display\n");
 	ft_putstr((*lst)->rights);
 	put_space((*lst)->link_nb, opt->lk_len);
 	ft_putstr((*lst)->link_nb);
@@ -63,6 +69,8 @@ int				long_display(t_flist **lst, t_arg *opt)
 		ft_putstr((*lst)->group);
 		put_space((*lst)->group, (opt->gr_len + 2));
 	}
+	if (opt->o == 1 && opt->g == 1)
+		ft_putstr("  ");
 	if ((opt->a == 1 || (opt->a == 0 && (*lst)->name[0] != '.'))
 			&& ((*lst)->type == 'b' || (*lst)->type == 'c'))
 		format_majmin(lst, &opt);
@@ -72,8 +80,6 @@ int				long_display(t_flist **lst, t_arg *opt)
 
 int				display_colors(t_flist **lst)
 {
-	if (DEBUG == 1)
-		printf("fct : display colors\n");
 	if ((*lst)->rights[0] == 'd')
 		ft_putstr("\033[1;34m");
 	if ((*lst)->rights[0] == 'l')
@@ -102,8 +108,6 @@ int				display_colors(t_flist **lst)
 
 int				display_total(t_arg **opt)
 {
-	if (DEBUG == 1)
-		printf("fct : display total\n");
 	if ((*opt)->l == 1)
 	{
 		ft_putstr("total ");

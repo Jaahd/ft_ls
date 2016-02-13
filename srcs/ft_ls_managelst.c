@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ls_managelst.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/13 17:03:22 by avacher           #+#    #+#             */
+/*   Updated: 2016/02/13 17:03:22 by avacher          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <sys/stat.h>
 #include <sys/errno.h>
 #include <string.h>
@@ -7,12 +19,10 @@
 
 t_flist			*lst_new(char *name, char *fpath, t_arg **option)
 {
-	if (DEBUG == 1)
-		printf("fct : lst_new\n");
 	t_flist			*new;
 
 	if ((new = (t_flist *)malloc(sizeof(t_flist))) == NULL)
-		ft_error(1, "list creation"); // nom a reprendre
+		ft_error(1, "list creation");
 	if ((new->name = ft_strdup(name)) == NULL)
 		ft_error(1, name);
 	if ((new->path = ft_strdup(fpath)) == NULL)
@@ -36,8 +46,6 @@ t_flist			*lst_new(char *name, char *fpath, t_arg **option)
 
 static int		lst_2nd_t_insert(t_arg *option, t_flist **lst, t_flist *new)
 {
-	if (DEBUG == 1)
-		printf("fct : lst_2_t_insert\n");
 	int				cmp;
 	t_flist			*tmp;
 
@@ -66,8 +74,6 @@ static int		lst_2nd_t_insert(t_arg *option, t_flist **lst, t_flist *new)
 
 int				lst_time_insert(t_arg *option, t_flist **lst, t_flist *new)
 {
-	if (DEBUG == 1)
-		printf("fct : lst_time_insert\n");
 	t_flist			*tmp;
 	int				cmp;
 
@@ -92,8 +98,6 @@ int				lst_time_insert(t_arg *option, t_flist **lst, t_flist *new)
 
 int				lst_insert(t_arg *option, t_flist **lst, t_flist *new)
 {
-	if (DEBUG == 1)
-		printf("fct : lst_insert\n");
 	t_flist			*tmp;
 	int				cmp;
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ls_fileinfo.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avacher <avacher@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/02/13 17:03:22 by avacher           #+#    #+#             */
+/*   Updated: 2016/02/13 17:03:22 by avacher          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <sys/errno.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -8,8 +20,6 @@
 
 static int		get_minmaj(struct stat buff_stat, t_arg **opt, t_flist **lst)
 {
-	if (DEBUG == 1)
-		printf("fct : getminmaj\n");
 	char	*maj;
 	char	*tmp;
 	int		i;
@@ -34,8 +44,6 @@ static int		get_minmaj(struct stat buff_stat, t_arg **opt, t_flist **lst)
 
 static int		file_size(t_flist **lst, t_arg **option, struct stat buff_stat)
 {
-	if (DEBUG == 1)
-		printf("fct : file_size\n");
 	if (((*option)->a == 1 || ((*option)->a == 0 && (*lst)->name[0] != '.'))
 			&& ((*lst)->type == 'b' || (*lst)->type == 'c'))
 		get_minmaj(buff_stat, option, lst);
@@ -52,8 +60,6 @@ static int		file_size(t_flist **lst, t_arg **option, struct stat buff_stat)
 
 static int		type_l(t_flist **lst)
 {
-	if (DEBUG == 1)
-		printf("fct : type_l\n");
 	char				link_buff[1024];
 	int					ret;
 	char				*tmp;
@@ -77,8 +83,6 @@ static int		type_l(t_flist **lst)
 static int		option_l(struct stat b_stat, char *cheat[], t_flist **lst,
 				t_arg **opt)
 {
-	if (DEBUG == 1)
-		printf("fct : option_l\n");
 	int					tmp;
 
 	(*lst)->owner = ft_strdup(cheat[0]);
@@ -99,15 +103,13 @@ static int		option_l(struct stat b_stat, char *cheat[], t_flist **lst,
 		(*opt)->lk_len = tmp;
 	if (((*opt)->a == 1 || ((*opt)->a == 0 && (*lst)->name[0] != '.'))
 			&& (*lst)->type == 'l')
-		if((tmp = type_l(lst)) == -1)
+		if ((tmp = type_l(lst)) == -1)
 			return (-1);
 	return (0);
 }
 
 int				file_info(char *path, char *name, t_arg *option, t_flist **lst)
 {
-	if (DEBUG == 1)
-		printf("fct : file_info\n");
 	struct stat			buff_stat;
 	struct passwd		*pwd;
 	struct group		*grp;
