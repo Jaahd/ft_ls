@@ -83,6 +83,6 @@ int		main(int ac, char **av)
 	option.arg_nb = ac_c;
 	get_name(&option, &lst, ac_c, av);
 	first_display(&lst, &option);
-	free_s_flist(&lst);
+//	free_s_flist(&lst);
 	return (0);
 }

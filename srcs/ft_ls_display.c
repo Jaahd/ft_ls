@@ -62,7 +62,6 @@ int				first_display(t_flist **lst, t_arg *option)
 		second_display(option, tmp);
 		tmp = tmp->next;
 	}
-	free_s_flist(lst);
 	return (0);
 }
 

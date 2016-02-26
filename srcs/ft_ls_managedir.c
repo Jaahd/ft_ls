@@ -42,7 +42,7 @@ static int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *path)
 		str = format_path(path, p_dirent->d_name, ft_strlen(p_dirent->d_name));
 		if ((new = lst_new(p_dirent->d_name, str, &option)) == NULL)
 			continue ;
-		free(str);
+		//free(str);
 		if (*lst2 == NULL)
 			*lst2 = new;
 		else if (option->t == 1)
@@ -86,7 +86,7 @@ int				recu_dir(t_arg *option, char *dpath, char *name)
 			option->size_len = 0;
 			recu_dir(option, (str = format_path(dpath, tmp->name,
 							ft_strlen(tmp->name))), tmp->name);
-			free(str);
+			//free(str);
 		}
 		option->size_len = 0;
 		tmp = tmp->next;
