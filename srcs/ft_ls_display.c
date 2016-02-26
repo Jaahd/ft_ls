@@ -89,7 +89,8 @@ int				ls_display(t_arg *option, t_flist **lst)
 		ft_putstr("\033[0m");
 	if (option->p && (*lst)->type == 'd')
 		ft_putchar('/');
-	if (option->l == 1 && (*lst)->type == 'l')
+	if ((option->l == 1 || option->o == 1 || option->g == 1)
+			&& (*lst)->type == 'l')
 	{
 		ft_putstr(" -> ");
 		ft_putstr((*lst)->link);
