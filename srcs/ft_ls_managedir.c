@@ -50,7 +50,7 @@ static int		fill_list(DIR *p_dir, t_flist **lst2, t_arg *option, char *path)
 			lst_time_insert(option, lst2, new);
 		else
 			lst_insert(option, lst2, new);
-		if (option->a == 1 || (option->a == 0 && (*lst2)->name[0] != '.'))
+		if (option->a == 1 || (option->a == 0 && new->name[0] != '.'))
 			i++;
 	}
 	first_display_dir(lst2, option, i);

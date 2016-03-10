@@ -108,8 +108,8 @@ int				display_colors(t_flist **lst)
 
 int				display_total(t_arg **opt, int i)
 {
-	if ((((*opt)->a == 1 && i > 2) || i > 0)
-			&& ((*opt)->l == 1 || (*opt)->o == 1 || (*opt)->g == 1))
+	if (i > 0 && ((*opt)->l == 1 || (*opt)->o == 1
+				|| (*opt)->g == 1))
 	{
 		ft_putstr("total ");
 		ft_putnbrendl((*opt)->tot_blocks);
