@@ -27,7 +27,7 @@ SRC = 	ft_ls.c \
 
 OFILES = $(patsubst %.c, $(OPATH)/%.o, $(SRC))
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re norm
 
 all: $(OPATH) $(NAME)
 
@@ -58,6 +58,9 @@ fclean: clean lib.fclean
 	@echo "\033[36mAll clear!\033[0m"
 
 re: fclean all
+
+norm: all
+	norminette **/*.[ch]
 
 # lil memo
 # $@ = rule's name

@@ -84,7 +84,7 @@ char				file_type(struct stat buff_stat);
 
 int					file_info(char *path, char *name, t_arg *option,
 								t_flist **lst);
-int					display_total(t_arg **option);
+int					display_total(t_arg **option, int i);
 int					display_colors(t_flist **lst);
 int					long_display(t_flist **lst, t_arg *option);
 
